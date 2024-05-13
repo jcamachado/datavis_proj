@@ -1,0 +1,13 @@
+```js
+artistArray = Object.entries(artistStreams).map(([artist, streams]) => {
+    return {artist, streams};
+});
+```
+
+```js
+artistArray.sort((a, b) => b.streams - a.streams);
+```
+
+```js
+Inputs.table(artistArray)
+```
