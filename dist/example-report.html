@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Example report | Hello World</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,6 +85,7 @@ timeline(events, {height: 300})
   <ol>
     <li class="observablehq-link"><a href="./example-dashboard">Example dashboard</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./example-report">Example report</a></li>
+    <li class="observablehq-link"><a href="./spotify-report">2023 Spotify Streams</a></li>
   </ol>
 </nav>
 <script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -137,7 +138,7 @@ timeline(events, {height: 300})
 <p>Exploration will not only be limited to the Moon or Mars, but extend to other parts of our solar system such as Jupiter and Saturn’s moons, and beyond.</p>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./example-dashboard"><span>Example dashboard</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-04-23T20:43:54">Apr 23, 2024</a>.</div>
+<nav><a rel="prev" href="./example-dashboard"><span>Example dashboard</span></a><a rel="next" href="./spotify-report"><span>2023 Spotify Streams</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-05-14T19:26:37">May 14, 2024</a>.</div>
 </footer>
 </div>

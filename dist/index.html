@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Hello World</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,8 +54,7 @@
 import {define} from "./_observablehq/client.js";
 import {registerFile} from "./_observablehq/stdlib.js";
 
-registerFile("./aapl.csv", {"name":"./aapl.csv","mimeType":"text/csv","path":"./_file/aapl.18dc8bf6.csv","lastModified":1713915807081});
-registerFile("./penguins.csv", {"name":"./penguins.csv","mimeType":"text/csv","path":"./_file/penguins.dfee817d.csv","lastModified":1713915807085});
+registerFile("./penguins.csv", {"name":"./penguins.csv","mimeType":"text/csv","path":"./penguins.csv"});
 
 define({id: "7935742a", inline: true, inputs: ["resize","Plot","aapl","display"], body: async (resize,Plot,aapl,display) => {
 display(await(
@@ -91,10 +90,11 @@ display(await(
 ))
 }});
 
-define({id: "74b65852", inputs: ["FileAttachment"], outputs: ["aapl","penguins"], body: (FileAttachment) => {
-const aapl = FileAttachment("./aapl.csv").csv({typed: true});
+define({id: "d3fe3ef5", inputs: ["FileAttachment"], outputs: ["penguins"], body: (FileAttachment) => {
+// const aapl = FileAttachment("aapl.csv").csv({typed: true});
+// const penguins = FileAttachment("penguins.csv").csv({typed: true});
 const penguins = FileAttachment("./penguins.csv").csv({typed: true});
-return {aapl,penguins};
+return {penguins};
 }});
 
 </script>
@@ -108,6 +108,7 @@ return {aapl,penguins};
   <ol>
     <li class="observablehq-link"><a href="./example-dashboard">Example dashboard</a></li>
     <li class="observablehq-link"><a href="./example-report">Example report</a></li>
+    <li class="observablehq-link"><a href="./spotify-report">2023 Spotify Streams</a></li>
   </ol>
 </nav>
 <script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -163,7 +164,7 @@ return {aapl,penguins};
   <div class="card"><span id="cell-7935742a" class="observablehq--loading"></span></div>
   <div class="card"><span id="cell-699041c1" class="observablehq--loading"></span></div>
 </div>
-<div id="cell-74b65852" class="observablehq observablehq--block"></div>
+<div id="cell-d3fe3ef5" class="observablehq observablehq--block"></div>
 <hr>
 <h2 id="next-steps" tabindex="-1"><a class="observablehq-header-anchor" href="#next-steps">Next steps</a></h2>
 <p>Here are some ideas of things you could try…</p>
@@ -193,6 +194,6 @@ return {aapl,penguins};
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./example-dashboard"><span>Example dashboard</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-04-23T20:43:54">Apr 23, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-05-14T19:26:37">May 14, 2024</a>.</div>
 </footer>
 </div>
