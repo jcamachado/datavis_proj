@@ -14,7 +14,7 @@ O dataset já está com os streams como atributo numérico e em ordem decrescent
 
 ```js
 // O dataset já está com os streams como atributo numérico e em ordem decrescente
-const Spotify = FileAttachment("spotify_2023.csv").csv()
+const Spotify = FileAttachment("spotify-2023.csv").csv()
 ```
 
 ```js
@@ -80,10 +80,10 @@ Inputs.table(artistCount)
 
 # Músicas Mais Tocadas no Spotify em 2023
 
-```js
+<!-- ```js
 let range = view(Inputs.range([10, 32], {label: "Número de músicas:", step: 1, value: 10}))
-```
-
+``` -->
+<!-- 
 ```js
 vl.layer(
   // Camada de barras
@@ -95,7 +95,6 @@ vl.layer(
       vl.text().fieldN("track_name"),
       vl.color().fieldN("track_name").scale({scheme: 'category10'}).legend(null) // Esquema de cores opcional
     ),
-  
   // Camada de texto
   vl.markText({
     align: 'right',
@@ -122,8 +121,24 @@ vl.layer(
       vl.y().fieldN("track_name").sort(null),
       vl.text().fieldN("artist(s)_name")
     )
-
 ).width(700).height(range * 20).render()
+``` -->
 
+```js
+const random = d3.randomLcg(42);
+const x = Array.from({length: 500}, random);
+const y = Array.from({length: 500}, random);
+const chart = Plot.voronoi(x, {x, y, fill: x}).plot({nice: true});
+
+display(chart);
 ```
 
+```js
+Plot.plot({
+  r: {range: [0, 6]}, // generate slightly smaller dots
+  marks: [
+    Plot.dot(olympians, Plot.bin({r: "count"}, {x: "in_spotify_charts", y: "bpm"}))
+  ]
+})
+
+```
