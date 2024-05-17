@@ -45,7 +45,7 @@ transformedData = transformedData.filter(d =>
 ```
 
 ```js
-let range = view(Inputs.range([10,50], {label: "Número de Músicas: ", step: 1}));
+let range = view(Inputs.range([10,100], {label: "Número de Músicas: ", step: 1, value: 30}));
 ```
 
 ```js

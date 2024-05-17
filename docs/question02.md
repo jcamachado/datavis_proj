@@ -5,13 +5,13 @@ title: Músicas Lançadas no Mesmo Ano
 # Análise da Variação do Conjunto das Top 10 Músicas e Artistas por Ano de Lançamento
 
 <p style="text-align:justify;">
-Para observar a variação das Top 10 músicas e dos Top 10 artistas de acordo com o ano de lançamento das músicas, o dataset foi agrupado por ano de lançamento. Para contabilizar os artistas, somamos o número de streams de cada música em que o artista aparece, incluindo as colaborações ("feats"). Optamos por utilizar gráficos de barras para representar as músicas e os artistas porque este tipo de visualização facilita a comparação entre os números de streams de cada item. As barras proporcionam uma maneira clara e visualmente intuitiva de identificar diferenças e semelhanças nas popularidades. Cada barra representa uma música ou um artista.
+Para observar a variação das Top 10 músicas e dos Top 10 artistas de acordo com o ano de lançamento das músicas, o dataset foi agrupado por ano de lançamento. Para contabilizar os artistas, somamos o número de streams de cada música em que o artista aparece, incluindo as colaborações ("feats"). Optamos por utilizar gráficos de barras porque este tipo de visualização facilita a comparação entre os números de streams de cada item. As barras proporcionam uma maneira clara e visualmente intuitiva de identificar diferenças e semelhanças nas popularidades. Cada barra representa uma música ou um artista.
 </p>
 <p style="text-align:justify;">
-A análise dos dados de reprodução das músicas e artistas revela que o conjunto das Top 10 músicas e dos Top 10 artistas varia moderadamente de ano para ano. Observamos que, enquanto alguns artistas e músicas permanecem populares ao longo dos anos, novos nomes e canções também surgem periodicamente. Por exemplo, em 2020, 3 artistas continuaram no Top 10 em comparação com 2019, enquanto o restante da lista foi composto por novos destaques.
+A análise dos dados de reprodução das músicas e artistas revela que o conjunto dos Top 10 artistas, apesar de mudanças, apresenta alguns artistas que permanecem populares ao longo dos anos. Por exemplo, em 2020, 3 artistas continuaram no Top 10 em comparação com 2019.
 </p>
 <p style="text-align:justify;">
-Considerando músicas lançadas em anos anteriores, os artistas que aparecem no Top 10 são frequentemente os mesmos que estão no Top 10 de canções. Nos anos mais recentes, existem músicas cujos artistas não estão entre os mais tocados no Top 10 (embora a maioria esteja), pois a contabilização dos artistas mais tocados inclui suas parcerias e várias músicas que não necessariamente estão no Top 10.
+Considerando músicas lançadas em anos muito anteriores a 2023, os artistas que aparecem no Top 10 são frequentemente os mesmos que estão no Top 10 de canções. Nos anos mais recentes, existem músicas cujos artistas não estão entre os mais tocados no Top 10 (embora a maioria esteja), pois a contabilização dos artistas mais tocados inclui suas parcerias e várias músicas que não necessariamente estão no Top 10.
 </p>
 
 ```js
@@ -199,19 +199,14 @@ let plot2 = generateBarPlot02(trackCount.slice(0,10), "streams", "track_name");
 
 ```
 
-<table>
-  <tr>
-    <td>
+<div class="grid grid-cols-2">
 
-```js
-    view(plot1)
-```
-  </td>
-  <td>
+  <div class="card">
+    ${resize((width) => generateBarPlot(artistCount, "streams", "artist"))}
+  </div>
 
-```js
-    view(plot2)
-```
-  </td>
+  <div class="card">
+    ${resize((width) => generateBarPlot02(trackCount.slice(0,10), "streams", "track_name"))}
+  </div>
 
-</table>
+</div>

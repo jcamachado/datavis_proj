@@ -109,6 +109,7 @@ function scatterPlot(data, valX, valY, valColor="streams", valLegend=false, hide
   return Plot.plot({
     color: {legend: valLegend},
     stroke: valColor,
+    style: {fontSize: 50},
     marks: [
       Plot.dot(filteredData, {x: valX, y: valY, fill: valColor})
     ],
