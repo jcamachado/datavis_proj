@@ -1,5 +1,9 @@
 # Bem vindos ao nosso projeto.
 
+## Alunos: Dupla 1
+Alexsander Marciano da Cunha
+Jose Carlos de Almeida Machado
+
 Rodar o sistema:
 
 ```
