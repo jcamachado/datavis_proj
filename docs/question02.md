@@ -5,13 +5,13 @@ title: Músicas Lançadas no Mesmo Ano
 # Análise da Variação do Conjunto das Top 10 Músicas e Artistas por Ano de Lançamento
 
 <p style="text-align:justify;">
-Para observar a variação das Top 10 músicas e dos Top 10 artistas de acordo com o ano de lançamento das músicas, o dataset foi agrupado por ano de lançamento. Para contabilizar os artistas, somamos o número de streams de cada música em que o artista aparece, incluindo as colaborações ("feats"). Optamos por utilizar gráficos de barras porque este tipo de visualização facilita a comparação entre os números de streams de cada item. As barras proporcionam uma maneira clara e visualmente intuitiva de identificar diferenças e semelhanças nas popularidades. Cada barra representa uma música ou um artista.
+Para observar a variação das Top 10 músicas e artistas de acordo com o ano de lançamento das músicas, o dataset foi agrupado por ano de lançamento das músicas para a primeira tabela, e posteriormente por artistas para a segunda. Para contabilizar os artistas, somamos o número de streams de cada música em que o artista aparece, incluindo as colaborações ("feats"). Optamos por utilizar gráficos de barras porque este tipo de visualização facilita a comparação entre os números de streams de cada item. As barras proporcionam uma maneira clara e visualmente intuitiva de comparar a  popularidade dos dados no contexto anual. Na primeira tabela, cada barra representa uma música enquanto na segunda, ela representa um artista.
 </p>
 <p style="text-align:justify;">
-A análise dos dados de reprodução das músicas e artistas revela que o conjunto dos Top 10 artistas, apesar de mudanças, apresenta alguns artistas que permanecem populares ao longo dos anos. Por exemplo, em 2020, 3 artistas continuaram no Top 10 em comparação com 2019.
+A análise dos dados de reprodução das músicas no Spotify revela que o conjunto dos Top 10 artistas, apesar de mudanças, apresenta alguma estabilidade de popularidade ao longo dos anos. Por exemplo, em 2020, 3 artistas continuaram no Top 10 em comparação com 2019.
 </p>
 <p style="text-align:justify;">
-Considerando músicas lançadas em anos muito anteriores a 2023, os artistas que aparecem no Top 10 são frequentemente os mesmos que estão no Top 10 de canções. Nos anos mais recentes, existem músicas cujos artistas não estão entre os mais tocados no Top 10 (embora a maioria esteja), pois a contabilização dos artistas mais tocados inclui suas parcerias e várias músicas que não necessariamente estão no Top 10.
+Considerando músicas lançadas em anos muito anteriores a 2023, os artistas que aparecem no Top 10 são frequentemente os mesmos que estão no Top 10 de canções. Nos anos mais recentes, existem músicas, embora poucas, muito populares cujos artistas não estão entre os mais tocados no Top 10, pois a contabilização dos artistas mais tocados inclui suas parcerias e muitas destas músicas feitas em parceria não alcançam o Top 10.
 </p>
 
 ```js
