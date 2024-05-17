@@ -1,6 +1,6 @@
 ---
 theme: dashboard
-title: Músicas Lançadas no Mesmo Ano
+title: 2- Músicas Lançadas no Mesmo Ano
 ---
 # Análise da Variação do Conjunto das Top 10 Músicas e Artistas por Ano de Lançamento
 
@@ -198,15 +198,3 @@ let plot1 = generateBarPlot(artistCount, "streams", "artist");
 let plot2 = generateBarPlot02(trackCount.slice(0,10), "streams", "track_name");
 
 ```
-
-<div class="grid grid-cols-2">
-
-  <div class="card">
-    ${resize((width) => generateBarPlot(artistCount, "streams", "artist"))}
-  </div>
-
-  <div class="card">
-    ${resize((width) => generateBarPlot02(trackCount.slice(0,10), "streams", "track_name"))}
-  </div>
-
-</div>

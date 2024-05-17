@@ -1,6 +1,6 @@
 ---
 theme: dashboard
-title: Plataformas Musicais
+title: 3- Plataformas Musicais
 ---
 # Diferenças entre os charts das plataformas Spotify, Deezer, Apple Music e Shazam
 
@@ -10,10 +10,10 @@ Spotify.sort((a, b) => b.streams - a.streams);
 ```
 
 <p style="text-align:justify;">
-As músicas estão organizadas de acordo com os maiores números de streams no Spotify em 2023. O gráfico exibe a posição de cada música nos charts de várias plataformas. Os pontos vermelhos no eixo zero indicam que a música possui valor zero em determinado chart, ou seja, não está presente nessa plataforma.
+O gráfico exibe a posição de cada música nos charts de várias plataformas. Os pontos vermelhos indicam que a música possui o mesmo valor de rank em mais de uma plataforma. Em caso de a música não estar ranqueada em uma plataforma, sua colocação é 0 e também é exibida no gráfico.
 </p>
 <p style="text-align:justify;">
-Essa visualização é útil para comparar a divergência entre as plataformas: linhas mais próximas indicam maior semelhança entre os charts, enquanto linhas mais distantes indicam maior diferença. Nota-se que plataformas como Deezer e Spotify exibem valores mais semelhantes entre si. Por outro lado, o Shazam demonstra valores discrepantes em relação às posições. Músicas que alcançam posições elevadas nas outras plataformas geralmente não têm o mesmo desempenho no Shazam, enquanto a Apple Music mostra uma divergência ainda maior em relação às posições das músicas em seus gráficos, se comparada às demais. Isso indica que os rankings de cada plataforma se comportam de maneira distinta, especialmente a Apple Music, sugerindo que seu público-alvo pode representar um segmento diferente.
+Essa visualização é útil para comparar a divergência entre as plataformas: linhas mais próximas indicam maior semelhança entre os charts, enquanto linhas mais distantes indicam maior diferença. Nota-se que plataformas como Deezer e Spotify exibem valores semelhantes entre si. Por outro lado, o Shazam demonstra valores discrepantes, o que faz sentido, pois o Shazam não possui a mesma finalidade das plataformas analisadas que são voltadas para a reprodução de músicas. A Apple Music mostra uma divergência ainda maior em relação às posições das músicas em seus gráficos, se comparada às demais, sugerindo que seu público-alvo pode representar um segmento diferente. Concluindo, os rankings de cada plataforma se comportam de maneira distinta, logo um artista popular em uma plataforma não garante sua popularidade em outra.
 </p>
 
 
@@ -45,7 +45,7 @@ transformedData = transformedData.filter(d =>
 ```
 
 ```js
-let range = view(Inputs.range([10,100], {label: "Número de Músicas: ", step: 1, value: 30}));
+let range = view(Inputs.range([10,100], {label: "Número de Músicas: ", step: 1, value: 40}));
 ```
 
 ```js
@@ -90,7 +90,20 @@ let chart = Plot.plot({
     Plot.dot(deezerData, {x: "num", y: "deezer", fill: "red", r: 3}),
     Plot.dot(spotifyData, {x: "num", y: "spotify", fill: "red", r: 3}),
 
-    Plot.ruleX(transformedData, {x: "num", stroke: "transparent", tip:true, channels: {Musica: "track", Artista:"artist", Acessos: "streams"},}),
+    Plot.ruleX(transformedData, {
+      x: "num", 
+      stroke: "transparent", 
+      tip:true, 
+      channels: {
+        Nome: "track", 
+        Artista:"artist", 
+        Acessos: "streams", 
+        Rank_Spotify:"spotify",
+        Rank_Deezer:"deezer",
+        Rank_Shazam:"shazam",
+        Rank_Apple:"apple"
+      },
+    }),
 
   ]
 });
