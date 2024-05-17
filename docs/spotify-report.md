@@ -4,15 +4,17 @@ theme: dashboard
 title: Analisando os sucessos
 ---
 
-# Análise dos sucessos de 2023
+# Análise dos Sucessos de 2023 no Spotify
 
-## Introdução
-
-Para tentarmos entender quais características que mais influenciam para o sucesso de uma música, analisamos as músicas mais populares de 2023 no Spotify e comparamos suas propriedades contra sua popularidade na plataforma, a fim de buscar correlações coerentes. 
+<p style="text-align:justify;">
+Neste trabalho de Visualização de Dados, buscamos entender as características que mais influenciam o sucesso de uma música no Spotify. Para isso, analisamos as músicas mais populares de 2023 e comparamos suas propriedades com sua popularidade na plataforma, com o objetivo de identificar correlações significativas.
+</p>
 
 ## Organização dos dados
-A seguir, exibiremos 10 gráficos do tipo scatter plot, onde o eixo vertical sempre representará a quantidade de streams (acessos) e o eixo horizontal representará uma das características das músicas analisadas.
-Em todos os graficos em que a cor não é especificada, ela mudará proporcionamente ao valor do eixo vertical, ou seja, quanto mais streams, mais vermelho será o ponto, pois usaremos mapas de calor como sistema de cores padrão. 
+
+<p style="text-align:justify;">
+A seguir, apresentamos 10 gráficos do tipo scatter plot, onde o eixo vertical representa sempre a quantidade de streams (acessos) e o eixo horizontal representa diferentes características das músicas analisadas. Esse tipo de representação gráfica nos permite observar correlações entre duas variáveis e suas tendências. Nos gráficos onde a cor não é especificada, ela varia proporcionalmente ao valor do eixo vertical: quanto mais streams uma música tiver, mais vermelho será o ponto. Utilizamos mapas de calor como o esquema de cores padrão para facilitar a visualização dessas tendências.
+</p>
 
 <!-- Load and transform the data -->
 ```js
@@ -67,7 +69,7 @@ function scatterPlot(data, valX, valY, valColor="streams", valLegend=false, hide
       displayLabelX = "Modo";
       break;
     case "danceability_%":
-      displayLabelX = "Dançante (%)";
+      displayLabelX = "Dançabilidade (%)";
       break;
     case "valence_%":
       displayLabelX = "Positividade do conteúdo (%)";
@@ -82,10 +84,10 @@ function scatterPlot(data, valX, valY, valColor="streams", valLegend=false, hide
       displayLabelX = "Instrumental (%)";
       break;
     case "liveness_%":
-      displayLabelX = "Animação (%)";
+      displayLabelX = "Liveness (%)";
       break;
     case "speechiness_%":
-      displayLabelX = "Palavras faladas (%)";
+      displayLabelX = "Speechness (%)";
       break;
     default:
       displayLabelX = valX;
@@ -93,7 +95,7 @@ function scatterPlot(data, valX, valY, valColor="streams", valLegend=false, hide
 
   switch(valY) {
     case "streams":
-      displayLabelY = "Acessos (milhões)";
+      displayLabelY = "Acessos (M)";
       break;
     default:
       displayLabelY = valY;
@@ -247,14 +249,16 @@ function speechnessStreamsScatter(data, {width} = {}) {
 }
 ```
 
-## Análise dos dados
+# Análise dos Dados
+<p style="text-align:justify;">
+A análise dos dados foi realizada de acordo com as observações obtidas ao plotar as correlações. Os comentários foram divididos quanto às características que apresentavam maior impacto, possível impacto, menor impacto e as que não apresentavam impacto.
+</p>
 
-### Mais impacto
-As tendencias mais claras que encontramos foram em relação ao ano de lançamento e ao tom da musica.
-A proximidade do lançamento com o ano atual parece ter um impacto muito grande na popularidade da musica. Isso pode indicar fatores como o perfil de ouvintes que consomem mais musicas novas, o perfil de pessoas que acessam musica pelas plataformas, a promoção de musicas novas, ou até mesmo as musicas sendo feitas com estes publicos como alvo.
-
+### Maior Impacto
+<p style="text-align:justify;">
+As tendências mais claras que encontramos foram relacionadas ao ano de lançamento e ao tom das músicas. A proximidade do lançamento com o ano atual parece ter um impacto significativo na popularidade das músicas. Isso pode indicar diversos fatores, como o perfil de ouvintes que preferem consumir músicas novas, a natureza das pessoas que acessam música através das plataformas digitais, a promoção intensiva de músicas recém-lançadas ou até mesmo a criação de músicas especificamente direcionadas para esses públicos.
+</p>
 <br>
-
 <div class="grid grid-cols-2">
   <div class="card">
     ${resize((width) => yearStreamsScatter(sortedData, {width}))}
@@ -263,15 +267,16 @@ A proximidade do lançamento com o ano atual parece ter um impacto muito grande 
     ${resize((width) => keyStreamsScatter(sortedData, {width}))}
   </div>
 </div>
-
 <br>
 
-#### Impacto possivel
+#### Impacto Possível
+<p style="text-align:justify;">
+Observamos uma tendência muito forte de que músicas com mais streams possuem menos instrumentalidade. Todas as músicas com mais de 1 bilhão de streams têm menos de 25% de instrumentalidade, e aquelas com mais de 1,5 bilhão têm menos de 10%, com uma grande concentração em 0%.
+</p>
 
-Existe uma tendencia muito forte de que musicas com mais streams possuem menos instrumentalidade, invariavelmente. Todas as musicas com mais de 1 bilhao de streams possuem menos de 25% de instrumentalidade. e todas com mais de 1.5 bilhao possuem menos de 10%, e um adensamento muito grande em 0%. 
-
-Este dado foi posta como possibilidade de impacto, pois embora a tendencia seja clara, a concentração de valores em volta de 0% levanta a possibilidade de que os dados estejam enviesados, como por exemplo, valores invalidos ou faltantes.
-
+<p style="text-align:justify;">
+Embora essa tendência seja clara, consideramos a possibilidade de impacto, pois a alta concentração de valores em torno de 0% pode indicar que os dados estejam enviesados. Isso pode ser causado por valores inválidos ou faltantes.
+</p>
 <br>
 
 <div class="grid grid-cols-2">
@@ -282,43 +287,56 @@ Este dado foi posta como possibilidade de impacto, pois embora a tendencia seja 
 
 <br>
 
-### Menos impacto
+### Menor Impacto
+<p style="text-align:justify;">
+Alguns aspectos musicais parecem influenciar a popularidade, mas uma análise proporcional revela que esses padrões são questionáveis quando consideramos também a distribuição das músicas menos populares.
+</p>
 
-Alguns aspectos musicais, embora apresentem alguma tendencia em aumentar popularidade, analisando proporcionalmente, estes padrões se tornam duvidosos quando olhamos para a distribuição de musicas menos populares tambem. 
-
-Os exemplos mais obvios sao a % de palavras na musica e a % de animacao. A grande maioria das musicas populares possuem menos de 40$ de animacao e menos de 30% de palavras. E quanto menos % desses aspectos, mais popular a musica. Porem, a distribuicao de musicas menos populares segue um padrao parecido, com um adensamento muito maior em valores baixos.
-
-BPM, dançabilidade, energia e acustica seguem um comportamento parecido. Embora muito menos densas, as musicas mais populares e menos populares seguem o mesmo padrao de adensamento em certos intervalos. Dançabilidade apresenta uma concentração global entre 30% e 95%. Embora entre outros intervalos, estas outras características apresentam uma distribuição proporcional.
-
-<br>
+<p style="text-align:justify;">
+Dois exemplos claros são o percentual de palavras faladas ("speechness") na música e o percentual de elementos de performance ao vivo ("liveness"). A maioria das músicas populares tem menos de 40% de elementos de performance ao vivo e menos de 30% de palavras faladas. Quanto menor a porcentagem desses aspectos, mais popular é a música. No entanto, a distribuição das músicas menos populares segue um padrão semelhante, com uma concentração muito maior em valores baixos.
+</p>
 
 <div class="grid grid-cols-2">
   <div class="card">
-    ${resize((width) => bpmStreamsScatter(sortedData, {width}))}
+    ${resize((width) => speechnessStreamsScatter(sortedData, {width}))}
   </div>
-  <div class="card">
-    ${resize((width) => danceabilityStreamsScatter(sortedData, {width}))}
-  </div>
-  <div class="card">
-    ${resize((width) => energyStreamsScatter(sortedData, {width}))}
-  </div>
-  <div class="card">
-    ${resize((width) => acousticnessStreamsScatter(sortedData, {width}))}
-  </div>
+
   <div class="card">
     ${resize((width) => livenessStreamsScatter(sortedData, {width}))}
   </div>
+</div>
+
+<p style="text-align:justify;">
+O BPM, a dançabilidade, a energia e a acústica mostram comportamentos semelhantes. Embora menos densas, tanto as músicas mais populares quanto as menos populares seguem o mesmo padrão de concentração em certos intervalos. A dançabilidade, por exemplo, tem uma concentração global entre 30% e 95%.
+</p>
+<br>
+
+<div class="grid grid-cols-2">
+
   <div class="card">
-    ${resize((width) => speechnessStreamsScatter(sortedData, {width}))}
+    ${resize((width) => bpmStreamsScatter(sortedData, {width}))}
   </div>
+
+  <div class="card">
+    ${resize((width) => danceabilityStreamsScatter(sortedData, {width}))}
+  </div>
+
+  <div class="card">
+    ${resize((width) => energyStreamsScatter(sortedData, {width}))}
+  </div>
+
+  <div class="card">
+    ${resize((width) => acousticnessStreamsScatter(sortedData, {width}))}
+  </div>
+
 </div>
 
 <br>
 
 ### Sem impacto
-
-Dentre os aspectos analisados, o mês de lançamento, o modo musical e a positividade do conteúdo parecem não ter impacto na popularidade das músicas. A distribuição de músicas populares e menos populares é homogênea em relação a essas características, parecendo aleatória. Ou seja, não parece haver nenhum benefício em lançar uma música em um mês específico, em um modo musical específico ou com um conteúdo mais positivo, o que pode indicar um grau maior de liberdade na produção musical.
-
+<p style="text-align:justify;">
+Dentre os aspectos analisados, o mês de lançamento, o modo das músicas e a positividade do conteúdo, parece não impactar na popularidade das músicas. A distribuição de músicas populares e menos populares é homogênea em relação a essas características, sugerindo uma distribuição aleatória. Em outras palavras, lançar uma música em um mês específico, com um modo musical particular ou com um conteúdo mais positivo não parece conferir benefício em termos de popularidade.
+</p>
 <br>
 
 <div class="grid grid-cols-2">

@@ -10,10 +10,10 @@ Spotify.sort((a, b) => b.streams - a.streams);
 ```
 
 <p style="text-align:justify;">
-As músicas estão organizadas de acordo com os maiores streams no Spotify em 2023. O gráfico exibe a posição de cada música nos charts de várias plataformas. Os pontos vermelhos no eixo zero indicam que a música possui valor zero em determinado chart, ou seja, não está presente nessa plataforma.
+As músicas estão organizadas de acordo com os maiores números de streams no Spotify em 2023. O gráfico exibe a posição de cada música nos charts de várias plataformas. Os pontos vermelhos no eixo zero indicam que a música possui valor zero em determinado chart, ou seja, não está presente nessa plataforma.
 </p>
 <p style="text-align:justify;">
-Essa visualização é útil para comparar a divergência entre as plataformas: linhas mais próximas indicam maior semelhança entre os charts, enquanto linhas mais distantes indicam maior diferença. Observa-se que plataformas como Deezer e Spotify apresentam valores mais próximos, indicando uma maior similaridade, enquanto a Apple Music exibe maior divergência em relação às outras.
+Essa visualização é útil para comparar a divergência entre as plataformas: linhas mais próximas indicam maior semelhança entre os charts, enquanto linhas mais distantes indicam maior diferença. Nota-se que plataformas como Deezer e Spotify exibem valores mais semelhantes entre si. Por outro lado, o Shazam demonstra valores discrepantes em relação às posições. Músicas que alcançam posições elevadas nas outras plataformas geralmente não têm o mesmo desempenho no Shazam, enquanto a Apple Music mostra uma divergência ainda maior em relação às posições das músicas em seus gráficos, se comparada às demais. Isso indica que os rankings de cada plataforma se comportam de maneira distinta, especialmente a Apple Music, sugerindo que seu público-alvo pode representar um segmento diferente.
 </p>
 
 
