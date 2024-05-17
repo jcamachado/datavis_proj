@@ -85,7 +85,7 @@ function scatterPlot(data, valX, valY, valColor="streams", valLegend=false, hide
       displayLabelX = "Animação (%)";
       break;
     case "speechiness_%":
-      displayLabelX = "Qtd de palavras (%)";
+      displayLabelX = "Palavras faladas (%)";
       break;
     default:
       displayLabelX = valX;

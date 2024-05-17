@@ -2,7 +2,7 @@
 theme: dashboard
 title: Plataformas Musicais
 ---
-# Dferenças entre os charts das plataformas Spotify, Deezer, Apple Music e Shazam
+# Diferenças entre os charts das plataformas Spotify, Deezer, Apple Music e Shazam
 
 ```js
 let Spotify = await FileAttachment("spotify-2023.csv").csv();
@@ -60,28 +60,30 @@ let chart = Plot.plot({
   },
   y: {
     label: "Posição nos Charts",
-    domain: [0, 250],
+    domain: [200, 1],
   },
-    color: {
+  color: {
     type: "ordinal",
     legend: true,
     label: "Plataforma",
     domain: ["Apple", "Shazam", "Deezer", "Spotify"],
-    range: ["white", "blue", "purple", "green"],
+    range: ["white", "cyan", "yellow", "green"],
     marginLeft: 400
   },
   marks: [
-     Plot.line(transformedData.slice(0, max), {x: "num", y: "apple", sort: "num", stroke: "white"}),
-     Plot.line(transformedData.slice(0, max), {x: "num", y: "shazam", sort: "num", stroke: "blue"}),
-     Plot.line(transformedData.slice(0, max), {x: "num", y: "deezer", sort: "num", stroke: "purple"}),
-     Plot.line(transformedData.slice(0, max), {x: "num", y: "spotify", sort: "num", stroke: "green"}),
+    Plot.line(transformedData.slice(0, max), {x: "num", y: "apple", sort: "num", stroke: "white"}),
+    Plot.line(transformedData.slice(0, max), {x: "num", y: "shazam", sort: "num", stroke: "cyan"}),
+    Plot.line(transformedData.slice(0, max), {x: "num", y: "deezer", sort: "num", stroke: "yellow"}),
+    Plot.line(transformedData.slice(0, max), {x: "num", y: "spotify", sort: "num", stroke: "green"}),
 
-     // Adiciona círculos nos pontos onde o valor é 0 para cada plataforma
+    // Adiciona círculos nos pontos onde o valor é 0 para cada plataforma
     Plot.dot(transformedData.filter(d => d.apple === 0).slice(0, max), {x: "num", y: "apple", fill: "red", r: 3}),
     Plot.dot(transformedData.filter(d => d.shazam === 0).slice(0, max), {x: "num", y: "shazam", fill: "red", r: 3}),
     Plot.dot(transformedData.filter(d => d.deezer === 0).slice(0, max), {x: "num", y: "deezer", fill: "red", r: 3}),
-    Plot.dot(transformedData.filter(d => d.spotify === 0).slice(0, max), {x: "num", y: "spotify", fill: "red", r: 3})
-  
+    Plot.dot(transformedData.filter(d => d.spotify === 0).slice(0, max), {x: "num", y: "spotify", fill: "red", r: 3}),
+
+    // Add text labels for track_name and streams on hover
+    // Plot.text(transformedData, {x: "num", y: "spotify", text: d => `Track: ${d.track}\nStreams: ${d.spotify}`, fill: "white", dy: -10}),
   ]
 });
 view(chart)
