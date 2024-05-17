@@ -27,6 +27,7 @@ let transformedData = Spotify.map((d, i) => ({
   num: i + 1,
   track: d["track_name"],
   artist: d["artist(s)_name"],
+  streams: Number(d.streams),
   apple: Number(d.in_apple_charts),
   deezer: Number(d.in_deezer_charts),
   shazam: Number(d.in_shazam_charts),
@@ -51,6 +52,14 @@ let range = view(Inputs.range([10,50], {label: "Número de Músicas: ", step: 1}
 // Crie o gráfico
 let max = range;
 
+let appleData = transformedData.filter(d => d.apple === d.shazam || d.apple === d.deezer || d.apple === d.spotify).slice(0, max);
+let shazamData = transformedData.filter(d => d.shazam === d.apple || d.shazam === d.deezer || d.shazam === d.spotify).slice(0, max);
+let deezerData = transformedData.filter(d => d.deezer === d.apple || d.deezer === d.shazam || d.deezer === d.spotify).slice(0, max);
+let spotifyData = transformedData.filter(d => d.spotify === d.apple || d.spotify === d.shazam || d.spotify === d.deezer).slice(0, max);
+
+//concat all these data
+let newConcatData = appleData.concat(shazamData, deezerData, spotifyData);
+
 let chart = Plot.plot({
   x: {
     label: "Música",
@@ -60,7 +69,7 @@ let chart = Plot.plot({
   },
   y: {
     label: "Posição nos Charts",
-    domain: [200, 1],
+    domain: [200, 0],
   },
   color: {
     type: "ordinal",
@@ -76,14 +85,13 @@ let chart = Plot.plot({
     Plot.line(transformedData.slice(0, max), {x: "num", y: "deezer", sort: "num", stroke: "yellow"}),
     Plot.line(transformedData.slice(0, max), {x: "num", y: "spotify", sort: "num", stroke: "green"}),
 
-    // Adiciona círculos nos pontos onde o valor é 0 para cada plataforma
-    Plot.dot(transformedData.filter(d => d.apple === 0).slice(0, max), {x: "num", y: "apple", fill: "red", r: 3}),
-    Plot.dot(transformedData.filter(d => d.shazam === 0).slice(0, max), {x: "num", y: "shazam", fill: "red", r: 3}),
-    Plot.dot(transformedData.filter(d => d.deezer === 0).slice(0, max), {x: "num", y: "deezer", fill: "red", r: 3}),
-    Plot.dot(transformedData.filter(d => d.spotify === 0).slice(0, max), {x: "num", y: "spotify", fill: "red", r: 3}),
+    Plot.dot(appleData, {x: "num", y: "apple", fill: "red", r: 3}),
+    Plot.dot(shazamData, {x: "num", y: "shazam", fill: "red", r: 3, }),
+    Plot.dot(deezerData, {x: "num", y: "deezer", fill: "red", r: 3}),
+    Plot.dot(spotifyData, {x: "num", y: "spotify", fill: "red", r: 3}),
 
-    // Add text labels for track_name and streams on hover
-    // Plot.text(transformedData, {x: "num", y: "spotify", text: d => `Track: ${d.track}\nStreams: ${d.spotify}`, fill: "white", dy: -10}),
+    Plot.ruleX(transformedData, {x: "num", stroke: "transparent", tip:true, channels: {Musica: "track", Artista:"artist", Acessos: "streams"},}),
+
   ]
 });
 view(chart)
