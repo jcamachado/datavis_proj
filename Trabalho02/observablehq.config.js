@@ -1,7 +1,7 @@
 // See https://observablehq.com/framework/config for documentation.
 export default {
   // The project’s title; used in the sidebar and webpage titles.
-  title: "Niterói, RJ",
+  title: "Indicadores de Niterói",
 
   // The pages and sections in the sidebar. If you don’t specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
@@ -10,7 +10,7 @@ export default {
     {
       name: "Seções",
       pages: [
-        {name: "Home", path: "/01 - home"},
+        {name: "Introdução", path: "/01 - Introdução"},
         {name: "IDH, Economia e Desigualdade", path: "/02 - IDH, Economia e Desigualdade"},
         {name: "Demografia", path: "/03 - Demografia"}
       ]

@@ -7,30 +7,72 @@ const vl = vegaLiteApi.register(vega, vegaLite);
 
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background-color: #f4f4f9;
+        line-height: 1.6;
+        padding: 20px;
     }
+
+    h1, h2, h3 {
+        font-family: 'Merriweather', serif;
+        text-align: justify;
+        text-indent: 0;
+        color: #003366;
+    }
+
+    p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin-bottom: 20px;
+        text-indent: 1.5em;
+        max-width: none;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .chart {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+        }
+    }
+
     div {
         text-align: center; /* Centraliza o conteúdo dentro das divs */
         max-width: none;
         margin: auto; /* Centraliza a própria div */
     }
-    p {
-        text-align: justify; /* Mantém os parágrafos justificados */
-        text-indent: 1.5em;
-        max-width: none;
-    }
-    h1, h2 {
-        text-align: justify;
-        text-indent: 0; /* Remove a indentação dos títulos h1 e h2 */
-    }
+
     li, ol { 
         max-width: none; 
+    }
+    .checkbox-label {
+    font-weight: bold; /* Aplica negrito ao texto */
+    display: flex;
+    align-items: center; /* Alinha verticalmente o texto e o checkbox */
+    gap: 8px; /* Ajusta o espaçamento entre o checkbox e o texto */
+    }
+    input[type="checkbox"] {
+    accent-color: #4CAF50;
+    cursor: pointer;
     }
 </style>
 
 <div class="hero">
-  <h1>IDH, Economia e Desigualdade</h1>
+  <h1 style="margin-bottom: 50px;">IDH, Economia e Desigualdade</h1>
 </div>
+
 
 Você provavelmente já se deparou com anúncios destacando que Niterói tem o maior Índice de Desenvolvimento Humano (IDH) do estado do Rio de Janeiro. Mas você sabe o que realmente significa ter um alto IDH? Vamos explorar o que esse indicador representa.
 
@@ -43,19 +85,12 @@ Você provavelmente já se deparou com anúncios destacando que Niterói tem o m
 O mapa interativo a seguir facilita a visualização do IDH dos municípios do estado do Rio de Janeiro. Ao passar o cursor sobre cada município, você pode ver o IDH correspondente e comparar as diferenças visualmente com a ajuda de um gráfico de cores que indica os níveis de IDH.
 
 <div style="width: 100%; margin-top: 15px;">
-<center>
     <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotMap(divWidth01 - 100, geojson, IDHM)) }
+        ${ vl.render(plotMap(divWidth01 - 200, geojson, IDHM)) }
     </div>
-</center>
 </div>
 
 O Censo Demográfico no Brasil é realizado a cada dez anos. Desde 1991, os dados começaram a ser divulgados digitalmente, facilitando significativamente o acesso. O gráfico a seguir mostra a evolução do IDH de Niterói ao longo do tempo, ilustrando as mudanças baseadas nos censos realizados de 1991 até 2010. Além disso, é possível comparar a evolução do IDH de Niterói com o IDH do Brasil e do estado do Rio de Janeiro, utilizando as opções disponíveis no checkbox.
-
-```js
-// Criar Checkbox
-let checkboxIDH = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
-```
 
 <div style="width: 100%; margin-top: 15px;">
 <center>
@@ -65,20 +100,22 @@ let checkboxIDH = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"],
 </center>
 </div>
 
+```js
+// Criar Checkbox
+let checkboxIDH = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
+```
+
 Desde 2010, quando o Relatório de Desenvolvimento Humano completou 20 anos, novas metodologias foram incorporadas para o cálculo do IDH. Atualmente,três pilares constituem o IDH: <b>saúde, educação e renda</b>.
 
-<h2 class="title">Análise da Saúde</h2>
+<div class="hero">
+  <h2 style="margin-bottom: 20px; margin-top: 50px;">Saúde</h2>
+</div>
 
 Uma vida longa e saudável (saúde) é medida pela expectativa de vida;
 
 O IDH de longevidade, medido pela esperança de vida ao nascer, é um indicador de saúde e qualidade ambiental. Niterói se destaca nesse aspecto também, geralmente apresentando uma esperança de vida maior que a média estadual e nacional. Isso pode ser atribuído a um acesso superior a serviços de saúde, melhores condições de habitação e um ambiente mais saudável. Um alto IDH de longevidade em Niterói reflete o sucesso das políticas de saúde pública e a disponibilidade de infraestrutura de saúde adequada.
 
 A esperança de vida e a longevidade são conceitos relacionados à saúde e ao bem-estar, mas têm significados diferentes. A esperança de vida ao nascer é a média de anos que um recém-nascido pode esperar viver se os padrões de mortalidade atuais permanecerem constantes ao longo de sua vida. A longevidade refere-se ao tempo de vida efetivo dos indivíduos, ou seja, a duração de vida real das pessoas dentro de uma população. Se em um país a esperança de vida ao nascer é de 75 anos, isso significa que, em média, os recém-nascidos esperam viver 75 anos, assumindo que as taxas de mortalidade atuais não mudem. Se uma pessoa vive até os 90 anos, sua longevidade é de 90 anos. Isso é uma medida observacional da duração de vida dessa pessoa específica. Em resumo, a esperança de vida é uma média estatística usada para prever a duração de vida com base em condições atuais, enquanto a longevidade é a medida observada da vida de indivíduos. Ambos são importantes para entender a saúde e o bem-estar de populações, mas servem a propósitos diferentes em estudos demográficos e de saúde pública.
-
-```js
-// Criar Checkbox
-let checkboxEspVida = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
-```
 
 <div style="display: flex; justify-content: space-around; width: 90%; margin-top: 15px;">
     <div id="ex01" style="width: 50%; margin-top: 15px;">
@@ -89,18 +126,20 @@ let checkboxEspVida = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeir
     </div>
 </div>
 
-<h2 class="title">Análise da Educação</h2>
+```js
+// Criar Checkbox
+let checkboxEspVida = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
+```
+
+<div class="hero">
+  <h2 style="margin-bottom: 20px; margin-top: 50px;">Educação</h2>
+</div>
 
 O acesso ao conhecimento (educação) é medido por: 
 média de anos de educação de adultos, que é o número médio de anos de educação recebidos durante a vida por pessoas a partir de 25 anos; e 
 a expectativa de anos de escolaridade para crianças na idade de iniciar a vida escolar, que é o número total de anos de escolaridade que um criança na idade de iniciar a vida escolar pode esperar receber se os padrões prevalecentes de taxas de matrículas específicas por idade permanecerem os mesmos durante a vida da criança;
 
 O IDH de educação é avaliado pela média de anos de estudo da população adulta e os anos esperados de escolaridade para crianças em idade escolar. Niterói, com sua renda relativamente alta e infraestrutura desenvolvida, geralmente apresenta um IDH de educação que excede os padrões do Rio de Janeiro e do Brasil. Isso indica uma maior taxa de matrículas escolares, melhor qualidade de ensino e maior acesso a recursos educacionais. A educação é fundamental para o desenvolvimento sustentável de uma região, influenciando diretamente outras áreas como renda e saúde.
-
-```js
-// Criar Checkbox
-let checkboxEdu = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
-```
 
 <div style="width: 100%; margin-top: 15px;">
 <center>
@@ -110,15 +149,17 @@ let checkboxEdu = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"],
 </center>
 </div>
 
-
-<h2 class="title">Análise da Renda</h2>
-
-E o padrão de vida (renda) é medido pela Renda Nacional Bruta (RNB) per capita expressa em poder de paridade de compra (PPP) constante, em dólar, tendo 2005 como ano de referência. O IDH de renda reflete o padrão de vida econômico de uma área. Em Niterói, que tradicionalmente tem um dos maiores IDHs de renda do estado do Rio de Janeiro, isso indica um nível geral de riqueza e acesso a recursos econômicos superior à média estadual e, frequentemente, superior à média nacional. Uma renda per capita alta em Niterói sugere melhores oportunidades de emprego, salários mais altos e um mercado local mais robusto em comparação com outras partes do estado e do país.
-
 ```js
 // Criar Checkbox
-let checkboxRenda = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
+let checkboxEdu = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
 ```
+
+
+<div class="hero">
+  <h2 style="margin-bottom: 20px; margin-top: 50px;">Renda</h2>
+</div>
+
+E o padrão de vida (renda) é medido pela Renda Nacional Bruta (RNB) per capita expressa em poder de paridade de compra (PPP) constante, em dólar, tendo 2005 como ano de referência. O IDH de renda reflete o padrão de vida econômico de uma área. Em Niterói, que tradicionalmente tem um dos maiores IDHs de renda do estado do Rio de Janeiro, isso indica um nível geral de riqueza e acesso a recursos econômicos superior à média estadual e, frequentemente, superior à média nacional. Uma renda per capita alta em Niterói sugere melhores oportunidades de emprego, salários mais altos e um mercado local mais robusto em comparação com outras partes do estado e do país.
 
 <div style="width: 100%; margin-top: 15px;">
 <center>
@@ -127,6 +168,15 @@ let checkboxRenda = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"
     </div>
 </center>
 </div>
+
+<div class="hero">
+  <h2 style="margin-bottom: 20px; margin-top: 50px;">Desigualdade</h2>
+</div>
+
+```js
+// Criar Checkbox
+let checkboxRenda = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], {label: "Exibir dados: ", value: ["Niterói"]}));
+```
 
 O IDH é uma medida média das conquistas de desenvolvimento humano básico em um país. Como todas as médias, o IDH mascara a desigualdade na distribuição do desenvolvimento humano entre a população no nível de país. O IDH 2010 introduziu o IDH Ajustado à Desigualdade (IDHAD), que leva em consideração a desigualdade em todas as três dimensões do IDH “descontando” o valor médio de cada dimensão de acordo com seu nível de desigualdade.
 
@@ -167,7 +217,7 @@ function plotMap(divWidth, geojson, IDHM) {
     spec: {
       width: divWidth,
       height: 300,
-      background: "#FFFFFF",
+      background: "#f4f4f9",
       projection: {
         type: "mercator"
       },
@@ -339,16 +389,16 @@ function plotLine(Nit, Brasil, RJ, selectedLocations, plottitle, xField, yField,
                 "fontSize": 20,
                 "font": "Arial",
                 "anchor": "middle",
-                "color": "#4CAF50"
+                "color": "#003366" // Azul Marinho para o título
             },
             "config": {
                 "axis": {
-                    "labelColor": "#4CAF50",
+                    "labelColor": "#333333",
                     "labelFont": "Arial",
                     "gridColor": "#e0e0e0",
-                    "tickColor": "#4CAF50"
+                    "tickColor": "#333333"
                 },
-                "background": "#f9f9f9"
+                "background": "#f4f4f9"
             }
         }
     };

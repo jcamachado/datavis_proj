@@ -1,21 +1,52 @@
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background-color: #f4f4f9;
+        line-height: 1.6;
+        padding: 20px;
     }
+
+    h1, h2, h3 {
+        font-family: 'Merriweather', serif;
+        text-align: justify;
+        text-indent: 0;
+        color: #003366;
+    }
+
+    p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin-bottom: 20px;
+        text-indent: 1.5em;
+        max-width: none;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .chart {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+        }
+    }
+
     div {
         text-align: center; /* Centraliza o conteúdo dentro das divs */
         max-width: none;
         margin: auto; /* Centraliza a própria div */
     }
-    p {
-        text-align: justify; /* Mantém os parágrafos justificados */
-        text-indent: 1.5em;
-        max-width: none;
-    }
-    h1, h2 {
-        text-align: justify;
-        text-indent: 0; /* Remove a indentação dos títulos h1 e h2 */
-    }
+
     li, ol { 
         max-width: none; 
     }
@@ -28,23 +59,25 @@ import * as vegaLiteApi from "npm:vega-lite-api";
 const vl = vegaLiteApi.register(vega, vegaLite);
 ```
 
-# Demografia
+<div class="hero">
+  <h1 style="margin-bottom: 50px;">Demografia</h1>
+</div>
+
+<div style="width: 100%; margin-top: 15px;">
+    <div id="ex01" style="width: 100%; margin-top: 15px;">
+        ${ vl.render(plotMap(divWidth01 - 200, geojson, IDHM, radioboxPop)) }
+    </div>
+</div>
 
 ```js
 // Criar Radio Box
 let radioboxPop = view(Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {label: "Exibir dados: ", value: "Densidade Demográfica (2022)"}));
 ```
 
-<div style="width: 100%; margin-top: 15px;">
-<center>
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotMap(divWidth01 - 100, geojson, IDHM, radioboxPop)) }
-    </div>
-</center>
+
+<div class="hero">
+  <h2 style="margin-bottom: 50px; margin-top: 50px;">População</h2>
 </div>
-
-
-População
 
 Em 2022, a população era de 481.749 habitantes e a densidade demográfica era de 3.601,67 habitantes por quilômetro quadrado. Na comparação com outros municípios do estado, ficava nas posições 7 e 7 de 92. Já na comparação com municípios de todo o país, ficava nas posições 44 e 29 de 5570. 
 
@@ -72,7 +105,7 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
     spec: {
       width: divWidth,
       height: 300,
-      background: "#FFFFFF",
+      background: "#f4f4f9",
       projection: {
         type: "mercator"
       },
@@ -107,7 +140,12 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
             color: {
               field: radioboxPop,
               type: "quantitative",
-              scale: { scheme: "blues", type: 'log' }
+              scale: { scheme: "blues", type: 'log' },
+              "legend": {
+                "orient": "right",
+                "titleFontSize": 12,
+                "titleAlign": "center"
+              }
             },
             tooltip: [
               { field: "properties.name", type: "nominal", title: "Cidade" },

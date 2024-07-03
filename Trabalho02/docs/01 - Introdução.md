@@ -1,27 +1,60 @@
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background-color: #f4f4f9;
+        line-height: 1.6;
+        padding: 20px;
     }
-    div {
-        text-align: center;
-        max-width: none;
-        margin: auto;
+
+    h1, h2, h3 {
+        font-family: 'Merriweather', serif;
+        text-align: justify;
+        text-indent: 0;
+        color: #003366;
     }
+
     p {
         text-align: justify;
+        text-justify: inter-word;
+        margin-bottom: 20px;
         text-indent: 1.5em;
         max-width: none;
     }
-    h1, h2 {
-        text-align: justify;
-        text-indent: 0;
+
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
     }
+
+    .chart {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+        }
+    }
+
+    div {
+        text-align: center; /* Centraliza o conteúdo dentro das divs */
+        max-width: none;
+        margin: auto; /* Centraliza a própria div */
+    }
+
     li, ol { 
         max-width: none; 
     }
 </style>
 
-<h2 style="margin-bottom: 20px;"> Introdução</h2>
+<div class="hero">
+  <h1 style="margin-bottom: 50px; margin-top: 50px;">Introdução</h1>
+</div>
 
 O Censo Demográfico, realizado no Brasil a cada dez anos, é uma ferramenta essencial para compreender a demografia e as características socioeconômicas de uma população. Além de descrever a população, o censo é indispensável para identificar e mitigar desigualdades sociais. O Censo de 2022 é especialmente significativo, marcando 150 anos desde o primeiro recenseamento no Brasil, realizado em 1872 durante o período imperial. Aquela pesquisa inicial questionava os entrevistados sobre sua condição de "livre" ou "escravo" e os formulários eram distribuídos a cavalo. A realização do censo foi interrompida em três ocasiões—1880, 1910 e 1930—devido a instabilidades políticas. Detalhes históricos e informações adicionais estão disponíveis no site do IBGE (<a href="https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/33495-em-150-anos-conheca-a-historia-que-o-censo-conta">a história que o Censo conta</a>).
 
