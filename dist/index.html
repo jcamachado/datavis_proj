@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Trabalho bonitao</title>
+<title>Indicadores de Niterói</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
-<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="preload" as="style" href="./_observablehq/theme-air.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
-<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air.css">
 <link rel="modulepreload" href="./_observablehq/client.js">
 <link rel="modulepreload" href="./_observablehq/runtime.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.js">
-<link rel="icon" href="./_file/spotify.ce4e959c.png" type="image/png" sizes="32x32">
 <script type="module">
 
 import "./_observablehq/client.js";
@@ -21,77 +20,87 @@ import "./_observablehq/client.js";
 <nav id="observablehq-sidebar">
   <ol>
     <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
-    <li class="observablehq-link observablehq-link-active"><a href="./">Trabalho bonitao</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./">Indicadores de Niterói</a></li>
   </ol>
   <ol>
-    <li class="observablehq-link"><a href="./question01">1- Analisando os sucessos</a></li>
-    <li class="observablehq-link"><a href="./question02">2- Músicas Lançadas no Mesmo Ano</a></li>
-    <li class="observablehq-link"><a href="./question03">3- Plataformas Musicais</a></li>
+    <details open>
+      <summary>Seções</summary>
+      <ol>
+    <li class="observablehq-link"><a href="./01%20-%20Introdu%C3%A7%C3%A3o">Introdução</a></li>
+    <li class="observablehq-link"><a href="./02%20-%20IDH,%20Economia%20e%20Desigualdade">IDH, Economia e Desigualdade</a></li>
+    <li class="observablehq-link"><a href="./03%20-%20Demografia">Demografia</a></li>
+      </ol>
+    </details>
   </ol>
 </nav>
-<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
 <style>
-
 .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--sans-serif);
-  margin: 4rem 0 8rem;
-  text-wrap: balance;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--sans-serif);
+    margin: 4rem 0 8rem;
+    text-wrap: balance;
+    text-align: center;
 }
 
 .hero h1 {
-  margin: 2rem 0;
-  max-width: none;
-  font-size: 14vw;
-  font-weight: 900;
-  line-height: 1;
-  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+    margin: 2rem 0;
+    max-width: none;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.1;
+    background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero h2 {
-  margin: 0;
-  max-width: 34em;
-  font-size: 25px;
-  font-style: initial;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--theme-foreground-muted);
-}
-
-.hero h3 {
-  font-size: 20px;
-  font-style: initial;
-  font-weight: 500;
-  color: var(--theme-foreground-muted);
+    margin: 0;
+    max-width: 34em;
+    font-size: 20px;
+    font-style: initial;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--theme-foreground-muted);
 }
 
 @media (min-width: 640px) {
-  .hero h1 {
-    font-size: 90px;
-  }
+    .hero h1 {
+        font-size: 90px;
+    }
 }
+
+p { max-width: none; }
+>
 
 </style>
 <div class="hero">
-  <h1>Boas vindas!</h1>
-  <h2>Alunos:</h2>
-  <p>Alexsander Marciano da Cunha</p>
-  <p>José Carlos de Almeida Machado</p>
-  <h2>Este trabalho analisa dados de plataformas de música em 2023! Principalmente do Spotify.</h2> 
-  <h3>Análises foram realizadas em cima da base de dados fornecida com o objetivo de responder 3 questões sobre o seu conteúdo.</h3> 
-  <h3>Como um tratamento prévio, os dados foram ordenados de forma decrescente de acordo com o número de streams.</h3>
-  <h3>Para começar, basta navegar pelos itens na aba lateral na esquerda do navegador.</h3>
-</div></main>
+    <h1>Indicadores de Niterói</h1>
+    <h2 style="margin-bottom: 20px;">Visualização dos Censos do IBGE em IDH, Economia, Demografia e Saúde</h2>
+    <img src="./_file/Tabelas_panorama/niteroi-home.89a78783.webp" alt="Fonte: iStock" width="800" height="400">
+</div>
+<h2 id="%C3%ADndice" tabindex="-1"><a class="observablehq-header-anchor" href="#%C3%ADndice">Índice</a></h2>
+<div class="grid grid-cols-4">
+    <div class="card">
+        <h2>Parte 01<br><a href="01-home">Home</a></h2>
+        Use <a href="https://www.markdownguide.org/" target="_blank" rel="noopener noreferrer">Markdown</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">HTML</a> e <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">JavaScript</a>!
+    </div>
+    <div class="card">
+        <h2>Parte 02<br><a href="02 - IDH, Economia e Desigualdade">IDH, Economia e Desigualdade</a></h2>
+        Carregando arquivos CSV, JSON, etc.
+    </div>
+    <div class="card">
+        <h2>Parte 03<br><a href="03 - Demografia">Demografia</a></h2>
+        Criação de botões, checkboxes, etc.
+    </div>
+</div>
+</main>
 <footer id="observablehq-footer">
-<nav><a rel="next" href="./question01"><span>1- Analisando os sucessos</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-05-17T17:56:36">May 17, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-07-03T17:50:10">Jul 3, 2024</a>.</div>
 </footer>
 </div>

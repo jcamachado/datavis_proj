@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Indicadores de Niterói</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style"
+  href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap"
+  crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
+<link rel="stylesheet" type="text/css"
+  href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap"
+  crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/vega-lite.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-lite-api@5.6.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-lite@5.19.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega@5.30.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-util@1.17.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-event-selector@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-expression@5.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-dataflow@5.7.6/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-transforms@4.12.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-view-transforms@4.6.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-encode@4.10.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-geo@4.4.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-force@4.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-hierarchy@4.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-label@1.3.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-regression@1.3.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-voronoi@4.2.3/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-wordcloud@4.1.5/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-crossfilter@4.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-statistics@1.9.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-time@2.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-loader@4.5.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-scenegraph@4.13.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-scale@7.4.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-projection@1.6.1/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-view@5.13.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-format@1.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-functions@5.15.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-parser@6.4.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-runtime@6.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-canvas@1.2.7/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/topojson-client@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo-projection@4.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/vega-selections@5.4.2/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+  import { define } from "./_observablehq/client.js";
+  import { registerFile } from "./_observablehq/stdlib.js";
+
+  registerFile("./Tabelas_panorama/IDHM_AtlasBR.csv", { "name": "./Tabelas_panorama/IDHM_AtlasBR.csv", "mimeType": "text/csv", "path": "./_file/Tabelas_panorama/IDHM_AtlasBR.92f4259e.csv", "lastModified": 1720037679736 });
+  registerFile("./Tabelas_panorama/RJ_IDHM.csv", { "name": "./Tabelas_panorama/RJ_IDHM.csv", "mimeType": "text/csv", "path": "./_file/Tabelas_panorama/RJ_IDHM.1d0abc86.csv", "lastModified": 1720037679736 });
+  registerFile("./Tabelas_panorama/geojs-33-mun.json", { "name": "./Tabelas_panorama/geojs-33-mun.json", "mimeType": "application/json", "path": "./_file/Tabelas_panorama/geojs-33-mun.1e01322a.json", "lastModified": 1720037679740 });
+
+  define({
+    id: "8c3c94be", inline: true, inputs: ["vl", "plotMap", "divWidth01", "geojson", "IDHM", "display"], body: async (vl, plotMap, divWidth01, geojson, IDHM, display) => {
+      display(await (
+        vl.render(plotMap(divWidth01 - 200, geojson, IDHM))
+      ))
+    }
+  });
+
+  define({
+    id: "74e333e1", inline: true, inputs: ["vl", "plotLine", "IDH_Nit", "IDH_Brasil", "IDH_RJ", "checkboxIDH", "display"], body: async (vl, plotLine, IDH_Nit, IDH_Brasil, IDH_RJ, checkboxIDH, display) => {
+      display(await (
+        vl.render(plotLine(IDH_Nit, IDH_Brasil, IDH_RJ, checkboxIDH, "Evolução IDH ao Longo dos Anos", "Ano", "IDH", [0.4, 1]))
+      ))
+    }
+  });
+
+  define({
+    id: "0be70298", inputs: ["view", "Inputs"], outputs: ["checkboxIDH"], body: (view, Inputs) => {
+      // Criar Checkbox
+      let checkboxIDH = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], { label: "Exibir dados: ", value: ["Niterói"] }));
+      return { checkboxIDH };
+    }
+  });
+
+  define({
+    id: "e6cfbfc4", inline: true, inputs: ["vl", "plotLine", "EspVida_Nit", "EspVida_Brasil", "EspVida_RJ", "checkboxEspVida", "display"], body: async (vl, plotLine, EspVida_Nit, EspVida_Brasil, EspVida_RJ, checkboxEspVida, display) => {
+      display(await (
+        vl.render(plotLine(EspVida_Nit, EspVida_Brasil, EspVida_RJ, checkboxEspVida, "Esperança de Vida", "Ano", "Esperança de Vida", [60, 90]))
+      ))
+    }
+  });
+
+  define({
+    id: "014d204f", inline: true, inputs: ["vl", "plotLine", "Long_Nit", "Long_Brasil", "Long_RJ", "checkboxEspVida", "display"], body: async (vl, plotLine, Long_Nit, Long_Brasil, Long_RJ, checkboxEspVida, display) => {
+      display(await (
+        vl.render(plotLine(Long_Nit, Long_Brasil, Long_RJ, checkboxEspVida, "IDHM Longevidade", "Ano", "IDHM Longevidade", [0.6, 0.9]))
+      ))
+    }
+  });
+
+  define({
+    id: "ad3ded04", inputs: ["view", "Inputs"], outputs: ["checkboxEspVida"], body: (view, Inputs) => {
+      // Criar Checkbox
+      let checkboxEspVida = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], { label: "Exibir dados: ", value: ["Niterói"] }));
+      return { checkboxEspVida };
+    }
+  });
+
+  define({
+    id: "aa94c62d", inline: true, inputs: ["vl", "plotLine", "Edu_Nit", "Edu_Brasil", "Edu_RJ", "checkboxEdu", "display"], body: async (vl, plotLine, Edu_Nit, Edu_Brasil, Edu_RJ, checkboxEdu, display) => {
+      display(await (
+        vl.render(plotLine(Edu_Nit, Edu_Brasil, Edu_RJ, checkboxEdu, "Evolução IDHM Educação ao Longo dos Anos", "Ano", "IDHM Educação", [0, 1]))
+      ))
+    }
+  });
+
+  define({
+    id: "4eb8fd50", inputs: ["view", "Inputs"], outputs: ["checkboxEdu"], body: (view, Inputs) => {
+      // Criar Checkbox
+      let checkboxEdu = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], { label: "Exibir dados: ", value: ["Niterói"] }));
+      return { checkboxEdu };
+    }
+  });
+
+  define({
+    id: "663572c6", inline: true, inputs: ["vl", "plotLine", "Renda_Nit", "Renda_Brasil", "Renda_RJ", "checkboxRenda", "display"], body: async (vl, plotLine, Renda_Nit, Renda_Brasil, Renda_RJ, checkboxRenda, display) => {
+      display(await (
+        vl.render(plotLine(Renda_Nit, Renda_Brasil, Renda_RJ, checkboxRenda, "Evolução IDHM Renda ao Longo dos Anos", "Ano", "IDHM Educação", [0.5, 1]))
+      ))
+    }
+  });
+
+  define({
+    id: "c071dc38", inputs: ["view", "Inputs"], outputs: ["checkboxRenda"], body: (view, Inputs) => {
+      // Criar Checkbox
+      let checkboxRenda = view(Inputs.checkbox(["Niterói", "Brasil", "Rio de Janeiro"], { label: "Exibir dados: ", value: ["Niterói"] }));
+      return { checkboxRenda };
+    }
+  });
+
+  define({
+    id: "7cfcf5c4", inputs: ["FileAttachment"], outputs: ["geojson", "IDHM"], body: async (FileAttachment) => {
+      const geojson = await FileAttachment("./Tabelas_panorama/geojs-33-mun.json").json({ typed: true });
+      const IDHM = await FileAttachment("./Tabelas_panorama/RJ_IDHM.csv").csv();
+      return { geojson, IDHM };
+    }
+  });
+
+  define({
+    id: "bf717096", inputs: ["Generators"], outputs: ["divWidth01"], body: (Generators) => {
+      const divWidth01 = Generators.width(document.querySelector("#ex01"));
+      return { divWidth01 };
+    }
+  });
+
+  define({
+    id: "9435b76c", outputs: ["plotMap"], body: () => {
+      function plotMap(divWidth, geojson, IDHM) {
+        return {
+          spec: {
+            width: divWidth,
+            height: 300,
+            background: "#f4f4f9",
+            projection: {
+              type: "mercator"
+            },
+            layer: [
+              {
+                data: {
+                  values: geojson,
+                  format: {
+                    type: "json",
+                    property: "features"
+                  }
+                },
+                transform: [
+                  {
+                    lookup: "properties.name",
+                    from: {
+                      data: {
+                        values: IDHM
+                      },
+                      key: "Territorialidades",
+                      fields: ["IDHM 2010"]
+                    }
+                  }
+                ],
+                mark: {
+                  type: "geoshape",
+                  stroke: "#BFBFBF",
+                  strokeWidth: 1
+                },
+                encoding: {
+                  color: {
+                    field: "IDHM 2010",
+                    type: "quantitative",
+                    scale: { scheme: "reds" }
+                  },
+                  tooltip: [
+                    { field: "properties.name", type: "nominal", title: "Cidade" },
+                    { field: "IDHM 2010", type: "quantitative", title: "IDHM" }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+      return { plotMap };
+    }
+  });
+
+  define({
+    id: "e78df3c3", inputs: ["FileAttachment"], outputs: ["data", "IDH_Nit", "IDH_Brasil", "IDH_RJ", "EspVida_Nit", "EspVida_Brasil", "EspVida_RJ", "Long_Nit", "Long_Brasil", "Long_RJ", "Edu_Nit", "Edu_Brasil", "Edu_RJ", "Renda_Nit", "Renda_Brasil", "Renda_RJ"], body: async (FileAttachment) => {
+      let data = await FileAttachment("./Tabelas_panorama/IDHM_AtlasBR.csv").csv();
+      // Converter valores para números
+      data.forEach(function (d) {
+        d.Valor = parseFloat(d.Valor.replace(',', '.'));
+      });
+
+      let IDH_Nit = data.filter(row => row.Item === "IDHM" && row.Local === "Niterói");
+      let IDH_Brasil = data.filter(row => row.Item === "IDHM" && row.Local === "Brasil");
+      let IDH_RJ = data.filter(row => row.Item === "IDHM" && row.Local === "Rio de Janeiro");
+      let EspVida_Nit = data.filter(row => row.Item === "Esperança de vida ao nascer" && row.Local === "Niterói");
+      let EspVida_Brasil = data.filter(row => row.Item === "Esperança de vida ao nascer" && row.Local === "Brasil");
+      let EspVida_RJ = data.filter(row => row.Item === "Esperança de vida ao nascer" && row.Local === "Rio de Janeiro");
+      let Long_Nit = data.filter(row => row.Item === "IDHM Longevidade" && row.Local === "Niterói" && row.Fonte === "IBGE");
+      let Long_Brasil = data.filter(row => row.Item === "IDHM Longevidade" && row.Local === "Brasil" && row.Fonte === "IBGE");
+      let Long_RJ = data.filter(row => row.Item === "IDHM Longevidade" && row.Local === "Rio de Janeiro" && row.Fonte === "IBGE");
+      let Edu_Nit = data.filter(row => row.Item === "IDHM Educação" && row.Local === "Niterói" && row.Fonte === "IBGE");
+      let Edu_Brasil = data.filter(row => row.Item === "IDHM Educação" && row.Local === "Brasil" && row.Fonte === "IBGE");
+      let Edu_RJ = data.filter(row => row.Item === "IDHM Educação" && row.Local === "Rio de Janeiro" && row.Fonte === "IBGE");
+      let Renda_Nit = data.filter(row => row.Item === "IDHM Renda" && row.Local === "Niterói" && row.Fonte === "IBGE");
+      let Renda_Brasil = data.filter(row => row.Item === "IDHM Renda" && row.Local === "Brasil" && row.Fonte === "IBGE");
+      let Renda_RJ = data.filter(row => row.Item === "IDHM Renda" && row.Local === "Rio de Janeiro" && row.Fonte === "IBGE");
+
+      return { data, IDH_Nit, IDH_Brasil, IDH_RJ, EspVida_Nit, EspVida_Brasil, EspVida_RJ, Long_Nit, Long_Brasil, Long_RJ, Edu_Nit, Edu_Brasil, Edu_RJ, Renda_Nit, Renda_Brasil, Renda_RJ };
+    }
+  });
+
+  define({
+    id: "ab9179de", outputs: ["plotLine"], body: () => {
+      function plotLine(Nit, Brasil, RJ, selectedLocations, plottitle, xField, yField, yDomain) {
+        let Data = [];
+
+        if (selectedLocations.includes("Brasil") && selectedLocations.includes("Niterói") && selectedLocations.includes("Rio de Janeiro")) {
+          Data = Nit.concat(Brasil, RJ);
+        } else if (selectedLocations.includes("Rio de Janeiro") && selectedLocations.includes("Brasil")) {
+          Data = RJ.concat(Brasil);
+        } else if (selectedLocations.includes("Rio de Janeiro") && selectedLocations.includes("Niterói")) {
+          Data = RJ.concat(Nit);
+        } else if (selectedLocations.includes("Niterói") && selectedLocations.includes("Brasil")) {
+          Data = Nit.concat(Brasil);
+        } else if (selectedLocations.includes("Brasil")) {
+          Data = Brasil;
+        } else if (selectedLocations.includes("Niterói")) {
+          Data = Nit;
+        } else if (selectedLocations.includes("Rio de Janeiro")) {
+          Data = RJ;
+        }
+
+
+        return {
+          spec: {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 350,
+            "height": 250,
+            "data": {
+              "values": Data
+            },
+            "layer": [
+              {
+                "mark": {
+                  "type": "line",
+                  "point": {
+                    "filled": true,
+                    "size": 100 // Aumentando o tamanho do ponto
+                  },
+                  "color": "#4CAF50",
+                  "tooltip": true
+                },
+                "encoding": {
+                  "x": {
+                    "field": xField,
+                    "type": "ordinal",
+                    "title": xField,
+                    "axis": { "labelFontSize": 12, "titleFontSize": 14, "labelAngle": 0, "titleColor": "#4CAF50" }
+                  },
+                  "y": {
+                    "field": "Valor",
+                    "type": "quantitative",
+                    "title": yField,
+                    "axis": { "labelFontSize": 12, "titleFontSize": 14, "titleColor": "#4CAF50" },
+                    "scale": { "domain": yDomain }
+                  },
+                  "color": {
+                    "field": "Local",
+                    "type": "nominal",
+                    "title": ".       Local       ."
+                  },
+                  "tooltip": [
+                    { "field": "Ano", "type": "ordinal" },
+                    { "field": "Valor", "type": "quantitative" },
+                    { "field": "Local", "type": "nominal" }
+                  ]
+                }
+              },
+              {
+                "mark": {
+                  "type": "text",
+                  "align": "left",
+                  "dx": 5,
+                  "dy": -5
+                },
+                "encoding": {
+                  "x": {
+                    "field": xField,
+                    "type": "ordinal"
+                  },
+                  "y": {
+                    "field": "Valor",
+                    "type": "quantitative"
+                  },
+                  "text": {
+                    "field": "Valor",
+                    "type": "quantitative"
+                  },
+                  "color": {
+                    "field": "Local",
+                    "type": "nominal"
+                  }
+                }
+              }
+            ],
+            "title": {
+              "text": plottitle,
+              "fontSize": 20,
+              "font": "Arial",
+              "anchor": "middle",
+              "color": "#003366" // Azul Marinho para o título
+            },
+            "config": {
+              "axis": {
+                "labelColor": "#333333",
+                "labelFont": "Arial",
+                "gridColor": "#e0e0e0",
+                "tickColor": "#333333"
+              },
+              "background": "#f4f4f9"
+            }
+          }
+        };
+      }
+      return { plotLine };
+    }
+  });
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">Indicadores de Niterói</a></li>
+  </ol>
+  <ol>
+    <details open class="observablehq-section-active">
+      <summary>Seções</summary>
+      <ol>
+        <li class="observablehq-link"><a href="./01%20-%20Introdu%C3%A7%C3%A3o">Introdução</a></li>
+        <li class="observablehq-link observablehq-link-active"><a
+            href="./02%20-%20IDH,%20Economia%20e%20Desigualdade">IDH, Economia e Desigualdade</a></li>
+        <li class="observablehq-link"><a href="./03%20-%20Demografia">Demografia</a></li>
+      </ol>
+    </details>
+  </ol>
+</nav>
+<script>{ Object.assign(document.createElement("a"), { href: "" }).password && location.replace(location.href); const e = document.querySelector("#observablehq-sidebar"), o = document.querySelector("#observablehq-sidebar-toggle"), r = sessionStorage.getItem("observablehq-sidebar"); r ? o.checked = r === "true" : o.indeterminate = !0; for (const t of document.querySelectorAll("#observablehq-sidebar summary")) { const s = t.parentElement; switch (sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)) { case "true": s.open = !0; break; case "false": s.classList.contains("observablehq-section-active") || (s.open = !1); break } } addEventListener("beforeunload", () => sessionStorage.setItem("observablehq-sidebar-scrolly", `${e.scrollTop}`)); const a = sessionStorage.getItem("observablehq-sidebar-scrolly"); a != null && (e.style.cssText = "overflow: hidden;", e.scrollTop = +a, e.style.cssText = ""); }</script>
+<div id="observablehq-center">
+  <main id="observablehq-main" class="observablehq">
+    <div class="observablehq observablehq--block">
+      <div class="observablehq--inspect observablehq--error">SyntaxError: non-local import: ../maplibre-gl (5:0)</div>
+    </div>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        background-color: #f4f4f9;
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: 'Merriweather', serif;
+        text-align: justify;
+        text-indent: 0;
+        color: #003366;
+      }
+
+      p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin-bottom: 20px;
+        text-indent: 1.5em;
+        max-width: none;
+      }
+
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+
+      .chart {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #ccc;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+        }
+      }
+
+      div {
+        text-align: center;
+        /* Centraliza o conteúdo dentro das divs */
+        max-width: none;
+        margin: auto;
+        /* Centraliza a própria div */
+      }
+
+      li,
+      ol {
+        max-width: none;
+      }
+
+      .checkbox-label {
+        font-weight: bold;
+        /* Aplica negrito ao texto */
+        display: flex;
+        align-items: center;
+        /* Alinha verticalmente o texto e o checkbox */
+        gap: 8px;
+        /* Ajusta o espaçamento entre o checkbox e o texto */
+      }
+
+      input[type="checkbox"] {
+        accent-color: #4CAF50;
+        cursor: pointer;
+      }
+    </style>
+    <div class="hero">
+      <h1 style="margin-bottom: 50px;">IDH, Economia e Desigualdade</h1>
+    </div>
+    <p>Você provavelmente já se deparou com anúncios destacando que Niterói tem o maior Índice de Desenvolvimento Humano
+      (IDH) do estado do Rio de Janeiro. Mas você sabe o que realmente significa ter um alto IDH? Vamos explorar o que
+      esse indicador representa.</p>
+    <div
+      style="background-color: #FFE5CC; padding: 20px; border: 1px solid #FF8C00; border-radius: 0px; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-family: 'Arial', sans-serif; color: #333;">
+      <b>O Índice de Desenvolvimento Humano (IDH)</b> é uma medida resumida do progresso a longo prazo em três dimensões
+      básicas do desenvolvimento humano: renda, educação e saúde. O objetivo da criação do IDH foi o de oferecer um
+      contraponto a outro indicador muito utilizado, o Produto Interno Bruto (PIB) per capita, que considera apenas a
+      dimensão econômica do desenvolvimento. Criado por Mahbub ul Haq com a colaboração do economista indiano Amartya
+      Sen, ganhador do Prêmio Nobel de Economia de 1998, o IDH pretende ser uma medida geral e sintética que, apesar de
+      ampliar a perspectiva sobre o desenvolvimento humano, não abrange nem esgota todos os aspectos de desenvolvimento.
+      (PNUD Brasil)
+    </div>
+    <div id="map"></div>
+    <p><b>Niterói possui o sétimo maior IDH do Brasil</b>, conforme os dados do censo do IBGE de 2010, e é <b>o primeiro
+        no estado do Rio de Janeiro em termos de IDH</b>. O censo mais recente, realizado em 2022, sofreu atrasos devido
+      à pandemia de COVID-19. O IDH é calculado pelo Programa das Nações Unidas para o Desenvolvimento (PNUD), que
+      utiliza esses dados censitários para avaliar as condições de vida da população. Contudo, os dados do IDH
+      referentes ao Censo de 2022 ainda não foram divulgados.</p>
+    <p>O mapa interativo a seguir facilita a visualização do IDH dos municípios do estado do Rio de Janeiro. Ao passar o
+      cursor sobre cada município, você pode ver o IDH correspondente e comparar as diferenças visualmente com a ajuda
+      de um gráfico de cores que indica os níveis de IDH.</p>
+    <div style="width: 100%; margin-top: 15px;">
+      <div id="ex01" style="width: 100%; margin-top: 15px;">
+        <span id="cell-8c3c94be" class="observablehq--loading"></span>
+      </div>
+    </div>
+    <p>O Censo Demográfico no Brasil é realizado a cada dez anos. Desde 1991, os dados começaram a ser divulgados
+      digitalmente, facilitando significativamente o acesso. O gráfico a seguir mostra a evolução do IDH de Niterói ao
+      longo do tempo, ilustrando as mudanças baseadas nos censos realizados de 1991 até 2010. Além disso, é possível
+      comparar a evolução do IDH de Niterói com o IDH do Brasil e do estado do Rio de Janeiro, utilizando as opções
+      disponíveis no checkbox.</p>
+    <div style="width: 100%; margin-top: 15px;">
+      <center>
+        <div id="ex01" style="width: 100%; margin-top: 15px;">
+          <span id="cell-74e333e1" class="observablehq--loading"></span>
+        </div>
+      </center>
+    </div>
+    <div id="cell-0be70298" class="observablehq observablehq--block"></div>
+    <p>Desde 2010, quando o Relatório de Desenvolvimento Humano completou 20 anos, novas metodologias foram incorporadas
+      para o cálculo do IDH. Atualmente,três pilares constituem o IDH: <b>saúde, educação e renda</b>.</p>
+    <div class="hero">
+      <h2 style="margin-bottom: 20px; margin-top: 50px;">Saúde</h2>
+    </div>
+    <p>Uma vida longa e saudável (saúde) é medida pela expectativa de vida;</p>
+    <p>O IDH de longevidade, medido pela esperança de vida ao nascer, é um indicador de saúde e qualidade ambiental.
+      Niterói se destaca nesse aspecto também, geralmente apresentando uma esperança de vida maior que a média estadual
+      e nacional. Isso pode ser atribuído a um acesso superior a serviços de saúde, melhores condições de habitação e um
+      ambiente mais saudável. Um alto IDH de longevidade em Niterói reflete o sucesso das políticas de saúde pública e a
+      disponibilidade de infraestrutura de saúde adequada.</p>
+    <p>A esperança de vida e a longevidade são conceitos relacionados à saúde e ao bem-estar, mas têm significados
+      diferentes. A esperança de vida ao nascer é a média de anos que um recém-nascido pode esperar viver se os padrões
+      de mortalidade atuais permanecerem constantes ao longo de sua vida. A longevidade refere-se ao tempo de vida
+      efetivo dos indivíduos, ou seja, a duração de vida real das pessoas dentro de uma população. Se em um país a
+      esperança de vida ao nascer é de 75 anos, isso significa que, em média, os recém-nascidos esperam viver 75 anos,
+      assumindo que as taxas de mortalidade atuais não mudem. Se uma pessoa vive até os 90 anos, sua longevidade é de 90
+      anos. Isso é uma medida observacional da duração de vida dessa pessoa específica. Em resumo, a esperança de vida é
+      uma média estatística usada para prever a duração de vida com base em condições atuais, enquanto a longevidade é a
+      medida observada da vida de indivíduos. Ambos são importantes para entender a saúde e o bem-estar de populações,
+      mas servem a propósitos diferentes em estudos demográficos e de saúde pública.</p>
+    <div style="display: flex; justify-content: space-around; width: 90%; margin-top: 15px;">
+      <div id="ex01" style="width: 50%; margin-top: 15px;">
+        <span id="cell-e6cfbfc4" class="observablehq--loading"></span>
+      </div>
+      <div id="ex03" style="width: 50%; margin-top: 15px;">
+        <span id="cell-014d204f" class="observablehq--loading"></span>
+      </div>
+    </div>
+    <div id="cell-ad3ded04" class="observablehq observablehq--block"></div>
+    <div class="hero">
+      <h2 style="margin-bottom: 20px; margin-top: 50px;">Educação</h2>
+    </div>
+    <p>O acesso ao conhecimento (educação) é medido por:
+      média de anos de educação de adultos, que é o número médio de anos de educação recebidos durante a vida por
+      pessoas a partir de 25 anos; e
+      a expectativa de anos de escolaridade para crianças na idade de iniciar a vida escolar, que é o número total de
+      anos de escolaridade que um criança na idade de iniciar a vida escolar pode esperar receber se os padrões
+      prevalecentes de taxas de matrículas específicas por idade permanecerem os mesmos durante a vida da criança;</p>
+    <p>O IDH de educação é avaliado pela média de anos de estudo da população adulta e os anos esperados de escolaridade
+      para crianças em idade escolar. Niterói, com sua renda relativamente alta e infraestrutura desenvolvida,
+      geralmente apresenta um IDH de educação que excede os padrões do Rio de Janeiro e do Brasil. Isso indica uma maior
+      taxa de matrículas escolares, melhor qualidade de ensino e maior acesso a recursos educacionais. A educação é
+      fundamental para o desenvolvimento sustentável de uma região, influenciando diretamente outras áreas como renda e
+      saúde.</p>
+    <div style="width: 100%; margin-top: 15px;">
+      <center>
+        <div id="ex01" style="width: 100%; margin-top: 15px;">
+          <span id="cell-aa94c62d" class="observablehq--loading"></span>
+        </div>
+      </center>
+    </div>
+    <div id="cell-4eb8fd50" class="observablehq observablehq--block"></div>
+    <div class="hero">
+      <h2 style="margin-bottom: 20px; margin-top: 50px;">Renda</h2>
+    </div>
+    <p>E o padrão de vida (renda) é medido pela Renda Nacional Bruta (RNB) per capita expressa em poder de paridade de
+      compra (PPP) constante, em dólar, tendo 2005 como ano de referência. O IDH de renda reflete o padrão de vida
+      econômico de uma área. Em Niterói, que tradicionalmente tem um dos maiores IDHs de renda do estado do Rio de
+      Janeiro, isso indica um nível geral de riqueza e acesso a recursos econômicos superior à média estadual e,
+      frequentemente, superior à média nacional. Uma renda per capita alta em Niterói sugere melhores oportunidades de
+      emprego, salários mais altos e um mercado local mais robusto em comparação com outras partes do estado e do país.
+    </p>
+    <div style="width: 100%; margin-top: 15px;">
+      <center>
+        <div id="ex01" style="width: 100%; margin-top: 15px;">
+          <span id="cell-663572c6" class="observablehq--loading"></span>
+        </div>
+      </center>
+    </div>
+    <div class="hero">
+      <h2 style="margin-bottom: 20px; margin-top: 50px;">Desigualdade</h2>
+    </div>
+    <div id="cell-c071dc38" class="observablehq observablehq--block"></div>
+    <p>O IDH é uma medida média das conquistas de desenvolvimento humano básico em um país. Como todas as médias, o IDH
+      mascara a desigualdade na distribuição do desenvolvimento humano entre a população no nível de país. O IDH 2010
+      introduziu o IDH Ajustado à Desigualdade (IDHAD), que leva em consideração a desigualdade em todas as três
+      dimensões do IDH “descontando” o valor médio de cada dimensão de acordo com seu nível de desigualdade.</p>
+    <p>Com a introdução do IDHAD, o IDH tradicional pode ser visto como um índice de desenvolvimento humano “potencial”
+      e o IDHAD como um índice do desenvolvimento humano “real”. A “perda” no desenvolvimento humano potencial devido à
+      desigualdade é dada pela diferença entre o IDH e o IDHAD e pode ser expressa por um percentual.</p>
+    <p>Adicionar mapa com IDH ajustado.</p>
+    <p>Niterói teve posição de destaque no Índice de Concorrência dos Municípios Brasileiros (ICM), levantamento feito
+      pelo Ministério da Economia que avalia, de forma sistemática, contínua e estruturada o ambiente de negócios dos
+      municípios brasileiros. A cidade ficou em 1º lugar entre os 92 municípios de todo o estado do Rio de Janeiro,
+      firmou-se em 3º entre os 1.668 da Região Sudeste, e em 12º lugar no ranking geral.</p>
+    <p>A pesquisa foi enviada para 119 municípios brasileiros, totalizando 43% da população brasileira e o resultado foi
+      informado na segunda-feira (9), pelo site do Ministério da Economia. Com a pontuação de 562,8, Niterói supera, até
+      mesmo, a pontuação média nacional (473,9) e capitais como Rio de Janeiro (466,2) e São Paulo (532,58). O ICM tem
+      como objetivo realizar uma avaliação, ampla e objetiva, do ambiente de negócios dos municípios brasileiros,
+      visando, a partir dos resultados, contribuir na formulação de políticas públicas e direcionar as boas práticas
+      observadas nas cidades.</p>
+    <p>Desigualdade</p>
+    <p>Niterói tem 850 pessoas em situação de rua
+      <a href="https://atribunarj.com.br/materia/niteroi-tem-850-pessoas-em-situacao-de-rua" target="_blank"
+        rel="noopener noreferrer">https://atribunarj.com.br/materia/niteroi-tem-850-pessoas-em-situacao-de-rua</a>
+    </p>
+    <h2 class="title">Plotar gráfico com as características dos domicílios</h2>
+    <div id="cell-7cfcf5c4" class="observablehq observablehq--block"></div>
+    <div id="cell-bf717096" class="observablehq observablehq--block"></div>
+    <div id="cell-9435b76c" class="observablehq observablehq--block"></div>
+    <div id="cell-e78df3c3" class="observablehq observablehq--block"></div>
+    <div id="cell-ab9179de" class="observablehq observablehq--block"></div>
+  </main>
+  <footer id="observablehq-footer">
+    <div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a
+        title="2024-07-03T17:50:10">Jul 3, 2024</a>.</div>
+  </footer>
+</div>

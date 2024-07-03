@@ -1,0 +1,46 @@
+Item,Valor,Ano,Fonte,Local
+Esperança de vida ao nascer,"64,73",1991,IBGE,Brasil
+Esperança de vida ao nascer,"68,03",1991,IBGE,Niterói
+Esperança de vida ao nascer,"66,42",1991,IBGE,Rio de Janeiro
+Esperança de vida ao nascer,"68,61",2000,IBGE,Brasil
+Esperança de vida ao nascer,"72,26",2000,IBGE,Niterói
+Esperança de vida ao nascer,"69,42",2000,IBGE,Rio de Janeiro
+Esperança de vida ao nascer,"73,94",2010,IBGE,Brasil
+Esperança de vida ao nascer,"76,23",2010,IBGE,Niterói
+Esperança de vida ao nascer,"75,10",2010,IBGE,Rio de Janeiro
+IDHM,"0,493",1991,IBGE,Brasil
+IDHM,"0,681",1991,IBGE,Niterói
+IDHM,"0,573",1991,IBGE,Rio de Janeiro
+IDHM,"0,612",2000,IBGE,Brasil
+IDHM,"0,771",2000,IBGE,Niterói
+IDHM,"0,664",2000,IBGE,Rio de Janeiro
+IDHM,"0,727",2010,IBGE,Brasil
+IDHM,"0,837",2010,IBGE,Niterói
+IDHM,"0,761",2010,IBGE,Rio de Janeiro
+IDHM Renda,"0,647",1991,IBGE,Brasil
+IDHM Renda,"0,79",1991,IBGE,Niterói
+IDHM Renda,"0,696",1991,IBGE,Rio de Janeiro
+IDHM Renda,"0,692",2000,IBGE,Brasil
+IDHM Renda,"0,851",2000,IBGE,Niterói
+IDHM Renda,"0,745",2000,IBGE,Rio de Janeiro
+IDHM Renda,"0,739",2010,IBGE,Brasil
+IDHM Renda,"0,887",2010,IBGE,Niterói
+IDHM Renda,"0,782",2010,IBGE,Rio de Janeiro
+IDHM Longevidade,"0,662",1991,IBGE,Brasil
+IDHM Longevidade,"0,717",1991,IBGE,Niterói
+IDHM Longevidade,"0,690",1991,IBGE,Rio de Janeiro
+IDHM Longevidade,"0,727",2000,IBGE,Brasil
+IDHM Longevidade,"0,788",2000,IBGE,Niterói
+IDHM Longevidade,"0,740",2000,IBGE,Rio de Janeiro
+IDHM Longevidade,"0,816",2010,IBGE,Brasil
+IDHM Longevidade,"0,854",2010,IBGE,Niterói
+IDHM Longevidade,"0,835",2010,IBGE,Rio de Janeiro
+IDHM Educação,"0,279",1991,IBGE,Brasil
+IDHM Educação,"0,557",1991,IBGE,Niterói
+IDHM Educação,"0,392",1991,IBGE,Rio de Janeiro
+IDHM Educação,"0,456",2000,IBGE,Brasil
+IDHM Educação,"0,684",2000,IBGE,Niterói
+IDHM Educação,"0,530",2000,IBGE,Rio de Janeiro
+IDHM Educação,"0,637",2010,IBGE,Brasil
+IDHM Educação,"0,773",2010,IBGE,Niterói
+IDHM Educação,"0,675",2010,IBGE,Rio de Janeiro
