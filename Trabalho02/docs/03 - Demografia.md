@@ -58,16 +58,22 @@ import * as vegaLite from "npm:vega-lite";
 import * as vegaLiteApi from "npm:vega-lite-api";
 const vl = vegaLiteApi.register(vega, vegaLite);
 ```
-
+<head>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
 <div class="hero">
   <h1 style="margin-bottom: 50px;">Demografia</h1>
 </div>
 
-<div style="width: 100%; margin-top: 15px;">
+<!-- <div style="width: 100%; margin-top: 15px;">
     <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotMap(divWidth01 - 200, geojson, IDHM, radioboxPop)) }
+        ${ vl.render(plotAgePiramid(divWidth01, transformedData)) }
     </div>
-</div>
+</div> -->
+
+<div id="vis"></div>
 
 ```js
 // Criar Radio Box
@@ -96,65 +102,151 @@ Aqui serão plotados os dados do número de pessoas, população por cor e raça
 ```js
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json({typed: true});
 const IDHM = await FileAttachment("Tabelas_panorama/RJ_IDHM.csv").csv();
-const divWidth01 = Generators.width(document.querySelector("#ex01"));
-```
+const ageData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - Pirâmide etária - Niterói (RJ).csv").csv();
 
-```js
-function plotMap(divWidth, geojson, IDHM, radioboxPop) {
-  return {
-    spec: {
-      width: divWidth,
-      height: 300,
-      background: "#f4f4f9",
-      projection: {
-        type: "mercator"
-      },
-      layer: [
-        {
-          data: {
-            values: geojson,
-            format: {
-              type: "json",
-              property: "features"
-            }
-          },
-          transform: [
-            {
-              lookup: "properties.name",
-              from: {
-                data: {
-                  values: IDHM
-                },
-                key: "Territorialidades",
-                fields: [radioboxPop]
-              }
-            }
-          ],
-          mark: {
-            type: "geoshape",
-            stroke: "#D3D3D3"
-            ,
-            strokeWidth: 1
-          },
-          encoding: {
-            color: {
-              field: radioboxPop,
-              type: "quantitative",
-              scale: { scheme: "blues", type: 'log' },
-              "legend": {
-                "orient": "right",
-                "titleFontSize": 12,
-                "titleAlign": "center"
-              }
-            },
-            tooltip: [
-              { field: "properties.name", type: "nominal", title: "Cidade" },
-              { field: radioboxPop, type: "quantitative", title: radioboxPop}
-            ]
+ageData.forEach(d => {
+  // get key and split it into many keys using the semi-colon separator
+  // same for values, and each value is then assigned to the new key
+  Object.keys(d).forEach(k => {
+    if (k.includes(";")) {
+      const keys = k.split(";");
+      const values = d[k].split(";");
+      keys.forEach((key, i) => {
+        d[key] = values[i];
+      });
+      delete d[k];
+    }
+  });
+});
+let i = 0;
+//  map key values as properties of the object
+const transformedData = ageData.map(d => {
+  d.id = i++;
+  d.age = d["Grupo de idade"];
+  d.female = d["População feminina(pessoas)"];
+  d.male = d["População masculina(pessoas)"];
+  return d;
+});
+
+// for item in transformedData, print item
+for (const item of transformedData) {
+  console.log(item);
+}
+const divWidth01 = Generators.width(document.querySelector("#ex01"));
+
+var spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A population pyramid showing absolute values for male and female populations, with females on the left and males on the right, each line labeled by age.",
+  "data": {
+    "values": transformedData
+  },
+  "transform": [
+    {
+      "calculate": "datum.female * -1",
+      "as": "female"
+    },
+    {
+      "calculate": "abs(datum.male)",
+      "as": "male"
+    },
+    {
+    "calculate": "'População Feminina'",
+    "as": "gender_female"
+    },
+    {
+      "calculate": "'População Masculina'",
+      "as": "gender_male"
+    },
+    {
+      "calculate": "abs(datum.female)",
+      "as": "absFemale"
+    }
+  ],
+  "width": 800,
+  "height": 500,
+  "layer": [
+  {
+    "mark": "bar",
+    "encoding": {
+      "y": {
+        "field": "age",
+        "type": "ordinal",
+        "axis": {"title": "Faixa etária"},
+        "sort": {
+          "field": "id",
+          "order": "ascending"
           }
+      },
+      "x": {
+        "field": "female",
+        "type": "quantitative",
+        "axis": {"title": "População", "orient": "top", "labelAngle": 0},
+      },
+      "color": {
+        "field": "gender_female",
+        "type": "nominal",
+        "legend": {
+          "title": "Gender",
+          "values": ["População Feminina", "População Masculina"],
+          "orient": "right"
+        },
+        "scale": {
+          "domain": ["População Feminina", "População Masculina"],
+          "range": ["#522731", "#1f77b4"]
+        }
+      },
+      "tooltip": [
+        {"field": "age", "type": "ordinal", "title": "Faixa etária"},
+        {"field": "absFemale", 
+          "type": "quantitative", 
+          "title": "População Feminina", 
+          "aggregate": "sum", 
+          "format": ",.0f",
+          // multiply by -1 to get the absolute value
         }
       ]
     }
+  },
+  {
+    "mark": "bar",
+    "encoding": {
+      "y": {
+        "field": "age",
+        "type": "ordinal",
+        "sort": {
+          "field": "id",
+          "order": "ascending"
+          }
+        
+      },
+      "x": {
+        "field": "male",
+        "type": "quantitative",
+      "axis": {
+        "title": "Population",
+        "labelExpr": "abs(datum.value)"
+      }
+      },
+      "color": {
+        "value": "#1f77b4",
+      },
+      "tooltip": [
+        {"field": "age", "type": "ordinal", "title": "Faixa etária"},
+        {"field": "male", "type": "quantitative", "title": "População Masculina", "aggregate": "sum", "format": ",.0f"}
+      ]
+    }
   }
-}
+],
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"grid": false}
+  }
+};
+// Embed the visualization in the container with id 'vis'
+vegaEmbed('#vis', spec).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+
 ```
