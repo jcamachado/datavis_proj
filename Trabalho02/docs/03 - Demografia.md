@@ -58,6 +58,7 @@ import * as vegaLite from "npm:vega-lite";
 import * as vegaLiteApi from "npm:vega-lite-api";
 const vl = vegaLiteApi.register(vega, vegaLite);
 ```
+
 <head>
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -77,15 +78,19 @@ const vl = vegaLiteApi.register(vega, vegaLite);
 
 ```js
 // Criar Radio Box
-let radioboxPop = view(Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {label: "Exibir dados: ", value: "Densidade Demográfica (2022)"}));
+let radioboxPop = view(
+  Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {
+    label: "Exibir dados: ",
+    value: "Densidade Demográfica (2022)",
+  })
+);
 ```
-
 
 <div class="hero">
   <h2 style="margin-bottom: 50px; margin-top: 50px;">População</h2>
 </div>
 
-Em 2022, a população era de 481.749 habitantes e a densidade demográfica era de 3.601,67 habitantes por quilômetro quadrado. Na comparação com outros municípios do estado, ficava nas posições 7 e 7 de 92. Já na comparação com municípios de todo o país, ficava nas posições 44 e 29 de 5570. 
+Em 2022, a população era de 481.749 habitantes e a densidade demográfica era de 3.601,67 habitantes por quilômetro quadrado. Na comparação com outros municípios do estado, ficava nas posições 7 e 7 de 92. Já na comparação com municípios de todo o país, ficava nas posições 44 e 29 de 5570.
 
 População em 2010: 487.562
 
@@ -100,155 +105,177 @@ Aqui serão plotados os dados do número de pessoas, população por cor e raça
 <h2 class="title">Plotar população população quilombola e indígena</h2>
 
 ```js
-const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json({typed: true});
+const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
+  { typed: true }
+);
 const IDHM = await FileAttachment("Tabelas_panorama/RJ_IDHM.csv").csv();
 const ageData = await FileAttachment(
-  "Tabelas_panorama/Censo 2022 - Pirâmide etária - Niterói (RJ).csv").csv();
+  "Tabelas_panorama/Censo 2022 - Pirâmide etária - Niterói (RJ).csv"
+).csv();
+const popGrowthData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - Crescimento Populacional - Niterói (RJ).csv"
+).csv();
 
-ageData.forEach(d => {
-  // get key and split it into many keys using the semi-colon separator
-  // same for values, and each value is then assigned to the new key
-  Object.keys(d).forEach(k => {
-    if (k.includes(";")) {
-      const keys = k.split(";");
-      const values = d[k].split(";");
-      keys.forEach((key, i) => {
-        d[key] = values[i];
-      });
-      delete d[k];
-    }
+plotAgePiramid(ageData);
+```
+
+```js
+function plotAgePiramid(ageData) {
+  // Plotar pirâmide etária por gênero
+
+  ageData.forEach((d) => {
+    // get key and split it into many keys using the semi-colon separator
+    // same for values, and each value is then assigned to the new key
+    Object.keys(d).forEach((k) => {
+      if (k.includes(";")) {
+        const keys = k.split(";");
+        const values = d[k].split(";");
+        keys.forEach((key, i) => {
+          d[key] = values[i];
+        });
+        delete d[k];
+      }
+    });
   });
-});
-let i = 0;
-//  map key values as properties of the object
-const transformedData = ageData.map(d => {
-  d.id = i++;
-  d.age = d["Grupo de idade"];
-  d.female = d["População feminina(pessoas)"];
-  d.male = d["População masculina(pessoas)"];
-  return d;
-});
+  let i = 0;
+  //  map key values as properties of the object
+  const transformedData = ageData.map((d) => {
+    d.id = i++;
+    d.age = d["Grupo de idade"];
+    d.female = d["População feminina(pessoas)"];
+    d.male = d["População masculina(pessoas)"];
+    return d;
+  });
 
-// for item in transformedData, print item
-for (const item of transformedData) {
-  console.log(item);
-}
-const divWidth01 = Generators.width(document.querySelector("#ex01"));
+  // for item in transformedData, print item
+  for (const item of transformedData) {
+    console.log(item);
+  }
+  const divWidth01 = Generators.width(document.querySelector("#ex01"));
 
-var spec = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "A population pyramid showing absolute values for male and female populations, with females on the left and males on the right, each line labeled by age.",
-  "data": {
-    "values": transformedData
-  },
-  "transform": [
-    {
-      "calculate": "datum.female * -1",
-      "as": "female"
+  var spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    description:
+      "A population pyramid showing absolute values for male and female populations, with females on the left and males on the right, each line labeled by age.",
+    data: {
+      values: transformedData,
     },
-    {
-      "calculate": "abs(datum.male)",
-      "as": "male"
-    },
-    {
-    "calculate": "'População Feminina'",
-    "as": "gender_female"
-    },
-    {
-      "calculate": "'População Masculina'",
-      "as": "gender_male"
-    },
-    {
-      "calculate": "abs(datum.female)",
-      "as": "absFemale"
-    }
-  ],
-  "width": 800,
-  "height": 500,
-  "layer": [
-  {
-    "mark": "bar",
-    "encoding": {
-      "y": {
-        "field": "age",
-        "type": "ordinal",
-        "axis": {"title": "Faixa etária"},
-        "sort": {
-          "field": "id",
-          "order": "ascending"
-          }
+    transform: [
+      {
+        calculate: "datum.female * -1",
+        as: "female",
       },
-      "x": {
-        "field": "female",
-        "type": "quantitative",
-        "axis": {"title": "População", "orient": "top", "labelAngle": 0},
-        "scale": {"domain": [-25000, 0], "nice": false, "padding": 10}
+      {
+        calculate: "abs(datum.male)",
+        as: "male",
       },
-      "color": {
-        "field": "gender_female",
-        "type": "nominal",
-        "legend": {
-          "title": "Gender",
-          "values": ["População Feminina", "População Masculina"],
-          "orient": "right"
+      {
+        calculate: "'População Feminina'",
+        as: "gender_female",
+      },
+      {
+        calculate: "'População Masculina'",
+        as: "gender_male",
+      },
+      {
+        calculate: "abs(datum.female)",
+        as: "absFemale",
+      },
+    ],
+    width: 800,
+    height: 500,
+    layer: [
+      {
+        mark: "bar",
+        encoding: {
+          y: {
+            field: "age",
+            type: "ordinal",
+            axis: { title: "Faixa etária" },
+            sort: {
+              field: "id",
+              order: "ascending",
+            },
+          },
+          x: {
+            field: "female",
+            type: "quantitative",
+            axis: { title: "População", orient: "top", labelAngle: 0 },
+            scale: { domain: [-25000, 0], nice: false, padding: 10 },
+          },
+          color: {
+            field: "gender_female",
+            type: "nominal",
+            legend: {
+              title: "Gender",
+              values: ["População Feminina", "População Masculina"],
+              orient: "right",
+            },
+            scale: {
+              domain: ["População Feminina", "População Masculina"],
+              range: ["#522731", "#1f77b4"],
+            },
+          },
+          tooltip: [
+            { field: "age", type: "ordinal", title: "Faixa etária" },
+            {
+              field: "absFemale",
+              type: "quantitative",
+              title: "População Feminina",
+              aggregate: "sum",
+              format: ",.0f",
+              // multiply by -1 to get the absolute value
+            },
+          ],
         },
-        "scale": {
-          "domain": ["População Feminina", "População Masculina"],
-          "range": ["#522731", "#1f77b4"]
-        }
       },
-      "tooltip": [
-        {"field": "age", "type": "ordinal", "title": "Faixa etária"},
-        {"field": "absFemale", 
-          "type": "quantitative", 
-          "title": "População Feminina", 
-          "aggregate": "sum", 
-          "format": ",.0f",
-          // multiply by -1 to get the absolute value
-        }
-      ]
-    }
-  },
-  {
-    "mark": "bar",
-    "encoding": {
-      "y": {
-        "field": "age",
-        "type": "ordinal",
-        "sort": {
-          "field": "id",
-          "order": "ascending"
-          }
-        
+      {
+        mark: "bar",
+        encoding: {
+          y: {
+            field: "age",
+            type: "ordinal",
+            sort: {
+              field: "id",
+              order: "ascending",
+            },
+          },
+          x: {
+            field: "male",
+            type: "quantitative",
+            axis: {
+              title: "Population",
+              labelExpr: "abs(datum.value)",
+            },
+            scale: { domain: [0, 25000] },
+          },
+          color: {
+            value: "#1f77b4",
+          },
+          tooltip: [
+            { field: "age", type: "ordinal", title: "Faixa etária" },
+            {
+              field: "male",
+              type: "quantitative",
+              title: "População Masculina",
+              aggregate: "sum",
+              format: ",.0f",
+            },
+          ],
+        },
       },
-      "x": {
-        "field": "male",
-        "type": "quantitative",
-      "axis": {
-        "title": "Population",
-        "labelExpr": "abs(datum.value)"
-      },
-      "scale": {"domain": [0, 25000]}
-      },
-      "color": {
-        "value": "#1f77b4",
-      },
-      "tooltip": [
-        {"field": "age", "type": "ordinal", "title": "Faixa etária"},
-        {"field": "male", "type": "quantitative", "title": "População Masculina", "aggregate": "sum", "format": ",.0f"}
-      ]
-    }
-  }
-],
-  "config": {
-    "view": {"stroke": null},
-    "axis": {"grid": false}
-  }
-};
-// Embed the visualization in the container with id 'vis'
-vegaEmbed('#vis', spec).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-}).catch(console.error);
+    ],
+    config: {
+      view: { stroke: null },
+      axis: { grid: false },
+    },
+  };
 
-
+  // Embed the visualization in the container with id 'vis'
+  vegaEmbed("#vis", spec)
+    .then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    })
+    .catch(console.error);
+}
 ```
