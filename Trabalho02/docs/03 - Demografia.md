@@ -68,64 +68,50 @@ const vl = vegaLiteApi.register(vega, vegaLite);
   <h1 style="margin-bottom: 50px;">Demografia</h1>
 </div>
 
-<!-- <div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotAgePiramid(divWidth01, transformedData)) }
-    </div>
-</div> -->
-
-<div id="vis"></div>
-
 ```js
 // Criar Radio Box
-let radioboxPop = view(
-  Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {
-    label: "Exibir dados: ",
-    value: "Densidade Demográfica (2022)",
-  })
-);
+// let radioboxPop = view(
+//   Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {
+//     label: "Exibir dados: ",
+//     value: "Densidade Demográfica (2022)",
+//   })
+// );
 ```
 
 <div class="hero">
-  <h2 style="margin-bottom: 50px; margin-top: 50px;">População</h2>
+  <h2 style="margin-bottom: 50px; margin-top: 50px;">Crescimento populacional</h2>
 </div>
 
-Em 2022, a população era de 481.749 habitantes e a densidade demográfica era de 3.601,67 habitantes por quilômetro quadrado. Na comparação com outros municípios do estado, ficava nas posições 7 e 7 de 92. Já na comparação com municípios de todo o país, ficava nas posições 44 e 29 de 5570.
+Até 2010, a população niteroiense crescia em um ritmo desacelerado, indo de 397.135 habitantes em 1991 para 487.562 em 2010 e uma taxa média de crescimento de 12.75% por década. Mas entre 2010 e 2022 houve um decréscimo da população em 1.2%, chegando a 481.758 habitantes.
 
-População em 2010: 487.562
+<div id="visPopGrow"></div>
 
-População em 2022: 481.758
+A redução populacional é um aspecto com diversos fatores e sutilezas que, embora alguns sejam abordados, não serão aprofundados aqui. Como discutido na seção da página anterior (2), o IDH da cidade tem consistentemente crescido, e já é considerado alto a algumas pesquisas. E assim como é tendência em países com alto IDH, a taxa de natalidade tende a diminuir quando políticas publicas de igualdade de gênero não visam lidar com fatores que permitem a segurança para criação de filhos, como por exemplo, creches e licença paternidade equiparada.
 
-Inserir gráfico do crescimento populacional # csv do IBGE
+Consequentemente, a pirâmide etária da cidade desloca seu centro de massa para idades mais avançadas. Pois além de menos natalidade, a longevidade também vai sendo aprimorada.
 
-Aqui serão plotados os dados do número de pessoas, população por cor e raça, por sexo e pirâmide etária.
+<div id="visAge"></div>
 
-<h2 class="title">Plotar pirâmide etária por gênero</h2>
+<div class="hero">
+  <h2 style="margin-bottom: 50px; margin-top: 50px;">Diversidade</h2>
+</div>
+<div id="visEtnics"></div>
 
 <h2 class="title">Plotar população população quilombola e indígena</h2>
 
 ```js
+const goldenYellow = "#FFD700";
+const turquoise = "#40e0d0";
+const graphWidth = 800;
+const graphHeight = 500;
+
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
   { typed: true }
 );
 const IDHM = await FileAttachment("Tabelas_panorama/RJ_IDHM.csv").csv();
-const ageData = await FileAttachment(
-  "Tabelas_panorama/Censo 2022 - Pirâmide etária - Niterói (RJ).csv"
-).csv();
-const popGrowthData = await FileAttachment(
-  "Tabelas_panorama/Censo 2022 - Crescimento Populacional - Niterói (RJ).csv"
-).csv();
 
-plotAgePiramid(ageData);
-```
-
-```js
-function plotAgePiramid(ageData) {
-  // Plotar pirâmide etária por gênero
-
-  ageData.forEach((d) => {
-    // get key and split it into many keys using the semi-colon separator
-    // same for values, and each value is then assigned to the new key
+function parseIBGEData(data) {
+  data.forEach((d) => {
     Object.keys(d).forEach((k) => {
       if (k.includes(";")) {
         const keys = k.split(";");
@@ -137,145 +123,365 @@ function plotAgePiramid(ageData) {
       }
     });
   });
-  let i = 0;
-  //  map key values as properties of the object
-  const transformedData = ageData.map((d) => {
-    d.id = i++;
-    d.age = d["Grupo de idade"];
-    d.female = d["População feminina(pessoas)"];
-    d.male = d["População masculina(pessoas)"];
-    return d;
-  });
+}
+```
 
-  // for item in transformedData, print item
-  for (const item of transformedData) {
-    console.log(item);
+```js
+// Diversity
+let quilombolaData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População quilombola - Niterói (RJ).csv"
+).csv();
+let nativeData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População indígena - Niterói (RJ).csv"
+).csv();
+let ethinicsData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População por cor ou raça - Niterói (RJ).csv"
+).csv();
+
+parseIBGEData(quilombolaData);
+parseIBGEData(nativeData);
+parseIBGEData(ethinicsData);
+
+// population is undefined
+
+quilombolaData.population = quilombolaData[0]["População quilombola (pessoas)"];
+nativeData.ethinicAndSkinAffirmative = nativeData[0]["pessoas"];
+nativeData.selfDeclared = nativeData[1]["pessoas"];
+nativeData.population = nativeData[2]["pessoas"];
+
+// d.population has to be number
+ethinicsData.forEach((d) => {
+  d.skinDenomination = d["Cor ou raça"];
+  d.population = d["População (pessoas)"];
+  d.population = parseInt(d.population);
+
+  // if population is null or 0, drop d
+  if (d.population === "0" || d.population === "") {
+    ethinicsData = ethinicsData.filter((item) => item !== d);
   }
-  const divWidth01 = Generators.width(document.querySelector("#ex01"));
+});
 
-  var spec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    description:
-      "A population pyramid showing absolute values for male and female populations, with females on the left and males on the right, each line labeled by age.",
-    data: {
-      values: transformedData,
+console.log(quilombolaData);
+
+let ethinicsSpec = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description: "A circular plot representing population by skin denomination.",
+  data: {
+    values: ethinicsData,
+  },
+  width: graphWidth,
+  height: graphHeight,
+  layer: [
+    {
+      mark: {
+        type: "circle",
+        opacity: 0.8,
+        stroke: "black",
+        strokeWidth: 1,
+      },
+      encoding: {
+        x: {
+          field: "skinDenomination",
+          type: "nominal",
+          axis: { title: "Cor ou raça", grid: false },
+        },
+        y: {
+          field: "population",
+          type: "quantitative",
+          axis: { title: "População" },
+        },
+        size: {
+          field: "population",
+          type: "quantitative",
+          title: "Population Size",
+          legend: { clipHeight: 30 },
+          scale: { rangeMax: 5000 },
+        },
+        color: {
+          field: "skinDenomination",
+          type: "nominal",
+          scale: {
+            domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
+            range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
+          },
+          legend: null,
+        },
+        tooltip: [
+          { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
+          { field: "population", type: "quantitative", title: "População" },
+        ],
+      },
     },
-    transform: [
-      {
-        calculate: "datum.female * -1",
-        as: "female",
+    {
+      data: { values: [{}] },
+      mark: {
+        type: "text",
+        align: "right",
+        baseline: "bottom",
+        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
+        dy: graphHeight / 2 + 50, // Adjust the distance from the bottom of your visualization
+        text: "Fonte?, 2022?",
       },
-      {
-        calculate: "abs(datum.male)",
-        as: "male",
+      encoding: {
+        text: { type: "nominal" },
       },
-      {
-        calculate: "'População Feminina'",
-        as: "gender_female",
+    },
+    {
+      // New dotted line layer
+      mark: {
+        type: "rule",
+        strokeDash: [4, 4], // Creates a dotted line pattern
+        stroke: "grey", // Color of the line
       },
-      {
-        calculate: "'População Masculina'",
-        as: "gender_male",
-      },
-      {
-        calculate: "abs(datum.female)",
-        as: "absFemale",
-      },
-    ],
-    width: 800,
-    height: 500,
-    layer: [
-      {
-        mark: "bar",
-        encoding: {
-          y: {
-            field: "age",
-            type: "ordinal",
-            axis: { title: "Faixa etária" },
-            sort: {
-              field: "id",
-              order: "ascending",
-            },
-          },
-          x: {
-            field: "female",
-            type: "quantitative",
-            axis: { title: "População", orient: "top", labelAngle: 0 },
-            scale: { domain: [-25000, 0], nice: false, padding: 10 },
-          },
-          color: {
-            field: "gender_female",
-            type: "nominal",
-            legend: {
-              title: "Gender",
-              values: ["População Feminina", "População Masculina"],
-              orient: "right",
-            },
-            scale: {
-              domain: ["População Feminina", "População Masculina"],
-              range: ["#522731", "#1f77b4"],
-            },
-          },
-          tooltip: [
-            { field: "age", type: "ordinal", title: "Faixa etária" },
-            {
-              field: "absFemale",
-              type: "quantitative",
-              title: "População Feminina",
-              aggregate: "sum",
-              format: ",.0f",
-              // multiply by -1 to get the absolute value
-            },
-          ],
+      encoding: {
+        x: { field: "skinDenomination", type: "nominal" }, // Use the same x encoding as your circles
+        y: {
+          field: "population",
+          type: "quantitative",
+        },
+        y2: {
+          // This sets the end point of the lines at the baseline (0)
+          // Adjust this value if your baseline is different
+          value: 0,
         },
       },
-      {
-        mark: "bar",
-        encoding: {
-          y: {
-            field: "age",
-            type: "ordinal",
-            sort: {
-              field: "id",
-              order: "ascending",
-            },
+    },
+  ],
+};
+vegaEmbed("#visEtnics", ethinicsSpec)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+```
+
+```js
+
+```
+
+```js
+// plot the population growth
+let popGrowthData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - Crescimento Populacional - Niterói (RJ).csv"
+).csv();
+parseIBGEData(popGrowthData);
+
+popGrowthData = popGrowthData.map((d) => {
+  d.year = d["Ano da pesquisa"];
+  d.population = d["População(pessoas)"];
+  return d;
+});
+
+const divWidth02 = Generators.width(document.querySelector("#ex02"));
+
+var specPopGrow = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description: "A simple bar chart with embedded data.",
+  data: {
+    values: popGrowthData,
+  },
+  width: graphWidth,
+  height: graphHeight,
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: true,
+      },
+      encoding: {
+        x: {
+          field: "year",
+          type: "ordinal",
+          axis: { title: "Ano", labelAngle: 0 },
+        },
+        y: {
+          field: "population",
+          type: "quantitative",
+          axis: { title: "População" },
+        },
+      },
+    },
+    {
+      data: { values: [{}] },
+      mark: {
+        type: "text",
+        align: "right",
+        baseline: "bottom",
+        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
+        dy: graphHeight / 2 + 50, // Adjust the distance from the bottom of your visualization
+        text: "IBGE, 2022",
+      },
+      encoding: {
+        text: { type: "nominal" },
+      },
+    },
+  ],
+};
+
+// Embed the visualization in the container with id 'vis'
+vegaEmbed("#visPopGrow", specPopGrow)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+```
+
+```js
+// Plotar pirâmide etária por gênero
+
+let ageData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - Pirâmide etária - Niterói (RJ).csv"
+).csv();
+
+parseIBGEData(ageData);
+let i = 0;
+//  map key values as properties of the object
+ageData = ageData.map((d) => {
+  d.id = i++;
+  d.age = d["Grupo de idade"];
+  d.female = d["População feminina(pessoas)"];
+  d.male = d["População masculina(pessoas)"];
+  return d;
+});
+
+const divWidth01 = Generators.width(document.querySelector("#ex01"));
+
+var specAge = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description:
+    "A population pyramid showing absolute values for male and female populations, with females on the left and males on the right, each line labeled by age.",
+  data: {
+    values: ageData,
+  },
+  transform: [
+    {
+      calculate: "datum.female * -1",
+      as: "female",
+    },
+    {
+      calculate: "abs(datum.male)",
+      as: "male",
+    },
+    {
+      calculate: "'População Feminina'",
+      as: "gender_female",
+    },
+    {
+      calculate: "'População Masculina'",
+      as: "gender_male",
+    },
+    {
+      calculate: "abs(datum.female)",
+      as: "absFemale",
+    },
+  ],
+  width: graphWidth,
+  height: graphHeight,
+  layer: [
+    {
+      mark: "bar",
+      encoding: {
+        y: {
+          field: "age",
+          type: "ordinal",
+          axis: { title: "Faixa etária" },
+          sort: {
+            field: "id",
+            order: "ascending",
           },
-          x: {
+        },
+        x: {
+          field: "female",
+          type: "quantitative",
+          axis: { title: "População", orient: "top", labelAngle: 0 },
+          scale: { domain: [-25000, 0], nice: false, padding: 10 },
+        },
+        color: {
+          field: "gender_female",
+          type: "nominal",
+          legend: {
+            title: "Gender",
+            values: ["População Feminina", "População Masculina"],
+            orient: "right",
+          },
+          scale: {
+            domain: ["População Feminina", "População Masculina"],
+            range: [goldenYellow, turquoise],
+          },
+        },
+        tooltip: [
+          { field: "age", type: "ordinal", title: "Faixa etária" },
+          {
+            field: "absFemale",
+            type: "quantitative",
+            title: "População Feminina",
+            aggregate: "sum",
+            format: ",.0f",
+            // multiply by -1 to get the absolute value
+          },
+        ],
+      },
+    },
+    {
+      mark: "bar",
+      encoding: {
+        y: {
+          field: "age",
+          type: "ordinal",
+          sort: {
+            field: "id",
+            order: "ascending",
+          },
+        },
+        x: {
+          field: "male",
+          type: "quantitative",
+          axis: {
+            title: "População",
+            labelExpr: "abs(datum.value)",
+          },
+          scale: { domain: [0, 25000] },
+        },
+        color: {
+          value: turquoise,
+        },
+        tooltip: [
+          { field: "age", type: "ordinal", title: "Faixa etária" },
+          {
             field: "male",
             type: "quantitative",
-            axis: {
-              title: "Population",
-              labelExpr: "abs(datum.value)",
-            },
-            scale: { domain: [0, 25000] },
+            title: "População Masculina",
+            aggregate: "sum",
+            format: ",.0f",
           },
-          color: {
-            value: "#1f77b4",
-          },
-          tooltip: [
-            { field: "age", type: "ordinal", title: "Faixa etária" },
-            {
-              field: "male",
-              type: "quantitative",
-              title: "População Masculina",
-              aggregate: "sum",
-              format: ",.0f",
-            },
-          ],
-        },
+        ],
       },
-    ],
-    config: {
-      view: { stroke: null },
-      axis: { grid: false },
     },
-  };
+    {
+      data: { values: [{}] },
+      mark: {
+        type: "text",
+        align: "right",
+        baseline: "bottom",
+        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
+        dy: graphHeight / 2 + 10, // Adjust the distance from the bottom of your visualization
+        text: "IBGE, 2022",
+      },
+      encoding: {
+        text: { type: "nominal" },
+      },
+    },
+  ],
+  config: {
+    view: { stroke: null },
+    axis: { grid: false },
+  },
+};
 
-  // Embed the visualization in the container with id 'vis'
-  vegaEmbed("#vis", spec)
-    .then(function (result) {
-      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-    })
-    .catch(console.error);
-}
+// Embed the visualization in the container with id 'vis'
+vegaEmbed("#visAge", specAge)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
 ```
