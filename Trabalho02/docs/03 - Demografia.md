@@ -182,6 +182,7 @@ var spec = {
         "field": "female",
         "type": "quantitative",
         "axis": {"title": "População", "orient": "top", "labelAngle": 0},
+        "scale": {"domain": [-25000, 0], "nice": false, "padding": 10}
       },
       "color": {
         "field": "gender_female",
@@ -226,7 +227,8 @@ var spec = {
       "axis": {
         "title": "Population",
         "labelExpr": "abs(datum.value)"
-      }
+      },
+      "scale": {"domain": [0, 25000]}
       },
       "color": {
         "value": "#1f77b4",
