@@ -70,6 +70,12 @@ const vl = vegaLiteApi.register(vega, vegaLite);
     
 </style>
 
+<head>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
 <div class="hero">
   <h1 style="margin-bottom: 50px;">IDH, Economia e Desigualdade</h1>
 </div>
@@ -84,19 +90,12 @@ Você provavelmente já se deparou com anúncios destacando que Niterói tem o m
 
 O mapa interativo a seguir facilita a visualização do IDH dos municípios do estado do Rio de Janeiro. Ao passar o cursor sobre cada município, você pode ver o IDH correspondente e comparar as diferenças visualmente com a ajuda de um gráfico de cores que indica os níveis de IDH.
 
-<div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotMap(divWidth01 - 200, geojson, IDHM)) }
-    </div>
-</div>
+<div id="RJMap"></div>
 
-O Censo Demográfico no Brasil é realizado idealmente a cada dez anos. Desde 1991, os dados começaram a ser divulgados digitalmente, facilitando significativamente o acesso. O gráfico a seguir mostra a evolução do IDH de Niterói ao longo do tempo, ilustrando as mudanças baseadas nos censos realizados de 1991 até 2010. Além disso, é possível comparar a evolução do IDH de Niterói com o IDH do Brasil e do estado do Rio de Janeiro, utilizando as opções disponíveis no checkbox.
+O Censo Demográfico no Brasil é realizado a cada dez anos. Desde 1991, os dados começaram a ser divulgados digitalmente, facilitando significativamente o acesso. O gráfico a seguir mostra a evolução do IDH de Niterói ao longo do tempo, ilustrando as mudanças baseadas nos censos realizados de 1991 até 2010. Além disso, é possível comparar a evolução do IDH de Niterói com o IDH do Brasil e do estado do Rio de Janeiro, utilizando as opções disponíveis no checkbox.
 
-<div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotLine(IDH_Nit,IDH_Brasil,IDH_RJ,checkboxIDH,"Evolução IDH ao Longo dos Anos", "Ano", "IDH", [0.4, 1])) }
-    </div>
-</div>
+<div id="IDHM"></div>
+
 
 ```js
 // Criar Checkbox
@@ -112,37 +111,20 @@ let checkboxIDH = view(
   })
 );
 ```
-
-```js
-let a = Inputs.checkbox(["red", "green", "blue"], {
-  value: ["red"],
-  label: html`<b>Colors</b>`,
-  format: (x) =>
-    html`<span
-      style="text-transform: capitalize; border-bottom: solid 2px ${x}; margin-bottom:-2px;"
-      >${x}</span
-    >`,
-});
-```
-
-Desde 2010, quando o Relatório de Desenvolvimento Humano completou 20 anos, novas metodologias foram incorporadas para o cálculo do IDH. Atualmente,três pilares constituem o IDH: <b>saúde, educação e renda</b>.
+O cálculo do IDH pondera três dimensões básicas do desenvolvimento humano: saúde, educação e renda.
 
 <div class="hero">
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Saúde</h2>
 </div>
 
-Uma vida longa e saudável é medida pela expectativa de vida;
+O IDH de Longevidade serve como um métrica da saúde e da qualidade ambiental de uma região. Em Niterói, a esperança de vida tem se mostrado consistentemente superior à média tanto estadual quanto nacional, o que pode ser atribuído ao acesso mais amplo a serviços de saúde de qualidade, melhores condições de habitação e saneamento básico.
 
-O IDH de longevidade, medido pela esperança de vida ao nascer, é um indicador de saúde e qualidade ambiental. Niterói se destaca nesse aspecto também, geralmente apresentando uma esperança de vida maior que a média estadual e nacional. Isso pode ser atribuído a um acesso superior a serviços de saúde, melhores condições de habitação, coleta de lixo e esgoto; ou seja, um ambiente mais saudável. Um alto IDH de longevidade em Niterói reflete o sucesso das políticas de saúde pública e a disponibilidade de infraestrutura de saúde adequada.
-
-A esperança de vida e a longevidade são conceitos relacionados à saúde e ao bem-estar, mas têm significados diferentes. A esperança de vida ao nascer é a média de anos que um recém-nascido pode esperar viver se os padrões de mortalidade atuais permanecerem constantes ao longo de sua vida. A longevidade refere-se ao tempo de vida efetivo dos indivíduos, ou seja, a duração de vida real das pessoas dentro de uma população. Se em um país a esperança de vida ao nascer é de 75 anos, isso significa que, em média, os recém-nascidos esperam viver 75 anos, assumindo que as taxas de mortalidade atuais não mudem. Se uma pessoa vive até os 90 anos, sua longevidade é de 90 anos. Isso é uma medida observacional da duração de vida dessa pessoa específica. Em resumo, a esperança de vida é uma média estatística usada para prever a duração de vida com base em condições atuais, enquanto a longevidade é a medida observada da vida de indivíduos. Ambos são importantes para entender a saúde e o bem-estar de populações, mas servem a propósitos diferentes em estudos demográficos e de saúde pública.
+Os dados apresentados no gráfico da evolução da esperança de vida em Niterói permitem observar não apenas o aumento no número de anos que os recém-nascidos podem esperar viver, mas também refletem sobre a qualidade das intervenções de saúde pública e infraestrutura ao longo do tempo. A esperança de vida ao nascer é calculada com base na média de anos que um indivíduo recém-nascido pode esperar viver sob as taxas de mortalidade vigentes. Por outro lado, a longevidade refere-se ao tempo de vida efetivo alcançado pelos indivíduos dentro da população, ilustrando a duração real de vida das pessoas.
 
 <div style="display: flex; justify-content: space-around; width: 90%; margin-top: 15px;">
-    <div id="ex01" style="width: 50%; margin-top: 15px;">
-        ${ vl.render(plotLine(EspVida_Nit, EspVida_Brasil, EspVida_RJ, checkboxEspVida, "Esperança de Vida", "Ano", "Esperança de Vida", [60,90])) }
+    <div id="EspVida" style="width: 50%; margin-top: 15px;">
     </div>
-    <div id="ex03" style="width: 50%; margin-top: 15px;">
-        ${ vl.render(plotLine(Long_Nit, Long_Brasil, Long_RJ, checkboxEspVida, "IDHM Longevidade", "Ano", "IDHM Longevidade", [0.6,0.9])) }
+    <div id="Long" style="width: 50%; margin-top: 15px;">
     </div>
 </div>
 
@@ -160,17 +142,9 @@ let checkboxEspVida = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Educação</h2>
 </div>
 
-O acesso ao conhecimento é medido por:
-média de anos de educação de adultos, que é o número médio de anos de educação recebidos durante a vida por pessoas a partir de 25 anos; e
-a expectativa de anos de escolaridade para crianças na idade de iniciar a vida escolar, que é o número total de anos de escolaridade que um criança na idade de iniciar a vida escolar pode esperar receber se os padrões prevalecentes de taxas de matrículas específicas por idade permanecerem os mesmos durante a vida da criança;
+O IDH de Educação é calculado a partir de dois indicadores principais: a média de anos de estudo entre adultos e a expectativa de anos de escolaridade para crianças em idade escolar. Niterói destaca-se por superar as médias do Rio de Janeiro e do Brasil, refletindo altas taxas de matrícula, qualidade de ensino e amplo acesso a recursos educacionais. A educação, vital para o desenvolvimento sustentável, tem um impacto direto no progresso social e econômico da cidade.
 
-O IDH de educação é avaliado pela média de anos de estudo da população adulta e os anos esperados de escolaridade para crianças em idade escolar. Niterói, com sua renda relativamente alta e infraestrutura desenvolvida, geralmente apresenta um IDH de educação que excede os padrões do Rio de Janeiro e do Brasil. Isso indica uma maior taxa de matrículas escolares, melhor qualidade de ensino e maior acesso a recursos educacionais. A educação é fundamental para o desenvolvimento sustentável de uma região, influenciando diretamente outras áreas como renda e saúde.
-
-<div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotLine(Edu_Nit,Edu_Brasil,Edu_RJ,checkboxEdu,"Evolução IDHM Educação ao Longo dos Anos", "Ano", "IDHM Educação", [0, 1])) }
-    </div>
-</div>
+<div id="Edu"></div>
 
 ```js
 // Criar Checkbox
@@ -186,13 +160,9 @@ let checkboxEdu = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Renda</h2>
 </div>
 
-E o padrão de vida é medido pela Renda Nacional Bruta (RNB) per capita expressa em poder de paridade de compra (PPP) constante, em dólar, tendo 2005 como ano de referência. O IDH de renda reflete o padrão de vida econômico de uma área. Em Niterói, que tradicionalmente tem um dos maiores IDHs de renda do estado do Rio de Janeiro, isso indica um nível geral de riqueza e acesso a recursos econômicos superior à média estadual e, frequentemente, superior à média nacional. Uma renda per capita alta em Niterói sugere melhores oportunidades de emprego, salários mais altos e um mercado local mais robusto em comparação com outras partes do estado e do país.
+O IDH de Renda em Niterói, medido pela Renda Nacional Bruta (RNB) per capita ajustada pelo poder de paridade de compra (PPP), reflete um padrão de vida econômico elevado em relação ao estado do Rio de Janeiro e frequentemente acima da média nacional. Esta alta renda per capita geralmente é indicativa de melhores oportunidades de emprego, salários mais altos e um mercado local aquecido, contribuindo para a riqueza geral e o acesso a recursos econômicos superiores em Niterói.
 
-<div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotLine(Renda_Nit,Renda_Brasil,Renda_RJ,checkboxRenda,"Evolução IDHM Renda ao Longo dos Anos", "Ano", "IDHM Educação", [0.5, 1])) }
-    </div>
-</div>
+<div id="Renda"></div>
 
 ```js
 // Criar Checkbox
@@ -208,22 +178,13 @@ let checkboxRenda = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Desigualdade</h2>
 </div>
 
-O IDH é uma medida média das conquistas de desenvolvimento humano básico em um país. Como todas as médias, o IDH mascara a desigualdade na distribuição do desenvolvimento humano entre a população no nível de país. O IDH 2010 introduziu o IDH Ajustado à Desigualdade (IDHAD), que leva em consideração a desigualdade em todas as três dimensões do IDH “descontando” o valor médio de cada dimensão de acordo com seu nível de desigualdade.
+O Índice de Desenvolvimento Humano (IDH) serve como uma medida média que resume as principais conquistas em desenvolvimento humano de um país. Contudo, como toda média, o IDH pode ocultar as desigualdades na distribuição desses avanços entre a população. Reconhecendo essa limitação, desde 2010 foram introduzidas novas metodologias no cálculo do IDH. Uma dessas inovações é o IDH Ajustado à Desigualdade (IDHAD), que ajusta os valores do índice considerando as desigualdades nas três dimensões analisadas: saúde, educação e renda.
 
-Com a introdução do IDHAD, o IDH tradicional pode ser visto como um índice de desenvolvimento humano “potencial” e o IDHAD como um índice do desenvolvimento humano “real”. A “perda” no desenvolvimento humano potencial devido à desigualdade é dada pela diferença entre o IDH e o IDHAD e pode ser expressa por um percentual.
+Com o IDHAD, é possível diferenciar o 'potencial' de desenvolvimento humano, representado pelo IDH tradicional, do 'real', indicado pelo IDHAD. A diferença entre esses dois índices mostra a perda de desenvolvimento devido às desigualdades, e é expressa como uma porcentagem.
 
-O IDHM de uma região maior, como um estado ou o país inteiro, também é calculado com base nos mesmos indicadores, mas usando dados agregados de toda a população dessa região, e não como uma média simples dos IDHMs dos municípios. Portanto, enquanto o IDHM nacional reflete o desempenho médio do país nas dimensões de educação, saúde e renda, ele é influenciado pelo peso da população de cada município, região ou estado no conjunto de dados nacional. Assim, áreas mais populosas têm maior impacto no cálculo do IDHM do que áreas menos populosas.
+Vale destacar que o IDH Ajustado à Desigualdade (IDHAD) começou a ser calculado apenas em 2013 e não é aplicado aos municípios. Nos gráficos abaixo, você pode visualizar as variações do Índice de Desenvolvimento Humano Municipal (IDHM) e do IDHAD para o Estado do Rio de Janeiro e para o Brasil, utilizando os dados do PNAD de 2021.
 
-Portanto, o IDHM do Brasil reflete uma visão agregada e ponderada dos indicadores de desenvolvimento humano em todo o território nacional, levando em consideração as variações regionais e locais no desenvolvimento humano, saúde, educação e condições econômicas.
-Abaixo é possível observar os plots do IDHM e do IDHMAD do Estado do Rio de Janeiro e do Brasil, visto que estes valores não são calculados para os municípios. Os dados presentes são do ano de 2021, visto que o IDHAD começou a ser calculado a partir de 2013.
-
-<!-- Adicionar mapa com IDH ajustado. -->
-
-<div style="width: 100%; margin-top: 15px;">
-    <div id="ex01" style="width: 100%; margin-top: 15px;">
-        ${ vl.render(plotBars(radioboxLoc, dataRio, dataBrasil)) }
-    </div>
-</div>
+<div id="IDHMAD"></div>
 
 ```js
 // Criar Radio Box
@@ -235,12 +196,6 @@ let radioboxLoc = view(
 );
 ```
 
-<!-- Adicionar gráfico Distribuição de Renda na cidade e comparar com RJ e país. -->
-
-Niterói teve posição de destaque no Índice de Concorrência dos Municípios Brasileiros (ICM), levantamento feito pelo Ministério da Economia que avalia, de forma sistemática, contínua e estruturada o ambiente de negócios dos municípios brasileiros. A cidade ficou em 1º lugar entre os 92 municípios de todo o estado do Rio de Janeiro, firmou-se em 3º entre os 1.668 da Região Sudeste, e em 12º lugar no ranking geral.
-
-A pesquisa foi enviada para 119 municípios brasileiros, totalizando 43% da população brasileira e o resultado foi informado na segunda-feira (9), pelo site do Ministério da Economia. Com a pontuação de 562,8, Niterói supera, até mesmo, a pontuação média nacional (473,9) e capitais como Rio de Janeiro (466,2) e São Paulo (532,58). O ICM tem como objetivo realizar uma avaliação, ampla e objetiva, do ambiente de negócios dos municípios brasileiros, visando, a partir dos resultados, contribuir na formulação de políticas públicas e direcionar as boas práticas observadas nas cidades.
-
 ```js
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
   { typed: true }
@@ -249,77 +204,71 @@ const IDHM = await FileAttachment("Tabelas_panorama/RJ_IDHM.csv").csv();
 ```
 
 ```js
-const divWidth01 = Generators.width(document.querySelector("#ex01"));
-```
+const divWidth = Generators.width(document.querySelector("#ex01"));
 
-```js
-function plotMap(divWidth, geojson, IDHM) {
-  return {
-    spec: {
-      width: divWidth,
-      height: 300,
-      background: "#f4f4f9",
-      projection: {
-        type: "mercator",
+let plotMap = {
+  width: divWidth,
+  height: 300,
+  background: "#f4f4f9",
+  projection: {
+    type: "mercator",
+  },
+  layer: [
+    {
+      data: {
+        values: geojson,
+        format: {
+          type: "json",
+          property: "features",
+        },
       },
-      layer: [
+      transform: [
         {
-          data: {
-            values: geojson,
-            format: {
-              type: "json",
-              property: "features",
+          lookup: "properties.name",
+          from: {
+            data: {
+              values: IDHM,
             },
-          },
-          transform: [
-            {
-              lookup: "properties.name",
-              from: {
-                data: {
-                  values: IDHM,
-                },
-                key: "Territorialidades",
-                fields: ["IDHM 2010"],
-              },
-            },
-          ],
-          mark: {
-            type: "geoshape",
-            stroke: "#BFBFBF",
-            strokeWidth: 1,
-          },
-          encoding: {
-            color: {
-              field: "IDHM 2010",
-              type: "quantitative",
-              scale: { scheme: "reds" },
-            },
-          },
-          selection: {
-            highlight: {
-              type: "single",
-              on: "mouseover",
-              empty: "none",
-              fields: ["properties.name"],
-            },
-          },
-          encoding: {
-            color: {
-              condition: { selection: "highlight", value: "green" }, // Change to desired highlight color
-              field: "IDHM 2010",
-              type: "quantitative",
-              scale: { scheme: "reds" },
-            },
-            tooltip: [
-              { field: "properties.name", type: "nominal", title: "Cidade" },
-              { field: "IDHM 2010", type: "quantitative", title: "IDHM" },
-            ],
+            key: "Territorialidades",
+            fields: ["IDHM 2010"],
           },
         },
       ],
-    },
-  };
-}
+      mark: {
+        type: "geoshape",
+        stroke: "#BFBFBF",
+        strokeWidth: 1,
+      },
+      encoding: {
+        color: {
+          field: "IDHM 2010",
+          type: "quantitative",
+          scale: { scheme: "reds" },
+          condition: { selection: "highlight", value: "green" } // Highlight color when selected
+        },
+        tooltip: [
+          { field: "properties.name", type: "nominal", title: "Cidade" },
+          { field: "IDHM 2010", type: "quantitative", title: "IDHM" }
+        ]
+      },
+      selection: {
+        highlight: {
+          type: "single",
+          on: "mouseover",
+          empty: "none",
+          fields: ["properties.name"]
+        }
+      }
+    }
+  ],
+};
+
+
+vegaEmbed("#RJMap", plotMap)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
 ```
 
 ```js
@@ -401,54 +350,45 @@ let Renda_RJ = data.filter(
 ```
 
 ```js
-function plotLine(
-  Nit,
-  Brasil,
-  RJ,
-  selectedLocations,
-  plottitle,
-  xField,
-  yField,
-  yDomain
+// Gráfico IDHM
+
+let DataIDH = [];
+
+if (
+  checkboxIDH.includes("Brasil") &&
+  checkboxIDH.includes("Niterói") &&
+  checkboxIDH.includes("Rio de Janeiro")
 ) {
-  let Data = [];
+  DataIDH = IDH_Nit.concat(IDH_Brasil, IDH_RJ);
+} else if (
+  checkboxIDH.includes("Rio de Janeiro") &&
+  checkboxIDH.includes("Brasil")
+) {
+  DataIDH = IDH_RJ.concat(IDH_Brasil);
+} else if (
+  checkboxIDH.includes("Rio de Janeiro") &&
+  checkboxIDH.includes("Niterói")
+) {
+  DataIDH = IDH_RJ.concat(IDH_Nit);
+} else if (
+  checkboxIDH.includes("Niterói") &&
+  checkboxIDH.includes("Brasil")
+) {
+  DataIDH = IDH_Nit.concat(IDH_Brasil);
+} else if (checkboxIDH.includes("Brasil")) {
+  DataIDH = IDH_Brasil;
+} else if (checkboxIDH.includes("Niterói")) {
+  DataIDH = IDH_Nit;
+} else if (checkboxIDH.includes("Rio de Janeiro")) {
+  DataIDH = IDH_RJ;
+};
 
-  if (
-    selectedLocations.includes("Brasil") &&
-    selectedLocations.includes("Niterói") &&
-    selectedLocations.includes("Rio de Janeiro")
-  ) {
-    Data = Nit.concat(Brasil, RJ);
-  } else if (
-    selectedLocations.includes("Rio de Janeiro") &&
-    selectedLocations.includes("Brasil")
-  ) {
-    Data = RJ.concat(Brasil);
-  } else if (
-    selectedLocations.includes("Rio de Janeiro") &&
-    selectedLocations.includes("Niterói")
-  ) {
-    Data = RJ.concat(Nit);
-  } else if (
-    selectedLocations.includes("Niterói") &&
-    selectedLocations.includes("Brasil")
-  ) {
-    Data = Nit.concat(Brasil);
-  } else if (selectedLocations.includes("Brasil")) {
-    Data = Brasil;
-  } else if (selectedLocations.includes("Niterói")) {
-    Data = Nit;
-  } else if (selectedLocations.includes("Rio de Janeiro")) {
-    Data = RJ;
-  }
-
-  return {
-    spec: {
+let plotIDHM = {
       $schema: "https://vega.github.io/schema/vega-lite/v5.json",
       width: 350,
       height: 250,
       data: {
-        values: Data,
+        values: DataIDH,
       },
       layer: [
         {
@@ -463,9 +403,9 @@ function plotLine(
           },
           encoding: {
             x: {
-              field: xField,
+              field: "Ano",
               type: "ordinal",
-              title: xField,
+              title: "Ano",
               axis: {
                 labelFontSize: 12,
                 titleFontSize: 14,
@@ -476,13 +416,13 @@ function plotLine(
             y: {
               field: "Valor",
               type: "quantitative",
-              title: yField,
+              title: "IDH",
               axis: {
                 labelFontSize: 12,
                 titleFontSize: 14,
                 titleColor: "#333333",
               },
-              scale: { domain: yDomain },
+              scale: { domain: [0.4, 1] },
             },
             color: {
               field: "Local",
@@ -509,7 +449,7 @@ function plotLine(
           },
           encoding: {
             x: {
-              field: xField,
+              field: "Ano",
               type: "ordinal",
             },
             y: {
@@ -528,7 +468,7 @@ function plotLine(
         },
       ],
       title: {
-        text: plottitle,
+        text: "Evolução IDH ao Longo dos Anos",
         fontSize: 20,
         font: "Arial",
         anchor: "middle",
@@ -542,10 +482,272 @@ function plotLine(
           tickColor: "#333333",
         },
         background: "#f4f4f9",
+      }
+};
+
+vegaEmbed("#IDHM", plotIDHM)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+
+// Gráficos Esperança de Vida e Longevidade
+
+let DataEspVida = [];
+let DataLong = [];
+
+if (
+  checkboxEspVida.includes("Brasil") &&
+  checkboxEspVida.includes("Niterói") &&
+  checkboxEspVida.includes("Rio de Janeiro")
+) {
+  DataEspVida = EspVida_Nit.concat(EspVida_Brasil, EspVida_RJ);
+  DataLong = Long_Nit.concat(Long_Brasil, Long_RJ);
+} else if (
+  checkboxEspVida.includes("Rio de Janeiro") &&
+  checkboxEspVida.includes("Brasil")
+) {
+  DataEspVida = EspVida_RJ.concat(EspVida_Brasil);
+  DataLong = Long_RJ.concat(Long_Brasil);
+} else if (
+  checkboxEspVida.includes("Rio de Janeiro") &&
+  checkboxEspVida.includes("Niterói")
+) {
+  DataEspVida = EspVida_RJ.concat(EspVida_Nit);
+  DataLong = Long_RJ.concat(Long_Nit);
+} else if (
+  checkboxEspVida.includes("Niterói") &&
+  checkboxEspVida.includes("Brasil")
+) {
+  DataEspVida = EspVida_Nit.concat(EspVida_Brasil);
+  DataLong = Long_Nit.concat(Long_Brasil);
+} else if (checkboxEspVida.includes("Brasil")) {
+  DataEspVida = EspVida_Brasil;
+  DataLong = Long_Brasil;
+} else if (checkboxEspVida.includes("Niterói")) {
+  DataEspVida = EspVida_Nit;
+  DataLong = Long_Nit;
+} else if (checkboxEspVida.includes("Rio de Janeiro")) {
+  DataEspVida = EspVida_RJ;
+  DataLong = Long_RJ;
+};
+
+let plotEspVida = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      width: 350,
+      height: 250,
+      data: {
+        values: DataEspVida,
       },
-    },
-  };
-}
+      layer: [
+        {
+          mark: {
+            type: "line",
+            point: {
+              filled: true,
+              size: 100, // Aumentando o tamanho do ponto
+            },
+            color: "#4CAF50",
+            tooltip: true,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+              title: "Ano",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                labelAngle: 0,
+                titleColor: "#333333",
+              },
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+              title: "IDH",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                titleColor: "#333333",
+              },
+              scale: { domain: [60, 90] },
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+              scale: {
+                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+                range: ["#336699", "#668866", "#999999"],
+              },
+              title: "Local",
+            },
+            tooltip: [
+              { field: "Ano", type: "ordinal" },
+              { field: "Valor", type: "quantitative" },
+              { field: "Local", type: "nominal" },
+            ],
+          },
+        },
+        {
+          mark: {
+            type: "text",
+            align: "left",
+            dx: 5,
+            dy: -5,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            text: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+            },
+          },
+        },
+      ],
+      title: {
+        text: "Evolução Esperança de Vida",
+        fontSize: 20,
+        font: "Arial",
+        anchor: "middle",
+        color: "#003366", // Azul Marinho para o título
+      },
+      config: {
+        axis: {
+          labelColor: "#333333",
+          labelFont: "Arial",
+          gridColor: "#e0e0e0",
+          tickColor: "#333333",
+        },
+        background: "#f4f4f9",
+      }
+};
+
+vegaEmbed("#EspVida", plotEspVida)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+let plotLong = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      width: 350,
+      height: 250,
+      data: {
+        values: DataLong,
+      },
+      layer: [
+        {
+          mark: {
+            type: "line",
+            point: {
+              filled: true,
+              size: 100, // Aumentando o tamanho do ponto
+            },
+            color: "#4CAF50",
+            tooltip: true,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+              title: "Ano",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                labelAngle: 0,
+                titleColor: "#333333",
+              },
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+              title: "IDH",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                titleColor: "#333333",
+              },
+              scale: { domain: [0.6, 0.9] },
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+              scale: {
+                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+                range: ["#336699", "#668866", "#999999"],
+              },
+              title: "Local",
+            },
+            tooltip: [
+              { field: "Ano", type: "ordinal" },
+              { field: "Valor", type: "quantitative" },
+              { field: "Local", type: "nominal" },
+            ],
+          },
+        },
+        {
+          mark: {
+            type: "text",
+            align: "left",
+            dx: 5,
+            dy: -5,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            text: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+            },
+          },
+        },
+      ],
+      title: {
+        text: "Evolução IDH Longevidade",
+        fontSize: 20,
+        font: "Arial",
+        anchor: "middle",
+        color: "#003366", // Azul Marinho para o título
+      },
+      config: {
+        axis: {
+          labelColor: "#333333",
+          labelFont: "Arial",
+          gridColor: "#e0e0e0",
+          tickColor: "#333333",
+        },
+        background: "#f4f4f9",
+      }
+};
+
+vegaEmbed("#Long", plotLong)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
 ```
 
 ```js
@@ -572,10 +774,9 @@ const dataBrasil = [
 ```
 
 ```js
-function plotBars(radioboxLoc, dataRio, dataBrasil) {
-  const data = radioboxLoc === "Rio de Janeiro (UF)" ? dataRio : dataBrasil;
-  return {
-    spec: {
+const data = radioboxLoc === "Rio de Janeiro (UF)" ? dataRio : dataBrasil;
+
+let plotBars = {
       $schema: "https://vega.github.io/schema/vega-lite/v5.json",
       description: "Interactive bar chart with highlighting on hover",
       width: 400,
@@ -638,70 +839,294 @@ function plotBars(radioboxLoc, dataRio, dataBrasil) {
           },
         },
       ],
-    },
-  };
-}
-```
+    };
 
-```js
-function plotBars01() {
-  return {
-    spec: {
-      width: 400,
-      height: 300,
+vegaEmbed("#IDHMAD", plotBars)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+
+// Gráfico Educação
+
+let DataEdu = [];
+
+if (
+  checkboxEdu.includes("Brasil") &&
+  checkboxEdu.includes("Niterói") &&
+  checkboxEdu.includes("Rio de Janeiro")
+) {
+  DataEdu = Edu_Nit.concat(Edu_Brasil, Edu_RJ);
+} else if (
+  checkboxEdu.includes("Rio de Janeiro") &&
+  checkboxEdu.includes("Brasil")
+) {
+  DataEdu = Edu_RJ.concat(Edu_Brasil);
+} else if (
+  checkboxEdu.includes("Rio de Janeiro") &&
+  checkboxEdu.includes("Niterói")
+) {
+  DataEdu = Edu_RJ.concat(Edu_Nit);
+} else if (
+  checkboxEdu.includes("Niterói") &&
+  checkboxEdu.includes("Brasil")
+) {
+  DataEdu = Edu_Nit.concat(Edu_Brasil);
+} else if (checkboxEdu.includes("Brasil")) {
+  DataEdu = Edu_Brasil;
+} else if (checkboxEdu.includes("Niterói")) {
+  DataEdu = Edu_Nit;
+} else if (checkboxEdu.includes("Rio de Janeiro")) {
+  DataEdu = Edu_RJ;
+};
+
+let plotEdu = {
       $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      description:
-        "A bar chart with highlighting on hover and selecting on click. (Inspired by Tableau's interaction style.)",
+      width: 350,
+      height: 250,
       data: {
-        values: [
-          { IDH: "Educação", b: 0.8 },
-          { IDH: "Longevidade", b: 0.9 },
-          { IDH: "Renda", b: 0.7 },
-          { IDH: "Calculado", b: 0.5 },
-        ],
+        values: DataEdu,
       },
-      params: [
+      layer: [
         {
-          name: "highlight",
-          select: { type: "point", on: "pointerover" },
+          mark: {
+            type: "line",
+            point: {
+              filled: true,
+              size: 100, // Aumentando o tamanho do ponto
+            },
+            color: "#4CAF50",
+            tooltip: true,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+              title: "Ano",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                labelAngle: 0,
+                titleColor: "#333333",
+              },
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+              title: "IDH",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                titleColor: "#333333",
+              },
+              scale: { domain: [0, 1] },
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+              scale: {
+                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+                range: ["#336699", "#668866", "#999999"],
+              },
+              title: "Local",
+            },
+            tooltip: [
+              { field: "Ano", type: "ordinal" },
+              { field: "Valor", type: "quantitative" },
+              { field: "Local", type: "nominal" },
+            ],
+          },
         },
-        { name: "select", select: "point" },
+        {
+          mark: {
+            type: "text",
+            align: "left",
+            dx: 5,
+            dy: -5,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            text: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+            },
+          },
+        },
       ],
-      mark: {
-        type: "bar",
-        fill: "#556b2f",
-        stroke: "black",
-        cursor: "pointer",
-      },
-      encoding: {
-        x: { field: "IDH", type: "ordinal" },
-        y: { field: "b", type: "quantitative" },
-        fillOpacity: {
-          condition: { param: "select", value: 1 },
-          value: 0.3,
-        },
-        strokeWidth: {
-          condition: [
-            {
-              param: "select",
-              empty: false,
-              value: 2,
-            },
-            {
-              param: "highlight",
-              empty: false,
-              value: 1,
-            },
-          ],
-          value: 0,
-        },
+      title: {
+        text: "Evolução IDH Educação",
+        fontSize: 20,
+        font: "Arial",
+        anchor: "middle",
+        color: "#003366", // Azul Marinho para o título
       },
       config: {
-        scale: {
-          bandPaddingInner: 0.2,
+        axis: {
+          labelColor: "#333333",
+          labelFont: "Arial",
+          gridColor: "#e0e0e0",
+          tickColor: "#333333",
         },
+        background: "#f4f4f9",
+      }
+};
+
+vegaEmbed("#Edu", plotEdu)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+// Gráfico IDHM Renda
+
+let DataRenda = [];
+
+if (
+  checkboxRenda.includes("Brasil") &&
+  checkboxRenda.includes("Niterói") &&
+  checkboxRenda.includes("Rio de Janeiro")
+) {
+  DataRenda = Renda_Nit.concat(Renda_Brasil, Renda_RJ);
+} else if (
+  checkboxRenda.includes("Rio de Janeiro") &&
+  checkboxRenda.includes("Brasil")
+) {
+  DataRenda = Renda_RJ.concat(Renda_Brasil);
+} else if (
+  checkboxRenda.includes("Rio de Janeiro") &&
+  checkboxRenda.includes("Niterói")
+) {
+  DataRenda = Renda_RJ.concat(Renda_Nit);
+} else if (
+  checkboxRenda.includes("Niterói") &&
+  checkboxRenda.includes("Brasil")
+) {
+  DataRenda = Renda_Nit.concat(Renda_Brasil);
+} else if (checkboxRenda.includes("Brasil")) {
+  DataRenda = Renda_Brasil;
+} else if (checkboxRenda.includes("Niterói")) {
+  DataRenda = Renda_Nit;
+} else if (checkboxRenda.includes("Rio de Janeiro")) {
+  DataRenda = Renda_RJ;
+};
+
+let plotRenda = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      width: 350,
+      height: 250,
+      data: {
+        values: DataRenda,
       },
-    },
-  };
-}
+      layer: [
+        {
+          mark: {
+            type: "line",
+            point: {
+              filled: true,
+              size: 100, // Aumentando o tamanho do ponto
+            },
+            color: "#4CAF50",
+            tooltip: true,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+              title: "Ano",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                labelAngle: 0,
+                titleColor: "#333333",
+              },
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+              title: "IDH",
+              axis: {
+                labelFontSize: 12,
+                titleFontSize: 14,
+                titleColor: "#333333",
+              },
+              scale: { domain: [0.4, 1] },
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+              scale: {
+                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+                range: ["#336699", "#668866", "#999999"],
+              },
+              title: "Local",
+            },
+            tooltip: [
+              { field: "Ano", type: "ordinal" },
+              { field: "Valor", type: "quantitative" },
+              { field: "Local", type: "nominal" },
+            ],
+          },
+        },
+        {
+          mark: {
+            type: "text",
+            align: "left",
+            dx: 5,
+            dy: -5,
+          },
+          encoding: {
+            x: {
+              field: "Ano",
+              type: "ordinal",
+            },
+            y: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            text: {
+              field: "Valor",
+              type: "quantitative",
+            },
+            color: {
+              field: "Local",
+              type: "nominal",
+            },
+          },
+        },
+      ],
+      title: {
+        text: "Evolução IDH Renda",
+        fontSize: 20,
+        font: "Arial",
+        anchor: "middle",
+        color: "#003366", // Azul Marinho para o título
+      },
+      config: {
+        axis: {
+          labelColor: "#333333",
+          labelFont: "Arial",
+          gridColor: "#e0e0e0",
+          tickColor: "#333333",
+        },
+        background: "#f4f4f9",
+      }
+};
+
+vegaEmbed("#Renda", plotRenda)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
 ```

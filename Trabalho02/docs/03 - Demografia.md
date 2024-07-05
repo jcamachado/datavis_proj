@@ -68,6 +68,21 @@ const vl = vegaLiteApi.register(vega, vegaLite);
   <h1 style="margin-bottom: 50px;">Demografia</h1>
 </div>
 
+De acordo com os dados do IBGE em 2022, Niterói se destaca como uma das cidades mais populosas do estado do Rio de Janeiro, com densidade demográfica de 3.601,67 habitantes por km². Com uma população estimada em 481.758 habitantes, Niterói se posiciona como o 5º município mais populoso do Rio de Janeiro e o 44º do Brasil.
+
+O mapa apresentado facilita a visualização comparativa da densidade populacional e do número de habitantes dos municípios do Rio de Janeiro. Niterói se destaca nitidamente em tons mais escuros, revelando sua alta concentração populacional. Essa característica, atrelada à sua localização estratégica na Região Metropolitana do Rio de Janeiro, torna Niterói um polo cultural, econômico e social em constante crescimento.
+
+  <div style="width: 100%; margin-top: 15px;">
+    <div id="ex01" style="width: 100%; margin-top: 15px;">
+        ${ vl.render(plotMap(divWidth - 200, geojson, IDHM, radioboxPop)) }
+    </div>
+</div>
+
+```js
+// Criar Radio Box
+let radioboxPop = view(Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {label: "Exibir dados: ", value: "Densidade Demográfica (2022)"}));
+```
+
 <div class="hero">
   <h2 style="margin-bottom: 50px; margin-top: 50px;">Crescimento populacional</h2>
 </div>
@@ -76,7 +91,7 @@ Até 2010, a população niteroiense crescia em um ritmo desacelerado, indo de 3
 
 <div id="visPopGrow"></div>
 
-A redução populacional é um aspecto com diversos fatores e sutilezas que, embora alguns sejam abordados, não serão aprofundados aqui. Como discutido na seção da página anterior (2), o IDH da cidade tem consistentemente crescido, e já é considerado alto a algumas pesquisas. E assim como é tendência em países com alto IDH, a taxa de natalidade tende a diminuir quando políticas publicas de igualdade de gênero não visam lidar com fatores que permitem a segurança para criação de filhos, como por exemplo, creches e licença paternidade equiparada.
+A redução populacional é um aspecto com diversos fatores e sutilezas que, embora alguns sejam abordados, não serão aprofundados aqui. Como discutido na seção da página anterior (2), o IDH da cidade tem consistentemente crescido, e é considerado alto a algumas pesquisas. E assim como é tendência em países com alto IDH, a taxa de natalidade tende a diminuir quando políticas publicas de igualdade de gênero não visam lidar com fatores que permitem a segurança para criação de filhos, como por exemplo, creches e licença paternidade equiparada.
 
 Consequentemente, a pirâmide etária da cidade desloca seu centro de massa para idades mais avançadas. Pois além de menos natalidade, a longevidade também vai sendo aprimorada.
 
@@ -542,8 +557,6 @@ popGrowthData = popGrowthData.map((d) => {
   return d;
 });
 
-const divWidth02 = Generators.width(document.querySelector("#ex02"));
-
 var specPopGrow = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description: "A simple bar chart with embedded data.",
@@ -619,7 +632,7 @@ ageData = ageData.map((d) => {
   return d;
 });
 
-const divWidth01 = Generators.width(document.querySelector("#ex01"));
+const divWidth = Generators.width(document.querySelector("#ex01"));
 
 var specAge = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -759,4 +772,84 @@ vegaEmbed("#visAge", specAge)
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
   .catch(console.error);
+```
+
+```js
+function plotMap(divWidth, geojson, IDHM, radioboxPop) {
+  return {
+    spec: {
+      width: divWidth,
+      height: 300,
+      background: "#f4f4f9",
+      projection: {
+        type: "mercator"
+      },
+      layer: [
+        {
+          data: {
+            values: geojson,
+            format: {
+              type: "json",
+              property: "features"
+            }
+          },
+          transform: [
+            {
+              lookup: "properties.name",
+              from: {
+                data: {
+                  values: IDHM
+                },
+                key: "Territorialidades",
+                fields: [radioboxPop]
+              }
+            }
+          ],
+          mark: {
+            type: "geoshape",
+            stroke: "#D3D3D3"
+            ,
+            strokeWidth: 1
+          },
+          encoding: {
+            color: {
+              field: radioboxPop,
+              type: "quantitative",
+              scale: { scheme: "blues", type: 'log' },
+              "legend": {
+                "orient": "right",
+                "titleFontSize": 12,
+                "titleAlign": "center"
+              }
+            },
+            tooltip: [
+              { field: "properties.name", type: "nominal", title: "Cidade" },
+              { field: radioboxPop, type: "quantitative", title: radioboxPop}
+            ]
+          },
+          selection: {
+            highlight: {
+              type: "single",
+              on: "mouseover",
+              empty: "none",
+              fields: ["properties.name"],
+            },
+          },
+          encoding: {
+            color: {
+              condition: { selection: "highlight", value: "green" }, // Change to desired highlight color
+              field: radioboxPop,
+              type: "quantitative",
+              scale: { scheme: "blues", type: 'log' },
+            },
+            tooltip: [
+              { field: "properties.name", type: "nominal", title: "Cidade" },
+              { field: radioboxPop, type: "quantitative", title: radioboxPop },
+            ],
+          },
+        }
+      ]
+    }
+  }
+}
 ```
