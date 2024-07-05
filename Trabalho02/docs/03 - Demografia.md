@@ -120,7 +120,7 @@ Embora não seja um grupo etnico, os quilombolas também estão presentes na cid
 ```js
 const goldenYellow = "#FFD700";
 const turquoise = "#40e0d0";
-const graphWidth = 1024;
+const graphWidth = 800;
 const graphHeight = 500;
 
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
@@ -232,7 +232,7 @@ let ethinicsSpec = {
           type: "nominal",
           scale: {
             domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
-            range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
+            range: ["#f0f0f0", "#707070", "#FFFF99", "#FFB374", "#9DBB8F"],
           },
           legend: null,
         },
@@ -341,7 +341,7 @@ let ethinicsSpec2 = {
       type: "nominal",
       scale: {
         domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
-        range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
+        range: ["#f0f0f0", "#707070", "#FFFF99", "#FFB374", "#9DBB8F"],
       },
     },
     tooltip: [
@@ -386,7 +386,7 @@ let quilombolaSpec = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description:
     "Visualization of the Indígena, Amarela, and Quilombola populations as side-by-side circles.",
-  width: graphWidth,
+  width: graphWidth - 35,
   height: graphHeight,
   title: "População Quilombola X Indígena X Amarela- Niterói (RJ)",
   data: {
@@ -434,7 +434,7 @@ let quilombolaSpec = {
       type: "nominal",
       scale: {
         domain: ["Indígena", "Amarela", "Quilombola"],
-        range: ["#8B4513", "#FFFF00", "#000000"],
+        range: ["#9DBB8F", "#FFFF99", "#BF616A"],
       },
       legend: { title: "Tipo de População" },
     },
@@ -476,7 +476,7 @@ let genderSpec = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description:
     "Pie chart showing population by gender in Niterói (RJ) based on the 2022 census.",
-  width: graphWidth,
+  width: graphWidth + 80,
   height: graphHeight,
   data: {
     values: genderData,
@@ -507,7 +507,14 @@ let genderSpec = {
   },
   encoding: {
     theta: { field: "population", type: "quantitative" },
-    color: { field: "gender", type: "nominal", legend: { title: "Gênero" } },
+    color: {
+      field: "gender",
+      type: "nominal",
+      legend: { title: "Gênero" },
+      scale: {
+        range: [goldenYellow, turquoise],
+      },
+    },
     tooltip: [
       { field: "gender", type: "nominal", title: "Gênero" },
       { field: "population", type: "quantitative", title: "População" },
@@ -550,7 +557,7 @@ var specPopGrow = {
   data: {
     values: popGrowthData,
   },
-  width: graphWidth,
+  width: graphWidth + 130,
   height: graphHeight,
   layer: [
     {
@@ -574,20 +581,6 @@ var specPopGrow = {
           { field: "year", type: "ordinal", title: "Ano" },
           { field: "population", type: "quantitative", title: "População" },
         ],
-      },
-    },
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        align: "right",
-        baseline: "bottom",
-        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
-        dy: graphHeight / 2 + 50, // Adjust the distance from the bottom of your visualization
-        text: "IBGE, 2022",
-      },
-      encoding: {
-        text: { type: "nominal" },
       },
     },
   ],
@@ -650,7 +643,7 @@ var specAge = {
       as: "absFemale",
     },
   ],
-  width: graphWidth,
+  width: graphWidth - 80,
   height: graphHeight,
   layer: [
     {
@@ -714,6 +707,7 @@ var specAge = {
           axis: {
             title: "População",
             labelExpr: "abs(datum.value)",
+            orient: "top",
           },
           scale: { domain: [0, 25000] },
         },
@@ -730,20 +724,6 @@ var specAge = {
             format: ",.0f",
           },
         ],
-      },
-    },
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        align: "right",
-        baseline: "bottom",
-        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
-        dy: graphHeight / 2 + 10, // Adjust the distance from the bottom of your visualization
-        text: "IBGE, 2022",
-      },
-      encoding: {
-        text: { type: "nominal" },
       },
     },
   ],
