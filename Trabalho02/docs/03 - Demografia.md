@@ -140,6 +140,12 @@ Embora não seja um grupo etnico, os quilombolas também estão presentes na cid
 ```js
 let goldenYellow = "#FFD700";
 let turquoise = "#40e0d0";
+let branca = "#d0d0d0";
+let preta = "#404040";
+let amarela = "#FFFF99";
+let parda = "#FFB374";
+let indigena = "#9DBB8F";
+
 let bgColor = "#f4f4f9";
 let divWidth = Generators.width(document.querySelector("#ex01"));
 
@@ -220,7 +226,7 @@ let ethinicsSpec = {
     values: ethinicsData,
   },
   background: bgColor,
-  width: divWidth,
+  width: divWidth - 100,
   height: graphHeight,
 
   title: "População por cor ou raça - Niterói (RJ)",
@@ -255,7 +261,7 @@ let ethinicsSpec = {
           type: "nominal",
           scale: {
             domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
-            range: ["#f0f0f0", "#707070", "#FFFF99", "#FFB374", "#9DBB8F"],
+            range: [branca, preta, amarela, parda, indigena],
           },
           legend: null,
         },
@@ -351,7 +357,7 @@ let ethinicsSpec2 = {
       type: "nominal",
       scale: {
         domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
-        range: ["#f0f0f0", "#707070", "#FFFF99", "#FFB374", "#9DBB8F"],
+        range: [branca, preta, amarela, parda, indigena],
       },
     },
     tooltip: [
@@ -445,7 +451,7 @@ let quilombolaSpec = {
       type: "nominal",
       scale: {
         domain: ["Indígena", "Amarela", "Quilombola"],
-        range: ["#9DBB8F", "#FFFF99", "#BF616A"],
+        range: [indigena, amarela, "#BF616A"],
       },
       legend: { title: "Tipo de População" },
     },
@@ -630,6 +636,9 @@ var specAge = {
   data: {
     values: ageData,
   },
+  width: divWidth - 100,
+  height: graphHeight,
+  background: bgColor,
   transform: [
     {
       calculate: "datum.female * -1",
@@ -652,9 +661,6 @@ var specAge = {
       as: "absFemale",
     },
   ],
-  width: divWidth,
-  height: graphHeight,
-  background: bgColor,
   layer: [
     {
       mark: "bar",
