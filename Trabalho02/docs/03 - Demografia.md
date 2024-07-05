@@ -111,7 +111,7 @@ Mulheres são maioria em Niterói, com mais de 40mil habitantes a mais que homen
 <div id="visGender"></div>
 
 Outro importante retrato da diversidade de uma população é a distribuição pelo aspecto chamado "de cor ou raça". Este aspecto é registrado segundo a autodeclaração do entrevistado, e é um importante indicador de desigualdades sociais e raciais.
-A cidade de Niterói é casa de toda a diversidade categorizada pelo IBGE(garantir fonte e ano), com maioria de população branca com 57.16%, seguida por pardos com 29.96%, pretos com 12.51%. E com minoria expressivamente menos representativa somando 0.37% do total, com 0.24% de amarelos e 0.13% de indígenas.
+A cidade de Niterói possui uma população com maioria branca, representando 57,16% do total. Em seguida, vêm os pardos (29,96%), pretos (12,51%) e indígenas (0,13%). Os amarelos representam a menor parcela da população, com apenas 0,24%.
 
 Abaixo ambos os gráficos demonstram a distribuição da população por cor ou raça em Niterói.
 
