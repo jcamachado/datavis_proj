@@ -161,9 +161,14 @@ function parseIBGEData(data) {
     Object.keys(d).forEach((k) => {
       if (k.includes(";")) {
         const keys = k.split(";");
-        const values = d[k].split(";");
+        let values = d[k].split(";");
+
         keys.forEach((key, i) => {
           d[key] = values[i];
+          // if number set as number
+          if (!isNaN(d[key])) {
+            d[key] = +d[key];
+          }
         });
         delete d[k];
       }
@@ -348,7 +353,7 @@ let ethinicsSpec2 = {
     x: {
       field: "percentage",
       type: "quantitative",
-      axis: { title: "População (%)", format: ".1f" },
+      axis: { title: "População (%)", format: ",.0f" },
       stack: "zero",
     },
     color: {
@@ -563,7 +568,8 @@ parseIBGEData(popGrowthData);
 
 popGrowthData = popGrowthData.map((d) => {
   d.year = d["Ano da pesquisa"];
-  d.population = d["População(pessoas)"];
+  d.population = parseInt(d["População(pessoas)"]);
+  console.log(d);
   return d;
 });
 
@@ -596,7 +602,12 @@ var specPopGrow = {
         // Add tooltip encoding here
         tooltip: [
           { field: "year", type: "ordinal", title: "Ano" },
-          { field: "population", type: "quantitative", title: "População" },
+          {
+            field: "population",
+            type: "quantitative",
+            title: "População",
+            format: ",.0f",
+          },
         ],
       },
     },
