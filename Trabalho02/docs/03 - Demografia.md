@@ -80,7 +80,12 @@ O mapa apresentado facilita a visualização comparativa da densidade populacion
 
 ```js
 // Criar Radio Box
-let radioboxPop = view(Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {label: "Exibir dados: ", value: "Densidade Demográfica (2022)"}));
+let radioboxPop = view(
+  Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {
+    label: "Exibir dados: ",
+    value: "Densidade Demográfica (2022)",
+  })
+);
 ```
 
 <div class="hero">
@@ -91,7 +96,7 @@ Até 2010, a população niteroiense crescia em um ritmo desacelerado, indo de 3
 
 <div id="visPopGrow"></div>
 
-A redução populacional é um aspecto com diversos fatores e sutilezas que, embora alguns sejam abordados, não serão aprofundados aqui. Como discutido na seção da página anterior (2), o IDH da cidade tem consistentemente crescido, e é considerado alto a algumas pesquisas. E assim como é tendência em países com alto IDH, a taxa de natalidade tende a diminuir quando políticas publicas de igualdade de gênero não visam lidar com fatores que permitem a segurança para criação de filhos, como por exemplo, creches e licença paternidade equiparada.
+A redução populacional é um aspecto com diversos fatores e sutilezas que, embora alguns sejam abordados, não serão aprofundados aqui. Como discutido na seção da página anterior (2), o IDH da cidade tem consistentemente crescido, e é considerado alto a algumas pesquisas. E assim como é tendência em países com alto IDH, a taxa de natalidade tende a diminuir quando políticas públicas de igualdade de gênero.
 
 Consequentemente, a pirâmide etária da cidade desloca seu centro de massa para idades mais avançadas. Pois além de menos natalidade, a longevidade também vai sendo aprimorada.
 
@@ -762,7 +767,7 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
       height: 300,
       background: "#f4f4f9",
       projection: {
-        type: "mercator"
+        type: "mercator",
       },
       layer: [
         {
@@ -770,42 +775,41 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
             values: geojson,
             format: {
               type: "json",
-              property: "features"
-            }
+              property: "features",
+            },
           },
           transform: [
             {
               lookup: "properties.name",
               from: {
                 data: {
-                  values: IDHM
+                  values: IDHM,
                 },
                 key: "Territorialidades",
-                fields: [radioboxPop]
-              }
-            }
+                fields: [radioboxPop],
+              },
+            },
           ],
           mark: {
             type: "geoshape",
-            stroke: "#D3D3D3"
-            ,
-            strokeWidth: 1
+            stroke: "#D3D3D3",
+            strokeWidth: 1,
           },
           encoding: {
             color: {
               field: radioboxPop,
               type: "quantitative",
-              scale: { scheme: "blues", type: 'log' },
-              "legend": {
-                "orient": "right",
-                "titleFontSize": 12,
-                "titleAlign": "center"
-              }
+              scale: { scheme: "blues", type: "log" },
+              legend: {
+                orient: "right",
+                titleFontSize: 12,
+                titleAlign: "center",
+              },
             },
             tooltip: [
               { field: "properties.name", type: "nominal", title: "Cidade" },
-              { field: radioboxPop, type: "quantitative", title: radioboxPop}
-            ]
+              { field: radioboxPop, type: "quantitative", title: radioboxPop },
+            ],
           },
           selection: {
             highlight: {
@@ -820,16 +824,16 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
               condition: { selection: "highlight", value: "green" }, // Change to desired highlight color
               field: radioboxPop,
               type: "quantitative",
-              scale: { scheme: "blues", type: 'log' },
+              scale: { scheme: "blues", type: "log" },
             },
             tooltip: [
               { field: "properties.name", type: "nominal", title: "Cidade" },
               { field: radioboxPop, type: "quantitative", title: radioboxPop },
             ],
           },
-        }
-      ]
-    }
-  }
+        },
+      ],
+    },
+  };
 }
 ```
