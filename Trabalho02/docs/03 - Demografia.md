@@ -86,14 +86,14 @@ Consequentemente, a pirâmide etária da cidade desloca seu centro de massa para
   <h2 style="margin-bottom: 50px; margin-top: 50px;">Diversidade</h2>
 </div>
 
-Mulheres são maioria em Niterói, com mais de 40mil habitantes a mais que homens. Observando a pirâmide etária, notamos que em quase todas as faixas etárias, a população feminina é maior que a masculina. Com exceção de alguns grupos abaixo de 20 anos.
-(O que fazer com essa informação?)
+Mulheres são maioria em Niterói, com mais de 40mil habitantes a mais que homens. Observando a pirâmide etária, notamos que em quase todas as faixas etárias, a população feminina é maior que a masculina. Com exceção de alguns grupos abaixo de 20 anos. Esta tendência é nacional e também fruto de diversos estudos que apontam uma maior longevidade para mulheres, e também uma maior taxa de mortalidade para homens. Fatores como violência, cuidados com a saúde e acidentes de trânsito pesam na comparação entre os gêneros.
 
 <div id="visGender"></div>
 
+Outro importante retrato da diversidade de uma população é a distribuição pelo aspecto chamado "de cor ou raça". Este aspecto é registrado segundo a autodeclaração do entrevistado, e é um importante indicador de desigualdades sociais e raciais.
 A cidade de Niterói é casa de toda a diversidade categorizada pelo IBGE(garantir fonte e ano), com maioria de população branca com 57.16%, seguida por pardos com 29.96%, pretos com 12.51%. E com minoria expressivamente menos representativa somando 0.37% do total, com 0.24% de amarelos e 0.13% de indígenas.
 
-Abaixo ambos os gráficos demonstram a distribuição da população por cor ou raça.
+Abaixo ambos os gráficos demonstram a distribuição da população por cor ou raça em Niterói.
 
 <div id="visEtnics1"></div>
 
@@ -101,15 +101,26 @@ Abaixo ambos os gráficos demonstram a distribuição da população por cor ou 
 <br>
 <br>
 <br>
+ 
+Esta distribuição constrasta com a distribuição nacional que possui uma maioria de pardos <a href="https://educa.ibge.gov.br/jovens/conheca-o-brasil/populacao/18319-cor-ou-raca.html/">(45,35%)</a>. E contranstando com a distribuição de brancos nacionamelmente, com 43.46%.
+A única outra categoria que possui maior representatividade com relação ao contexto nacional é a de pessoas de pele preta, que possui 10.17% contrastando com os 12.51% locais. Indígenas nacionalmente são 0.6% da população, e amarelos 0.42%. Ambas representações maiores do que a soma destas categorias no escopo municipal.
 
 <div id="visEtnics2"></div>
+
+<div class="hero">
+  <h2 style="margin-bottom: 50px; margin-top: 50px;">População quilombola </h2>
+</div>
+
+Embora não seja um grupo etnico, os quilombolas também estão presentes na cidade de niterói. Comparativamente, eles são bem poucos, menos que amarelos e indígenas. Mas é importante visibilizar esta população históricamente marginalizada e para que se construam políticas públicas que garantam a preservação de sua cultura e território.
+
+<div id="visQuilombola"></div>
 
 <!-- <h2 class="title">Plotar população população quilombola e indígena</h2> -->
 
 ```js
 const goldenYellow = "#FFD700";
 const turquoise = "#40e0d0";
-const graphWidth = 800;
+const graphWidth = 1024;
 const graphHeight = 500;
 
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
@@ -135,36 +146,48 @@ function parseIBGEData(data) {
 
 ```js
 // Diversity
-let quilombolaData = await FileAttachment(
-  "Tabelas_panorama/Censo 2022 - População quilombola - Niterói (RJ).csv"
-).csv();
+
 let nativeData = await FileAttachment(
   "Tabelas_panorama/Censo 2022 - População indígena - Niterói (RJ).csv"
 ).csv();
 let ethinicsData = await FileAttachment(
   "Tabelas_panorama/Censo 2022 - População por cor ou raça - Niterói (RJ).csv"
 ).csv();
+let ethinicsDataBrasil = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População por cor ou raça - Brasil.csv"
+).csv();
 
-parseIBGEData(quilombolaData);
 parseIBGEData(nativeData);
 parseIBGEData(ethinicsData);
+parseIBGEData(ethinicsDataBrasil);
 
 // population is undefined
 
-quilombolaData.population = quilombolaData[0]["População quilombola (pessoas)"];
 nativeData.ethinicAndSkinAffirmative = nativeData[0]["pessoas"];
 nativeData.selfDeclared = nativeData[1]["pessoas"];
 nativeData.population = nativeData[2]["pessoas"];
 
-// d.population has to be number
 ethinicsData.forEach((d) => {
   d.skinDenomination = d["Cor ou raça"];
   d.population = d["População (pessoas)"];
   d.population = parseInt(d.population);
+  d.year = 2022;
 
   // if population is null or 0, drop d
   if (d.population === "0" || d.population === "") {
     ethinicsData = ethinicsData.filter((item) => item !== d);
+  }
+});
+
+ethinicsDataBrasil.forEach((d) => {
+  d.skinDenomination = d["Cor ou raça"];
+  d.population = d["População (pessoas)"];
+  d.population = parseInt(d.population);
+  d.year = 2022;
+
+  // if population is null or 0, drop d
+  if (d.population === "0" || d.population === "") {
+    ethinicsDataBrasil = ethinicsDataBrasil.filter((item) => item !== d);
   }
 });
 
@@ -174,8 +197,10 @@ let ethinicsSpec = {
   data: {
     values: ethinicsData,
   },
-  width: graphWidth,
+  width: graphWidth - 130,
   height: graphHeight,
+
+  title: "População por cor ou raça - Niterói (RJ)",
   layer: [
     {
       mark: {
@@ -199,7 +224,7 @@ let ethinicsSpec = {
           field: "population",
           type: "quantitative",
           title: "População",
-          legend: { clipHeight: 30 },
+          legend: { clipHeight: 50 },
           scale: { rangeMax: 20000 },
         },
         color: {
@@ -223,8 +248,8 @@ let ethinicsSpec = {
         type: "text",
         align: "right",
         baseline: "bottom",
-        dx: graphWidth / 2, // Adjust the position based on the size of your visualization
-        dy: graphHeight / 2 + 50, // Adjust the distance from the bottom of your visualization
+        dx: graphWidth / 2,
+        dy: graphHeight / 2 + 50,
         text: "Fonte?, 2022?",
       },
       encoding: {
@@ -257,15 +282,24 @@ let ethinicsSpec = {
 // Adjusted Vega-Lite specification
 let ethinicsSpec2 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-  description: "A circular plot representing population by skin denomination.",
+  description:
+    "A stacked horizontal bar chart representing population by skin denomination as percentages.",
   data: {
-    values: ethinicsData,
+    values: [
+      ...ethinicsData.map((d) => ({
+        ...d,
+        source: "ethinicsData",
+        region: "Niteroi",
+      })),
+      ...ethinicsDataBrasil.map((d) => ({
+        ...d,
+        source: "ethinicsDataBrasil",
+        region: "Brasil",
+      })),
+    ],
   },
-  width: graphWidth,
-  height: graphHeight,
   transform: [
     {
-      // Calculate the total population
       window: [
         {
           op: "sum",
@@ -274,127 +308,56 @@ let ethinicsSpec2 = {
         },
       ],
       frame: [null, null],
+      groupby: ["region"],
     },
     {
-      // Calculate the percentage for each group
       calculate: "datum.population / datum.totalPopulation * 100",
       as: "percentage",
     },
-    {
-      // Calculate start and end angles for each slice
-      window: [
-        {
-          op: "sum",
-          field: "population",
-          as: "endAngle",
-          sort: { field: "skinDenomination" },
-        },
-        { op: "lag", field: "endAngle", as: "startAngle" },
-      ],
-      frame: [null, 0],
-    },
-    {
-      // Calculate midpoint angle for text placement
-      calculate: "(datum.startAngle + datum.endAngle) / 2",
-      as: "midAngle",
-    },
   ],
-  layer: [
-    {
-      // Original arc marks
-      mark: "arc",
-      encoding: {
-        theta: { field: "population", type: "quantitative", stack: true },
-        color: {
-          field: "skinDenomination",
-          type: "nominal",
-          scale: {
-            domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
-            range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
-          },
-        },
-        tooltip: [
-          { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
-          { field: "population", type: "quantitative", title: "População" },
-          {
-            field: "percentage",
-            type: "quantitative",
-            title: "Percentual",
-            format: ".2f",
-            // add % to the tooltip
-          },
-        ],
+  width: graphWidth,
+  height: graphHeight / 2,
+  mark: {
+    type: "bar",
+    stroke: "black",
+    strokeWidth: 1,
+  },
+  title: "População por cor ou raça (Percentual)",
+  encoding: {
+    y: {
+      field: "region",
+      title: "Região",
+      type: "ordinal",
+    },
+    x: {
+      field: "percentage",
+      type: "quantitative",
+      axis: { title: "População (%)", format: ".1f" },
+      stack: "zero",
+    },
+    color: {
+      field: "skinDenomination",
+      title: "Cor ou raça",
+      type: "nominal",
+      scale: {
+        domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
+        range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
       },
     },
-    {
-      // Additional layer for the black bold line around the pie chart
-      mark: {
-        type: "arc",
-        outerRadius: Math.min(graphWidth, graphHeight) / 2, // Adjust based on your chart size
-        stroke: "black", // Line color
-        strokeWidth: 3, // Line width for the bold effect
-        fill: null, // Ensure the circle is not filled
+    tooltip: [
+      { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
+      { field: "population", type: "quantitative", title: "População" },
+      {
+        field: "percentage",
+        type: "quantitative",
+        title: "Percentual",
+        format: ".2f",
       },
-      data: { values: [{}] }, // Dummy data to draw the circle
-      encoding: {
-        // Fixed value to ensure the circle encompasses the whole chart
-        theta: { value: 0 },
-        theta2: { value: 360 },
-      },
+    ],
+    size: {
+      value: 60,
     },
-    {
-      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
-      data: { values: ethinicsData }, // Assuming ethinicsData is your data source
-      encoding: {
-        text: {
-          field: "percentage",
-          type: "quantitative",
-          format: ".1f",
-          condition: [
-            {
-              test: "datum.category === 'branca'",
-              value: "datum.percentage + '%'",
-            },
-          ],
-        },
-        theta: { value: 50 }, // Position for "branca"
-        radius: { value: 100 }, // Adjust as needed
-        color: { value: "black" },
-      },
-    },
-    {
-      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
-      encoding: {
-        text: {
-          condition: [
-            {
-              test: "datum.category === 'parda'",
-              value: "datum.percentage + '%'",
-            },
-          ],
-        },
-        theta: { value: 260 }, // Position for "parda"
-        radius: { value: 100 }, // Adjust as needed
-        color: { value: "black" },
-      },
-    },
-    {
-      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
-      encoding: {
-        text: {
-          condition: [
-            {
-              test: "datum.category === 'preta'",
-              value: "datum.percentage + '%'",
-            },
-          ],
-        },
-        theta: { value: 310 }, // Position for "preta"
-        radius: { value: 100 }, // Adjust as needed
-        color: { value: "white" }, // White text for "preta"
-      },
-    },
-  ],
+  },
 };
 
 vegaEmbed("#visEtnics1", ethinicsSpec)
@@ -404,6 +367,91 @@ vegaEmbed("#visEtnics1", ethinicsSpec)
   .catch(console.error);
 
 vegaEmbed("#visEtnics2", ethinicsSpec2)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+/*
+  Quilombola
+*/
+let quilombolaData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População quilombola - Niterói (RJ).csv"
+).csv();
+parseIBGEData(quilombolaData);
+quilombolaData.population = quilombolaData[0]["População quilombola (pessoas)"];
+
+// draw a circular plot with the whole population sum in ethinicsData as a circle and the quilombola population as a circle inside it
+let quilombolaSpec = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description:
+    "Visualization of the Indígena, Amarela, and Quilombola populations as side-by-side circles.",
+  width: graphWidth,
+  height: graphHeight,
+  title: "População Quilombola X Indígena X Amarela- Niterói (RJ)",
+  data: {
+    values: [
+      {
+        type: "Indígena",
+        population: ethinicsData
+          .filter((d) => d.skinDenomination === "Indígena")
+          .reduce((acc, d) => acc + d.population, 0),
+      },
+      {
+        type: "Amarela",
+        population: ethinicsData
+          .filter((d) => d.skinDenomination === "Amarela")
+          .reduce((acc, d) => acc + d.population, 0),
+      },
+      {
+        type: "Quilombola",
+        population: quilombolaData.population,
+      },
+    ],
+  },
+  mark: {
+    type: "point",
+    filled: true,
+    shape: "circle",
+    opacity: 0.8,
+    stroke: "black",
+    strokeWidth: 1,
+  },
+  encoding: {
+    x: {
+      field: "type",
+      type: "nominal",
+      axis: { title: "Tipo de População" },
+    },
+    y: {
+      field: "population",
+      type: "quantitative",
+      axis: { title: "População" },
+      scale: { zero: false },
+    },
+    color: {
+      field: "type",
+      type: "nominal",
+      scale: {
+        domain: ["Indígena", "Amarela", "Quilombola"],
+        range: ["#8B4513", "#FFFF00", "#000000"],
+      },
+      legend: { title: "Tipo de População" },
+    },
+    size: {
+      field: "population",
+      type: "quantitative",
+      legend: { title: "População" },
+    },
+    tooltip: [
+      { field: "type", type: "nominal", title: "Tipo" },
+      { field: "population", type: "quantitative", title: "População" },
+    ],
+  },
+  view: { stroke: null },
+};
+
+vegaEmbed("#visQuilombola", quilombolaSpec)
   .then(function (result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
@@ -451,7 +499,7 @@ let genderSpec = {
     },
   ],
   layout: [],
-
+  title: "População por gênero",
   mark: {
     type: "arc",
     stroke: "black", // Color of the stroke
@@ -508,7 +556,7 @@ var specPopGrow = {
     {
       mark: {
         type: "line",
-        point: true,
+        point: true, // Ensure points are visible on the line
       },
       encoding: {
         x: {
@@ -521,6 +569,11 @@ var specPopGrow = {
           type: "quantitative",
           axis: { title: "População" },
         },
+        // Add tooltip encoding here
+        tooltip: [
+          { field: "year", type: "ordinal", title: "Ano" },
+          { field: "population", type: "quantitative", title: "População" },
+        ],
       },
     },
     {
