@@ -68,16 +68,6 @@ const vl = vegaLiteApi.register(vega, vegaLite);
   <h1 style="margin-bottom: 50px;">Demografia</h1>
 </div>
 
-```js
-// Criar Radio Box
-// let radioboxPop = view(
-//   Inputs.radio(["Densidade Demográfica (2022)", "População (2022)"], {
-//     label: "Exibir dados: ",
-//     value: "Densidade Demográfica (2022)",
-//   })
-// );
-```
-
 <div class="hero">
   <h2 style="margin-bottom: 50px; margin-top: 50px;">Crescimento populacional</h2>
 </div>
@@ -95,9 +85,26 @@ Consequentemente, a pirâmide etária da cidade desloca seu centro de massa para
 <div class="hero">
   <h2 style="margin-bottom: 50px; margin-top: 50px;">Diversidade</h2>
 </div>
-<div id="visEtnics"></div>
 
-<h2 class="title">Plotar população população quilombola e indígena</h2>
+Mulheres são maioria em Niterói, com mais de 40mil habitantes a mais que homens. Observando a pirâmide etária, notamos que em quase todas as faixas etárias, a população feminina é maior que a masculina. Com exceção de alguns grupos abaixo de 20 anos.
+(O que fazer com essa informação?)
+
+<div id="visGender"></div>
+
+A cidade de Niterói é casa de toda a diversidade categorizada pelo IBGE(garantir fonte e ano), com maioria de população branca com 57.16%, seguida por pardos com 29.96%, pretos com 12.51%. E com minoria expressivamente menos representativa somando 0.37% do total, com 0.24% de amarelos e 0.13% de indígenas.
+
+Abaixo ambos os gráficos demonstram a distribuição da população por cor ou raça.
+
+<div id="visEtnics1"></div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div id="visEtnics2"></div>
+
+<!-- <h2 class="title">Plotar população população quilombola e indígena</h2> -->
 
 ```js
 const goldenYellow = "#FFD700";
@@ -161,8 +168,6 @@ ethinicsData.forEach((d) => {
   }
 });
 
-console.log(quilombolaData);
-
 let ethinicsSpec = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description: "A circular plot representing population by skin denomination.",
@@ -193,9 +198,9 @@ let ethinicsSpec = {
         size: {
           field: "population",
           type: "quantitative",
-          title: "Population Size",
+          title: "População",
           legend: { clipHeight: 30 },
-          scale: { rangeMax: 5000 },
+          scale: { rangeMax: 20000 },
         },
         color: {
           field: "skinDenomination",
@@ -248,7 +253,157 @@ let ethinicsSpec = {
     },
   ],
 };
-vegaEmbed("#visEtnics", ethinicsSpec)
+
+// Adjusted Vega-Lite specification
+let ethinicsSpec2 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description: "A circular plot representing population by skin denomination.",
+  data: {
+    values: ethinicsData,
+  },
+  width: graphWidth,
+  height: graphHeight,
+  transform: [
+    {
+      // Calculate the total population
+      window: [
+        {
+          op: "sum",
+          field: "population",
+          as: "totalPopulation",
+        },
+      ],
+      frame: [null, null],
+    },
+    {
+      // Calculate the percentage for each group
+      calculate: "datum.population / datum.totalPopulation * 100",
+      as: "percentage",
+    },
+    {
+      // Calculate start and end angles for each slice
+      window: [
+        {
+          op: "sum",
+          field: "population",
+          as: "endAngle",
+          sort: { field: "skinDenomination" },
+        },
+        { op: "lag", field: "endAngle", as: "startAngle" },
+      ],
+      frame: [null, 0],
+    },
+    {
+      // Calculate midpoint angle for text placement
+      calculate: "(datum.startAngle + datum.endAngle) / 2",
+      as: "midAngle",
+    },
+  ],
+  layer: [
+    {
+      // Original arc marks
+      mark: "arc",
+      encoding: {
+        theta: { field: "population", type: "quantitative", stack: true },
+        color: {
+          field: "skinDenomination",
+          type: "nominal",
+          scale: {
+            domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
+            range: ["#f0f0f0", "#000000", "#FFFF00", "#FFA500", "#8B4513"],
+          },
+        },
+        tooltip: [
+          { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
+          { field: "population", type: "quantitative", title: "População" },
+          {
+            field: "percentage",
+            type: "quantitative",
+            title: "Percentual",
+            format: ".2f",
+            // add % to the tooltip
+          },
+        ],
+      },
+    },
+    {
+      // Additional layer for the black bold line around the pie chart
+      mark: {
+        type: "arc",
+        outerRadius: Math.min(graphWidth, graphHeight) / 2, // Adjust based on your chart size
+        stroke: "black", // Line color
+        strokeWidth: 3, // Line width for the bold effect
+        fill: null, // Ensure the circle is not filled
+      },
+      data: { values: [{}] }, // Dummy data to draw the circle
+      encoding: {
+        // Fixed value to ensure the circle encompasses the whole chart
+        theta: { value: 0 },
+        theta2: { value: 360 },
+      },
+    },
+    {
+      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
+      data: { values: ethinicsData }, // Assuming ethinicsData is your data source
+      encoding: {
+        text: {
+          field: "percentage",
+          type: "quantitative",
+          format: ".1f",
+          condition: [
+            {
+              test: "datum.category === 'branca'",
+              value: "datum.percentage + '%'",
+            },
+          ],
+        },
+        theta: { value: 50 }, // Position for "branca"
+        radius: { value: 100 }, // Adjust as needed
+        color: { value: "black" },
+      },
+    },
+    {
+      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
+      encoding: {
+        text: {
+          condition: [
+            {
+              test: "datum.category === 'parda'",
+              value: "datum.percentage + '%'",
+            },
+          ],
+        },
+        theta: { value: 260 }, // Position for "parda"
+        radius: { value: 100 }, // Adjust as needed
+        color: { value: "black" },
+      },
+    },
+    {
+      mark: { type: "text", align: "center", baseline: "middle", fontSize: 12 },
+      encoding: {
+        text: {
+          condition: [
+            {
+              test: "datum.category === 'preta'",
+              value: "datum.percentage + '%'",
+            },
+          ],
+        },
+        theta: { value: 310 }, // Position for "preta"
+        radius: { value: 100 }, // Adjust as needed
+        color: { value: "white" }, // White text for "preta"
+      },
+    },
+  ],
+};
+
+vegaEmbed("#visEtnics1", ethinicsSpec)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
+
+vegaEmbed("#visEtnics2", ethinicsSpec2)
   .then(function (result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
@@ -256,7 +411,74 @@ vegaEmbed("#visEtnics", ethinicsSpec)
 ```
 
 ```js
+let genderData = await FileAttachment(
+  "Tabelas_panorama/Censo 2022 - População por sexo - Niterói (RJ).csv"
+).csv();
 
+parseIBGEData(genderData);
+
+// map key values as properties of the object
+genderData = genderData.map((d) => {
+  d.gender = d["Sexo"];
+  d.population = d["População(pessoas)"];
+  return d;
+});
+
+let genderSpec = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description:
+    "Pie chart showing population by gender in Niterói (RJ) based on the 2022 census.",
+  width: graphWidth,
+  height: graphHeight,
+  data: {
+    values: genderData,
+  },
+  transform: [
+    // add percentage
+    {
+      window: [
+        {
+          op: "sum",
+          field: "population",
+          as: "totalPopulation",
+        },
+      ],
+      frame: [null, null],
+    },
+    {
+      calculate: "datum.population / datum.totalPopulation * 100",
+      as: "percentage",
+    },
+  ],
+  layout: [],
+
+  mark: {
+    type: "arc",
+    stroke: "black", // Color of the stroke
+    strokeWidth: 2, // Width of the stroke for a bold appearance
+  },
+  encoding: {
+    theta: { field: "population", type: "quantitative" },
+    color: { field: "gender", type: "nominal", legend: { title: "Gênero" } },
+    tooltip: [
+      { field: "gender", type: "nominal", title: "Gênero" },
+      { field: "population", type: "quantitative", title: "População" },
+      {
+        field: "percentage",
+        type: "quantitative",
+        title: "Percentual",
+        format: ".2f",
+      },
+    ],
+  },
+  view: { stroke: null }, // This line is no longer necessary for the stroke around slices
+};
+
+vegaEmbed("#visGender", genderSpec)
+  .then(function (result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  })
+  .catch(console.error);
 ```
 
 ```js
