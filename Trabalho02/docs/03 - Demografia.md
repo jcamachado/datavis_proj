@@ -72,7 +72,7 @@ De acordo com os dados do IBGE em 2022, Niterói se destaca como uma das cidades
 
 O mapa apresentado facilita a visualização comparativa da densidade populacional e do número de habitantes dos municípios do Rio de Janeiro. Niterói se destaca nitidamente em tons mais escuros, revelando sua alta concentração populacional. Essa característica, atrelada à sua localização estratégica na Região Metropolitana do Rio de Janeiro, torna Niterói um polo cultural, econômico e social em constante crescimento.
 
-  <div style="width: 100%; margin-top: 15px;">
+<div style="width: 100%; margin-top: 15px;">
     <div id="ex01" style="width: 100%; margin-top: 15px;">
         ${ vl.render(plotMap(divWidth - 200, geojson, IDHM, radioboxPop)) }
     </div>
@@ -138,9 +138,11 @@ Embora não seja um grupo etnico, os quilombolas também estão presentes na cid
 <!-- <h2 class="title">Plotar população população quilombola e indígena</h2> -->
 
 ```js
-const goldenYellow = "#FFD700";
-const turquoise = "#40e0d0";
-const graphWidth = 800;
+let goldenYellow = "#FFD700";
+let turquoise = "#40e0d0";
+let bgColor = "#f4f4f9";
+let divWidth = Generators.width(document.querySelector("#ex01"));
+
 const graphHeight = 500;
 
 const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
@@ -217,7 +219,8 @@ let ethinicsSpec = {
   data: {
     values: ethinicsData,
   },
-  width: graphWidth - 130,
+  background: bgColor,
+  width: divWidth,
   height: graphHeight,
 
   title: "População por cor ou raça - Niterói (RJ)",
@@ -260,20 +263,6 @@ let ethinicsSpec = {
           { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
           { field: "population", type: "quantitative", title: "População" },
         ],
-      },
-    },
-    {
-      data: { values: [{}] },
-      mark: {
-        type: "text",
-        align: "right",
-        baseline: "bottom",
-        dx: graphWidth / 2,
-        dy: graphHeight / 2 + 50,
-        text: "Fonte?, 2022?",
-      },
-      encoding: {
-        text: { type: "nominal" },
       },
     },
     {
@@ -335,7 +324,8 @@ let ethinicsSpec2 = {
       as: "percentage",
     },
   ],
-  width: graphWidth,
+  background: bgColor,
+  width: divWidth,
   height: graphHeight / 2,
   mark: {
     type: "bar",
@@ -406,8 +396,9 @@ let quilombolaSpec = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description:
     "Visualization of the Indígena, Amarela, and Quilombola populations as side-by-side circles.",
-  width: graphWidth - 35,
+  width: divWidth,
   height: graphHeight,
+  background: bgColor,
   title: "População Quilombola X Indígena X Amarela- Niterói (RJ)",
   data: {
     values: [
@@ -496,8 +487,9 @@ let genderSpec = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description:
     "Pie chart showing population by gender in Niterói (RJ) based on the 2022 census.",
-  width: graphWidth + 80,
+  width: divWidth,
   height: graphHeight,
+  background: bgColor,
   data: {
     values: genderData,
   },
@@ -575,8 +567,9 @@ var specPopGrow = {
   data: {
     values: popGrowthData,
   },
-  width: graphWidth + 130,
+  width: divWidth,
   height: graphHeight,
+  background: bgColor,
   layer: [
     {
       mark: {
@@ -630,8 +623,6 @@ ageData = ageData.map((d) => {
   return d;
 });
 
-const divWidth = Generators.width(document.querySelector("#ex01"));
-
 var specAge = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
   description:
@@ -661,8 +652,9 @@ var specAge = {
       as: "absFemale",
     },
   ],
-  width: graphWidth - 80,
+  width: divWidth,
   height: graphHeight,
+  background: bgColor,
   layer: [
     {
       mark: "bar",
@@ -765,7 +757,7 @@ function plotMap(divWidth, geojson, IDHM, radioboxPop) {
     spec: {
       width: divWidth,
       height: 300,
-      background: "#f4f4f9",
+      background: bgColor,
       projection: {
         type: "mercator",
       },
