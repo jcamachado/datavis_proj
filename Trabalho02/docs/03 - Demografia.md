@@ -93,9 +93,16 @@ Mulheres são maioria em Niterói, com mais de 40mil habitantes a mais que homen
 Outro importante retrato da diversidade de uma população é a distribuição pelo aspecto chamado "de cor ou raça". Este aspecto é registrado segundo a autodeclaração do entrevistado, e é um importante indicador de desigualdades sociais e raciais.
 A cidade de Niterói é casa de toda a diversidade categorizada pelo IBGE(garantir fonte e ano), com maioria de população branca com 57.16%, seguida por pardos com 29.96%, pretos com 12.51%. E com minoria expressivamente menos representativa somando 0.37% do total, com 0.24% de amarelos e 0.13% de indígenas.
 
-Abaixo ambos os gráficos demonstram a distribuição da população por cor ou raça em Niterói.
+Os gráficos abaixo demonstram a distribuição da população por cor ou raça em Niterói.
 
-<div id="visEtnics1"></div>
+<!-- <div id="visEtnics1" hidden></div> -->
+
+<h2>Select Location for Population Data</h2>
+    <select id="location-select">
+        <option value="Niteroi" selected>Niterói</option>
+        <option value="Brasil">Brasil</option>
+    </select>
+<div id="viz"></div>
 
 <br>
 <br>
@@ -279,6 +286,17 @@ let ethinicsSpec = {
   ],
 };
 
+let ethinicsSpecNiteroi = JSON.parse(JSON.stringify(ethinicsSpec));
+
+// ethinicsSpecBrasil is the same as ethinicsSpec but with ethinicsDataBrasil
+let ethinicsSpecBrasil = {
+  ...ethinicsSpecNiteroi,
+  data: {
+    values: ethinicsDataBrasil,
+  },
+  title: "População por cor ou raça - Brasil",
+};
+
 // Adjusted Vega-Lite specification
 let ethinicsSpec2 = {
   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -371,6 +389,24 @@ vegaEmbed("#visEtnics2", ethinicsSpec2)
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
   .catch(console.error);
+
+function renderVisualization(spec) {
+  vegaEmbed("#viz", spec, { actions: false }).catch(console.error);
+}
+
+// Event listener for the select dropdown
+document
+  .getElementById("location-select")
+  .addEventListener("change", function (e) {
+    const location = e.target.value;
+    if (location === "Niteroi") {
+      renderVisualization(ethinicsSpecNiteroi);
+    } else if (location === "Brasil") {
+      renderVisualization(ethinicsSpecBrasil);
+    } else {
+      renderVisualization(ethinicsSpecNiteroi);
+    }
+  });
 
 /*
   Quilombola
