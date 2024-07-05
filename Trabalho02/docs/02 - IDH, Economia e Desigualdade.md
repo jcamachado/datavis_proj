@@ -96,7 +96,6 @@ O Censo Demográfico no Brasil é realizado a cada dez anos. Desde 1991, os dado
 
 <div id="IDHM"></div>
 
-
 ```js
 // Criar Checkbox
 let checkboxIDH = view(
@@ -111,6 +110,7 @@ let checkboxIDH = view(
   })
 );
 ```
+
 O cálculo do IDH pondera três dimensões básicas do desenvolvimento humano: saúde, educação e renda.
 
 <div class="hero">
@@ -201,9 +201,13 @@ const geojson = await FileAttachment("Tabelas_panorama/geojs-33-mun.json").json(
   { typed: true }
 );
 const IDHM = await FileAttachment("Tabelas_panorama/RJ_IDHM.csv").csv();
-```
 
-```js
+// crimson red
+var colorNiteroi = "#FF4500";
+// water blue
+var colorRJ = "#3399FF";
+// forest green
+var colorBrasil = "#228B22";
 const divWidth = Generators.width(document.querySelector("#ex01"));
 
 let plotMap = {
@@ -244,25 +248,24 @@ let plotMap = {
           field: "IDHM 2010",
           type: "quantitative",
           scale: { scheme: "reds" },
-          condition: { selection: "highlight", value: "green" } // Highlight color when selected
+          condition: { selection: "highlight", value: "green" }, // Highlight color when selected
         },
         tooltip: [
           { field: "properties.name", type: "nominal", title: "Cidade" },
-          { field: "IDHM 2010", type: "quantitative", title: "IDHM" }
-        ]
+          { field: "IDHM 2010", type: "quantitative", title: "IDHM" },
+        ],
       },
       selection: {
         highlight: {
           type: "single",
           on: "mouseover",
           empty: "none",
-          fields: ["properties.name"]
-        }
-      }
-    }
+          fields: ["properties.name"],
+        },
+      },
+    },
   ],
 };
-
 
 vegaEmbed("#RJMap", plotMap)
   .then(function (result) {
@@ -370,10 +373,7 @@ if (
   checkboxIDH.includes("Niterói")
 ) {
   DataIDH = IDH_RJ.concat(IDH_Nit);
-} else if (
-  checkboxIDH.includes("Niterói") &&
-  checkboxIDH.includes("Brasil")
-) {
+} else if (checkboxIDH.includes("Niterói") && checkboxIDH.includes("Brasil")) {
   DataIDH = IDH_Nit.concat(IDH_Brasil);
 } else if (checkboxIDH.includes("Brasil")) {
   DataIDH = IDH_Brasil;
@@ -381,108 +381,108 @@ if (
   DataIDH = IDH_Nit;
 } else if (checkboxIDH.includes("Rio de Janeiro")) {
   DataIDH = IDH_RJ;
-};
+}
 
 let plotIDHM = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      width: 350,
-      height: 250,
-      data: {
-        values: DataIDH,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: 350,
+  height: 250,
+  data: {
+    values: DataIDH,
+  },
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: {
+          filled: true,
+          size: 100, // Aumentando o tamanho do ponto
+        },
+        color: "#4CAF50",
+        tooltip: true,
       },
-      layer: [
-        {
-          mark: {
-            type: "line",
-            point: {
-              filled: true,
-              size: 100, // Aumentando o tamanho do ponto
-            },
-            color: "#4CAF50",
-            tooltip: true,
-          },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-              title: "Ano",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                labelAngle: 0,
-                titleColor: "#333333",
-              },
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-              title: "IDH",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                titleColor: "#333333",
-              },
-              scale: { domain: [0.4, 1] },
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-              scale: {
-                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
-                range: ["#336699", "#668866", "#999999"],
-              },
-              title: "Local",
-            },
-            tooltip: [
-              { field: "Ano", type: "ordinal" },
-              { field: "Valor", type: "quantitative" },
-              { field: "Local", type: "nominal" },
-            ],
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
+          title: "Ano",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            labelAngle: 0,
+            titleColor: "#333333",
           },
         },
-        {
-          mark: {
-            type: "text",
-            align: "left",
-            dx: 5,
-            dy: -5,
+        y: {
+          field: "Valor",
+          type: "quantitative",
+          title: "IDH",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            titleColor: "#333333",
           },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            text: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-            },
-          },
+          scale: { domain: [0.4, 1] },
         },
-      ],
-      title: {
-        text: "Evolução IDH ao Longo dos Anos",
-        fontSize: 20,
-        font: "Arial",
-        anchor: "middle",
-        color: "#003366", // Azul Marinho para o título
+        color: {
+          field: "Local",
+          type: "nominal",
+          scale: {
+            domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+            range: [colorNiteroi, colorRJ, colorBrasil],
+          },
+          title: "Local",
+        },
+        tooltip: [
+          { field: "Ano", type: "ordinal" },
+          { field: "Valor", type: "quantitative" },
+          { field: "Local", type: "nominal" },
+        ],
       },
-      config: {
-        axis: {
-          labelColor: "#333333",
-          labelFont: "Arial",
-          gridColor: "#e0e0e0",
-          tickColor: "#333333",
+    },
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        dy: -5,
+      },
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
         },
-        background: "#f4f4f9",
-      }
+        y: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        text: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        color: {
+          field: "Local",
+          type: "nominal",
+        },
+      },
+    },
+  ],
+  title: {
+    text: "Evolução IDH ao Longo dos Anos",
+    fontSize: 20,
+    font: "Arial",
+    anchor: "middle",
+    color: "#003366", // Azul Marinho para o título
+  },
+  config: {
+    axis: {
+      labelColor: "#333333",
+      labelFont: "Arial",
+      gridColor: "#e0e0e0",
+      tickColor: "#333333",
+    },
+    background: "#f4f4f9",
+  },
 };
 
 vegaEmbed("#IDHM", plotIDHM)
@@ -490,7 +490,6 @@ vegaEmbed("#IDHM", plotIDHM)
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
   .catch(console.error);
-
 
 // Gráficos Esperança de Vida e Longevidade
 
@@ -531,108 +530,108 @@ if (
 } else if (checkboxEspVida.includes("Rio de Janeiro")) {
   DataEspVida = EspVida_RJ;
   DataLong = Long_RJ;
-};
+}
 
 let plotEspVida = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      width: 350,
-      height: 250,
-      data: {
-        values: DataEspVida,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: 350,
+  height: 250,
+  data: {
+    values: DataEspVida,
+  },
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: {
+          filled: true,
+          size: 100, // Aumentando o tamanho do ponto
+        },
+        color: "#4CAF50",
+        tooltip: true,
       },
-      layer: [
-        {
-          mark: {
-            type: "line",
-            point: {
-              filled: true,
-              size: 100, // Aumentando o tamanho do ponto
-            },
-            color: "#4CAF50",
-            tooltip: true,
-          },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-              title: "Ano",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                labelAngle: 0,
-                titleColor: "#333333",
-              },
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-              title: "IDH",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                titleColor: "#333333",
-              },
-              scale: { domain: [60, 90] },
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-              scale: {
-                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
-                range: ["#336699", "#668866", "#999999"],
-              },
-              title: "Local",
-            },
-            tooltip: [
-              { field: "Ano", type: "ordinal" },
-              { field: "Valor", type: "quantitative" },
-              { field: "Local", type: "nominal" },
-            ],
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
+          title: "Ano",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            labelAngle: 0,
+            titleColor: "#333333",
           },
         },
-        {
-          mark: {
-            type: "text",
-            align: "left",
-            dx: 5,
-            dy: -5,
+        y: {
+          field: "Valor",
+          type: "quantitative",
+          title: "IDH",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            titleColor: "#333333",
           },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            text: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-            },
-          },
+          scale: { domain: [60, 90] },
         },
-      ],
-      title: {
-        text: "Evolução Esperança de Vida",
-        fontSize: 20,
-        font: "Arial",
-        anchor: "middle",
-        color: "#003366", // Azul Marinho para o título
+        color: {
+          field: "Local",
+          type: "nominal",
+          scale: {
+            domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+            range: [colorNiteroi, colorRJ, colorBrasil],
+          },
+          title: "Local",
+        },
+        tooltip: [
+          { field: "Ano", type: "ordinal" },
+          { field: "Valor", type: "quantitative" },
+          { field: "Local", type: "nominal" },
+        ],
       },
-      config: {
-        axis: {
-          labelColor: "#333333",
-          labelFont: "Arial",
-          gridColor: "#e0e0e0",
-          tickColor: "#333333",
+    },
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        dy: -5,
+      },
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
         },
-        background: "#f4f4f9",
-      }
+        y: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        text: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        color: {
+          field: "Local",
+          type: "nominal",
+        },
+      },
+    },
+  ],
+  title: {
+    text: "Evolução Esperança de Vida",
+    fontSize: 20,
+    font: "Arial",
+    anchor: "middle",
+    color: "#003366", // Azul Marinho para o título
+  },
+  config: {
+    axis: {
+      labelColor: "#333333",
+      labelFont: "Arial",
+      gridColor: "#e0e0e0",
+      tickColor: "#333333",
+    },
+    background: "#f4f4f9",
+  },
 };
 
 vegaEmbed("#EspVida", plotEspVida)
@@ -642,105 +641,105 @@ vegaEmbed("#EspVida", plotEspVida)
   .catch(console.error);
 
 let plotLong = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      width: 350,
-      height: 250,
-      data: {
-        values: DataLong,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: 350,
+  height: 250,
+  data: {
+    values: DataLong,
+  },
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: {
+          filled: true,
+          size: 100, // Aumentando o tamanho do ponto
+        },
+        color: "#4CAF50",
+        tooltip: true,
       },
-      layer: [
-        {
-          mark: {
-            type: "line",
-            point: {
-              filled: true,
-              size: 100, // Aumentando o tamanho do ponto
-            },
-            color: "#4CAF50",
-            tooltip: true,
-          },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-              title: "Ano",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                labelAngle: 0,
-                titleColor: "#333333",
-              },
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-              title: "IDH",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                titleColor: "#333333",
-              },
-              scale: { domain: [0.6, 0.9] },
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-              scale: {
-                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
-                range: ["#336699", "#668866", "#999999"],
-              },
-              title: "Local",
-            },
-            tooltip: [
-              { field: "Ano", type: "ordinal" },
-              { field: "Valor", type: "quantitative" },
-              { field: "Local", type: "nominal" },
-            ],
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
+          title: "Ano",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            labelAngle: 0,
+            titleColor: "#333333",
           },
         },
-        {
-          mark: {
-            type: "text",
-            align: "left",
-            dx: 5,
-            dy: -5,
+        y: {
+          field: "Valor",
+          type: "quantitative",
+          title: "IDH",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            titleColor: "#333333",
           },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            text: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-            },
-          },
+          scale: { domain: [0.6, 0.9] },
         },
-      ],
-      title: {
-        text: "Evolução IDH Longevidade",
-        fontSize: 20,
-        font: "Arial",
-        anchor: "middle",
-        color: "#003366", // Azul Marinho para o título
+        color: {
+          field: "Local",
+          type: "nominal",
+          scale: {
+            domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+            range: [colorNiteroi, colorRJ, colorBrasil],
+          },
+          title: "Local",
+        },
+        tooltip: [
+          { field: "Ano", type: "ordinal" },
+          { field: "Valor", type: "quantitative" },
+          { field: "Local", type: "nominal" },
+        ],
       },
-      config: {
-        axis: {
-          labelColor: "#333333",
-          labelFont: "Arial",
-          gridColor: "#e0e0e0",
-          tickColor: "#333333",
+    },
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        dy: -5,
+      },
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
         },
-        background: "#f4f4f9",
-      }
+        y: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        text: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        color: {
+          field: "Local",
+          type: "nominal",
+        },
+      },
+    },
+  ],
+  title: {
+    text: "Evolução IDH Longevidade",
+    fontSize: 20,
+    font: "Arial",
+    anchor: "middle",
+    color: "#003366", // Azul Marinho para o título
+  },
+  config: {
+    axis: {
+      labelColor: "#333333",
+      labelFont: "Arial",
+      gridColor: "#e0e0e0",
+      tickColor: "#333333",
+    },
+    background: "#f4f4f9",
+  },
 };
 
 vegaEmbed("#Long", plotLong)
@@ -777,76 +776,75 @@ const dataBrasil = [
 const data = radioboxLoc === "Rio de Janeiro (UF)" ? dataRio : dataBrasil;
 
 let plotBars = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      description: "Interactive bar chart with highlighting on hover",
-      width: 400,
-      height: 300,
-      background: "#f4f4f9",
-      data: {
-        values: data,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  description: "Interactive bar chart with highlighting on hover",
+  width: 400,
+  height: 300,
+  background: "#f4f4f9",
+  data: {
+    values: data,
+  },
+  params: [
+    {
+      name: "hover",
+      select: {
+        type: "point",
+        on: "mouseover",
+        clear: "mouseout",
       },
-      params: [
-        {
-          name: "hover",
-          select: {
-            type: "point",
-            on: "mouseover",
-            clear: "mouseout",
-          },
+    },
+  ],
+  layer: [
+    {
+      mark: { type: "bar", size: 70 },
+      encoding: {
+        x: {
+          field: "Component",
+          type: "nominal",
+          axis: { labelAngle: 0, labelPadding: 0 },
+          title: "Componente",
+          sort: ["Longevidade", "Educação", "Renda", "IDH"],
         },
-      ],
-      layer: [
-        {
-          mark: { type: "bar", size: 70 },
-          encoding: {
-            x: {
-              field: "Component",
-              type: "nominal",
-              axis: { labelAngle: 0, labelPadding: 0 },
-              title: "Componente",
-              sort: ["Longevidade", "Educação", "Renda", "IDH"],
-            },
-            y: {
-              field: "Value",
-              type: "quantitative",
-              axis: { title: "IDH", gridWidth: 1 },
-              scale: { domain: [0, 1.0] },
-              stack: null,
-            },
-            color: {
-              field: "Type",
-              type: "nominal",
-              scale: {
-                domain: ["IDHM", "IDHMAD"],
-                range: ["#000080", "#556b2f"],
-              },
-              legend: { title: "Tipo de Valor" },
-            },
-            fillOpacity: {
-              condition: { param: "hover", value: 1 },
-              value: 0.1,
-            },
-            tooltip: [
-              { field: "Component", type: "nominal", title: "Componente" },
-              { field: "Type", type: "nominal", title: "Tipo" },
-              {
-                field: "Value",
-                type: "quantitative",
-                title: "Valor",
-                format: ".3f",
-              },
-            ],
-          },
+        y: {
+          field: "Value",
+          type: "quantitative",
+          axis: { title: "IDH", gridWidth: 1 },
+          scale: { domain: [0, 1.0] },
+          stack: null,
         },
-      ],
-    };
+        color: {
+          field: "Type",
+          type: "nominal",
+          scale: {
+            domain: ["IDHM", "IDHMAD"],
+            range: ["#000080", "#556b2f"],
+          },
+          legend: { title: "Tipo de Valor" },
+        },
+        fillOpacity: {
+          condition: { param: "hover", value: 1 },
+          value: 0.1,
+        },
+        tooltip: [
+          { field: "Component", type: "nominal", title: "Componente" },
+          { field: "Type", type: "nominal", title: "Tipo" },
+          {
+            field: "Value",
+            type: "quantitative",
+            title: "Valor",
+            format: ".3f",
+          },
+        ],
+      },
+    },
+  ],
+};
 
 vegaEmbed("#IDHMAD", plotBars)
   .then(function (result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   })
   .catch(console.error);
-
 
 // Gráfico Educação
 
@@ -868,10 +866,7 @@ if (
   checkboxEdu.includes("Niterói")
 ) {
   DataEdu = Edu_RJ.concat(Edu_Nit);
-} else if (
-  checkboxEdu.includes("Niterói") &&
-  checkboxEdu.includes("Brasil")
-) {
+} else if (checkboxEdu.includes("Niterói") && checkboxEdu.includes("Brasil")) {
   DataEdu = Edu_Nit.concat(Edu_Brasil);
 } else if (checkboxEdu.includes("Brasil")) {
   DataEdu = Edu_Brasil;
@@ -879,108 +874,108 @@ if (
   DataEdu = Edu_Nit;
 } else if (checkboxEdu.includes("Rio de Janeiro")) {
   DataEdu = Edu_RJ;
-};
+}
 
 let plotEdu = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      width: 350,
-      height: 250,
-      data: {
-        values: DataEdu,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: 350,
+  height: 250,
+  data: {
+    values: DataEdu,
+  },
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: {
+          filled: true,
+          size: 100, // Aumentando o tamanho do ponto
+        },
+        color: "#4CAF50",
+        tooltip: true,
       },
-      layer: [
-        {
-          mark: {
-            type: "line",
-            point: {
-              filled: true,
-              size: 100, // Aumentando o tamanho do ponto
-            },
-            color: "#4CAF50",
-            tooltip: true,
-          },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-              title: "Ano",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                labelAngle: 0,
-                titleColor: "#333333",
-              },
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-              title: "IDH",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                titleColor: "#333333",
-              },
-              scale: { domain: [0, 1] },
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-              scale: {
-                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
-                range: ["#336699", "#668866", "#999999"],
-              },
-              title: "Local",
-            },
-            tooltip: [
-              { field: "Ano", type: "ordinal" },
-              { field: "Valor", type: "quantitative" },
-              { field: "Local", type: "nominal" },
-            ],
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
+          title: "Ano",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            labelAngle: 0,
+            titleColor: "#333333",
           },
         },
-        {
-          mark: {
-            type: "text",
-            align: "left",
-            dx: 5,
-            dy: -5,
+        y: {
+          field: "Valor",
+          type: "quantitative",
+          title: "IDH",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            titleColor: "#333333",
           },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            text: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-            },
-          },
+          scale: { domain: [0, 1] },
         },
-      ],
-      title: {
-        text: "Evolução IDH Educação",
-        fontSize: 20,
-        font: "Arial",
-        anchor: "middle",
-        color: "#003366", // Azul Marinho para o título
+        color: {
+          field: "Local",
+          type: "nominal",
+          scale: {
+            domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+            range: [colorNiteroi, colorRJ, colorBrasil],
+          },
+          title: "Local",
+        },
+        tooltip: [
+          { field: "Ano", type: "ordinal" },
+          { field: "Valor", type: "quantitative" },
+          { field: "Local", type: "nominal" },
+        ],
       },
-      config: {
-        axis: {
-          labelColor: "#333333",
-          labelFont: "Arial",
-          gridColor: "#e0e0e0",
-          tickColor: "#333333",
+    },
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        dy: -5,
+      },
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
         },
-        background: "#f4f4f9",
-      }
+        y: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        text: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        color: {
+          field: "Local",
+          type: "nominal",
+        },
+      },
+    },
+  ],
+  title: {
+    text: "Evolução IDH Educação",
+    fontSize: 20,
+    font: "Arial",
+    anchor: "middle",
+    color: "#003366", // Azul Marinho para o título
+  },
+  config: {
+    axis: {
+      labelColor: "#333333",
+      labelFont: "Arial",
+      gridColor: "#e0e0e0",
+      tickColor: "#333333",
+    },
+    background: "#f4f4f9",
+  },
 };
 
 vegaEmbed("#Edu", plotEdu)
@@ -1020,108 +1015,108 @@ if (
   DataRenda = Renda_Nit;
 } else if (checkboxRenda.includes("Rio de Janeiro")) {
   DataRenda = Renda_RJ;
-};
+}
 
 let plotRenda = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-      width: 350,
-      height: 250,
-      data: {
-        values: DataRenda,
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: 350,
+  height: 250,
+  data: {
+    values: DataRenda,
+  },
+  layer: [
+    {
+      mark: {
+        type: "line",
+        point: {
+          filled: true,
+          size: 100, // Aumentando o tamanho do ponto
+        },
+        color: "#4CAF50",
+        tooltip: true,
       },
-      layer: [
-        {
-          mark: {
-            type: "line",
-            point: {
-              filled: true,
-              size: 100, // Aumentando o tamanho do ponto
-            },
-            color: "#4CAF50",
-            tooltip: true,
-          },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-              title: "Ano",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                labelAngle: 0,
-                titleColor: "#333333",
-              },
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-              title: "IDH",
-              axis: {
-                labelFontSize: 12,
-                titleFontSize: 14,
-                titleColor: "#333333",
-              },
-              scale: { domain: [0.4, 1] },
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-              scale: {
-                domain: ["Niterói", "Rio de Janeiro", "Brasil"],
-                range: ["#336699", "#668866", "#999999"],
-              },
-              title: "Local",
-            },
-            tooltip: [
-              { field: "Ano", type: "ordinal" },
-              { field: "Valor", type: "quantitative" },
-              { field: "Local", type: "nominal" },
-            ],
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
+          title: "Ano",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            labelAngle: 0,
+            titleColor: "#333333",
           },
         },
-        {
-          mark: {
-            type: "text",
-            align: "left",
-            dx: 5,
-            dy: -5,
+        y: {
+          field: "Valor",
+          type: "quantitative",
+          title: "IDH",
+          axis: {
+            labelFontSize: 12,
+            titleFontSize: 14,
+            titleColor: "#333333",
           },
-          encoding: {
-            x: {
-              field: "Ano",
-              type: "ordinal",
-            },
-            y: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            text: {
-              field: "Valor",
-              type: "quantitative",
-            },
-            color: {
-              field: "Local",
-              type: "nominal",
-            },
-          },
+          scale: { domain: [0.4, 1] },
         },
-      ],
-      title: {
-        text: "Evolução IDH Renda",
-        fontSize: 20,
-        font: "Arial",
-        anchor: "middle",
-        color: "#003366", // Azul Marinho para o título
+        color: {
+          field: "Local",
+          type: "nominal",
+          scale: {
+            domain: ["Niterói", "Rio de Janeiro", "Brasil"],
+            range: [colorNiteroi, colorRJ, colorBrasil],
+          },
+          title: "Local",
+        },
+        tooltip: [
+          { field: "Ano", type: "ordinal" },
+          { field: "Valor", type: "quantitative" },
+          { field: "Local", type: "nominal" },
+        ],
       },
-      config: {
-        axis: {
-          labelColor: "#333333",
-          labelFont: "Arial",
-          gridColor: "#e0e0e0",
-          tickColor: "#333333",
+    },
+    {
+      mark: {
+        type: "text",
+        align: "left",
+        dx: 5,
+        dy: -5,
+      },
+      encoding: {
+        x: {
+          field: "Ano",
+          type: "ordinal",
         },
-        background: "#f4f4f9",
-      }
+        y: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        text: {
+          field: "Valor",
+          type: "quantitative",
+        },
+        color: {
+          field: "Local",
+          type: "nominal",
+        },
+      },
+    },
+  ],
+  title: {
+    text: "Evolução IDH Renda",
+    fontSize: 20,
+    font: "Arial",
+    anchor: "middle",
+    color: "#003366", // Azul Marinho para o título
+  },
+  config: {
+    axis: {
+      labelColor: "#333333",
+      labelFont: "Arial",
+      gridColor: "#e0e0e0",
+      tickColor: "#333333",
+    },
+    background: "#f4f4f9",
+  },
 };
 
 vegaEmbed("#Renda", plotRenda)
