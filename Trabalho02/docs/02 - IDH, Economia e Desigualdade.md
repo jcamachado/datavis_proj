@@ -80,7 +80,7 @@ const vl = vegaLiteApi.register(vega, vegaLite);
   <h1 style="margin-bottom: 50px;">IDH, Economia e Desigualdade</h1>
 </div>
 
-Você provavelmente já se deparou com anúncios destacando que Niterói tem o maior Índice de Desenvolvimento Humano (IDH) do estado do Rio de Janeiro. Mas você sabe o que realmente significa ter um alto IDH? Vamos explorar o que esse indicador representa.
+Você provavelmente já se deparou com anúncios destacando que Niterói tem o maior IDH do estado do Rio de Janeiro. Mas você sabe o que realmente significa ter um alto IDH? Vamos explorar o que esse indicador representa.
 
 <div style="background-color: #FFE5CC; padding: 20px; border: 1px solid #FF8C00; border-radius: 0px; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-family: 'Arial', sans-serif; color: #333;">
     <b>O Índice de Desenvolvimento Humano (IDH)</b> é uma medida resumida do progresso a longo prazo em três dimensões básicas do desenvolvimento humano: renda, educação e saúde. O objetivo da criação do IDH foi o de oferecer um contraponto a outro indicador muito utilizado, o Produto Interno Bruto (PIB) per capita, que considera apenas a dimensão econômica do desenvolvimento. Criado por Mahbub ul Haq com a colaboração do economista indiano Amartya Sen, ganhador do Prêmio Nobel de Economia de 1998, o IDH pretende ser uma medida geral e sintética que, apesar de ampliar a perspectiva sobre o desenvolvimento humano, não abrange nem esgota todos os aspectos de desenvolvimento. (PNUD Brasil)
@@ -90,7 +90,11 @@ Você provavelmente já se deparou com anúncios destacando que Niterói tem o m
 
 O mapa interativo a seguir facilita a visualização do IDH dos municípios do estado do Rio de Janeiro. Ao passar o cursor sobre cada município, você pode ver o IDH correspondente e comparar as diferenças visualmente com a ajuda de um gráfico de cores que indica os níveis de IDH.
 
-<div id="RJMap"></div>
+<div style="width: 100%; margin-top: 15px;">
+    <div id="ex01" style="width: 100%; margin-top: 15px;">
+        ${ vl.render(plotMap(divWidth - 200, geojson, IDHM)) }
+    </div>
+</div>
 
 O Censo Demográfico no Brasil é realizado a cada dez anos. Desde 1991, os dados começaram a ser divulgados digitalmente, facilitando significativamente o acesso. O gráfico a seguir mostra a evolução do IDH de Niterói ao longo do tempo, ilustrando as mudanças baseadas nos censos realizados de 1991 até 2010. Além disso, é possível comparar a evolução do IDH de Niterói com o IDH do Brasil e do estado do Rio de Janeiro, utilizando as opções disponíveis no checkbox.
 
@@ -142,7 +146,7 @@ let checkboxEspVida = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Educação</h2>
 </div>
 
-O IDH de Educação é calculado a partir de dois indicadores principais: a média de anos de estudo entre adultos e a expectativa de anos de escolaridade para crianças em idade escolar. Niterói destaca-se por superar as médias do Rio de Janeiro e do Brasil, refletindo altas taxas de matrícula, qualidade de ensino e amplo acesso a recursos educacionais. A educação, vital para o desenvolvimento sustentável, tem um impacto direto no progresso social e econômico da cidade.
+O IDH de Educação é calculado a partir de dois indicadores principais: a média de anos de estudo entre adultos e a expectativa de anos de escolaridade para crianças em idade escolar. Niterói se destaca por superar as médias do Rio de Janeiro e do Brasil, refletindo altas taxas de matrícula, qualidade de ensino e amplo acesso a recursos educacionais. A educação, vital para o desenvolvimento sustentável, tem um impacto direto no progresso social e econômico da cidade.
 
 <div id="Edu"></div>
 
@@ -160,7 +164,7 @@ let checkboxEdu = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Renda</h2>
 </div>
 
-O IDH de Renda em Niterói, medido pela Renda Nacional Bruta (RNB) per capita ajustada pelo poder de paridade de compra (PPP), reflete um padrão de vida econômico elevado em relação ao estado do Rio de Janeiro e frequentemente acima da média nacional. Esta alta renda per capita geralmente é indicativa de melhores oportunidades de emprego, salários mais altos e um mercado local aquecido, contribuindo para a riqueza geral e o acesso a recursos econômicos superiores em Niterói.
+O IDH de Renda em Niterói, medido pela Renda Nacional Bruta (RNB) per capita ajustada pelo poder de paridade de compra, reflete um padrão de vida econômico elevado em relação ao estado do Rio de Janeiro e frequentemente acima da média nacional. Esta alta renda per capita geralmente é indicativa de melhores oportunidades de emprego, salários mais altos e um mercado local aquecido, contribuindo para a riqueza geral e o acesso a recursos econômicos superiores em Niterói.
 
 <div id="Renda"></div>
 
@@ -178,11 +182,11 @@ let checkboxRenda = view(
   <h2 style="margin-bottom: 20px; margin-top: 50px;">Desigualdade</h2>
 </div>
 
-O Índice de Desenvolvimento Humano (IDH) serve como uma medida média que resume as principais conquistas em desenvolvimento humano de um país. Contudo, como toda média, o IDH pode ocultar as desigualdades na distribuição desses avanços entre a população. Reconhecendo essa limitação, desde 2010 foram introduzidas novas metodologias no cálculo do IDH. Uma dessas inovações é o IDH Ajustado à Desigualdade (IDHAD), que ajusta os valores do índice considerando as desigualdades nas três dimensões analisadas: saúde, educação e renda.
+O IDH serve como uma medida média que resume as principais conquistas em desenvolvimento humano de um país. Contudo, como toda média, o IDH pode ocultar as desigualdades na distribuição desses avanços entre a população. Reconhecendo essa limitação, desde 2010 foram introduzidas novas metodologias no cálculo do IDH. Uma dessas inovações é o IDH Ajustado à Desigualdade (IDHAD), que ajusta os valores do índice considerando as desigualdades nas três dimensões analisadas: saúde, educação e renda.
 
 Com o IDHAD, é possível diferenciar o 'potencial' de desenvolvimento humano, representado pelo IDH tradicional, do 'real', indicado pelo IDHAD. A diferença entre esses dois índices mostra a perda de desenvolvimento devido às desigualdades, e é expressa como uma porcentagem.
 
-Vale destacar que o IDH Ajustado à Desigualdade (IDHAD) começou a ser calculado apenas em 2013 e não é aplicado aos municípios. Nos gráficos abaixo, você pode visualizar as variações do Índice de Desenvolvimento Humano Municipal (IDHM) e do IDHAD para o Estado do Rio de Janeiro e para o Brasil, utilizando os dados do PNAD de 2021.
+Vale destacar que o IDH Ajustado à Desigualdade (IDHAD) começou a ser calculado apenas em 2013 e não é aplicado aos municípios. Nos gráficos abaixo, você pode visualizar as variações do IDH e do IDHAD para o Estado do Rio de Janeiro e para o Brasil, utilizando os dados do PNAD de 2021.
 
 <div id="IDHMAD"></div>
 
@@ -209,69 +213,71 @@ var colorRJ = "#3399FF";
 // forest green
 var colorBrasil = "#228B22";
 const divWidth = Generators.width(document.querySelector("#ex01"));
+```
 
-let plotMap = {
-  width: divWidth,
-  height: 300,
-  background: "#f4f4f9",
-  projection: {
-    type: "mercator",
-  },
-  layer: [
-    {
-      data: {
-        values: geojson,
-        format: {
-          type: "json",
-          property: "features",
-        },
+```js
+function plotMap(divWidth, geojson, IDHM) {
+  return {
+    spec: {
+      width: divWidth,
+      height: 300,
+      background: "#f4f4f9",
+      projection: {
+        type: "mercator"
       },
-      transform: [
+      layer: [
         {
-          lookup: "properties.name",
-          from: {
-            data: {
-              values: IDHM,
-            },
-            key: "Territorialidades",
-            fields: ["IDHM 2010"],
+          data: {
+            values: geojson,
+            format: {
+              type: "json",
+              property: "features"
+            }
           },
-        },
-      ],
-      mark: {
-        type: "geoshape",
-        stroke: "#BFBFBF",
-        strokeWidth: 1,
-      },
-      encoding: {
-        color: {
-          field: "IDHM 2010",
-          type: "quantitative",
-          scale: { scheme: "reds" },
-          condition: { selection: "highlight", value: "green" }, // Highlight color when selected
-        },
-        tooltip: [
-          { field: "properties.name", type: "nominal", title: "Cidade" },
-          { field: "IDHM 2010", type: "quantitative", title: "IDHM" },
-        ],
-      },
-      selection: {
-        highlight: {
-          type: "single",
-          on: "mouseover",
-          empty: "none",
-          fields: ["properties.name"],
-        },
-      },
-    },
-  ],
-};
-
-vegaEmbed("#RJMap", plotMap)
-  .then(function (result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  })
-  .catch(console.error);
+          transform: [
+            {
+              lookup: "properties.name",
+              from: {
+                data: {
+                  values: IDHM
+                },
+                key: "Territorialidades",
+                fields: ["IDHM 2010"]
+              }
+            }
+          ],
+          mark: {
+            type: "geoshape",
+            stroke: "#BFBFBF",
+            strokeWidth: 1
+          },
+          encoding: {
+            color: {
+              field: "IDHM 2010",
+              type: "quantitative",
+              scale: { scheme: "reds" }
+            }
+          },
+          selection: {
+            highlight: {type: "single", on: "mouseover", empty: "none", fields: ["properties.name"]}
+          },
+          encoding: {
+            color: {
+              condition: {selection: "highlight", value: "green"}, // Change to desired highlight color
+              field: "IDHM 2010",
+              type: "quantitative",
+              scale: {scheme: "reds"}
+            },
+            tooltip: [
+              { field: "properties.name", type: "nominal", title: "Cidade" },
+              { field: "IDHM 2010", type: "quantitative", title: "IDHM" }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
 ```
 
 ```js
@@ -460,9 +466,7 @@ let plotIDHM = {
           field: "Valor",
           type: "quantitative",
         },
-        color: {
-          field: "Local",
-          type: "nominal",
+        color: {value:"black",
         },
       },
     },
@@ -584,7 +588,7 @@ let plotEspVida = {
         },
         tooltip: [
           { field: "Ano", type: "ordinal" },
-          { field: "Valor", type: "quantitative" },
+          { field: "Valor", type: "quantitative", title:"Idade" },
           { field: "Local", type: "nominal" },
         ],
       },
@@ -610,8 +614,7 @@ let plotEspVida = {
           type: "quantitative",
         },
         color: {
-          field: "Local",
-          type: "nominal",
+          value: "black",
         },
       },
     },
@@ -717,9 +720,7 @@ let plotLong = {
           field: "Valor",
           type: "quantitative",
         },
-        color: {
-          field: "Local",
-          type: "nominal",
+      color: {value:"black",
         },
       },
     },
@@ -751,24 +752,24 @@ vegaEmbed("#Long", plotLong)
 
 ```js
 const dataRio = [
-  { Component: "Educação", Type: "IDHM", Value: 0.758 },
-  { Component: "Educação", Type: "IDHMAD", Value: 0.681 },
-  { Component: "Renda", Type: "IDHM", Value: 0.759 },
-  { Component: "Renda", Type: "IDHMAD", Value: 0.438 },
-  { Component: "Longevidade", Type: "IDHM", Value: 0.769 },
-  { Component: "Longevidade", Type: "IDHMAD", Value: 0.696 },
-  { Component: "IDH", Type: "IDHM", Value: 0.762 },
-  { Component: "IDH", Type: "IDHMAD", Value: 0.592 },
+  { Component: "Educação", Type: "IDH", Value: 0.758 },
+  { Component: "Educação", Type: "IDHAD", Value: 0.681 },
+  { Component: "Renda", Type: "IDH", Value: 0.759 },
+  { Component: "Renda", Type: "IDHAD", Value: 0.438 },
+  { Component: "Longevidade", Type: "IDH", Value: 0.769 },
+  { Component: "Longevidade", Type: "IDHAD", Value: 0.696 },
+  { Component: "IDH", Type: "IDH", Value: 0.762 },
+  { Component: "IDH", Type: "IDHAD", Value: 0.592 },
 ];
 const dataBrasil = [
-  { Component: "Educação", Type: "IDHM", Value: 0.757 },
-  { Component: "Educação", Type: "IDHMAD", Value: 0.64 },
-  { Component: "Renda", Type: "IDHM", Value: 0.724 },
-  { Component: "Renda", Type: "IDHMAD", Value: 0.436 },
-  { Component: "Longevidade", Type: "IDHM", Value: 0.819 },
-  { Component: "Longevidade", Type: "IDHMAD", Value: 0.74 },
-  { Component: "IDH", Type: "IDHM", Value: 0.766 },
-  { Component: "IDH", Type: "IDHMAD", Value: 0.591 },
+  { Component: "Educação", Type: "IDH", Value: 0.757 },
+  { Component: "Educação", Type: "IDHAD", Value: 0.64 },
+  { Component: "Renda", Type: "IDH", Value: 0.724 },
+  { Component: "Renda", Type: "IDHAD", Value: 0.436 },
+  { Component: "Longevidade", Type: "IDH", Value: 0.819 },
+  { Component: "Longevidade", Type: "IDHAD", Value: 0.74 },
+  { Component: "IDH", Type: "IDH", Value: 0.766 },
+  { Component: "IDH", Type: "IDHAD", Value: 0.591 },
 ];
 ```
 
@@ -816,7 +817,7 @@ let plotBars = {
           field: "Type",
           type: "nominal",
           scale: {
-            domain: ["IDHM", "IDHMAD"],
+            domain: ["IDH", "IDHAD"],
             range: ["#000080", "#556b2f"],
           },
           legend: { title: "Tipo de Valor" },
@@ -954,8 +955,7 @@ let plotEdu = {
           type: "quantitative",
         },
         color: {
-          field: "Local",
-          type: "nominal",
+          value: "black",
         },
       },
     },
@@ -1090,13 +1090,11 @@ let plotRenda = {
           field: "Valor",
           type: "quantitative",
         },
-        text: {
-          field: "Valor",
+        text: {field: "Valor",
           type: "quantitative",
         },
         color: {
-          field: "Local",
-          type: "nominal",
+          value:"black",
         },
       },
     },
