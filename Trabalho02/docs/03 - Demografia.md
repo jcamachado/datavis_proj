@@ -268,7 +268,7 @@ let ethinicsSpec = {
             domain: ["Branca", "Preta", "Amarela", "Parda", "Indígena"],
             range: [branca, preta, amarela, parda, indigena],
           },
-          legend: null,
+          legend: { title: "Cor ou raça" },
         },
         tooltip: [
           { field: "skinDenomination", type: "nominal", title: "Cor ou raça" },
